@@ -1,6 +1,6 @@
 # How to run the website locally using node.js:
 
-1. Make sure that nodejs an npm are installed:\
+1. Make sure that nodejs and npm packages are installed:\
 `$ sudo pacman -S nodejs`\
 `$ sudo pacman -S npm`
 
