@@ -14,20 +14,20 @@ quiz_a.push("", "", "", "", "");
 /* Pre-quiz screen */
 
 document.querySelector("input").addEventListener("click", () =>  {
-	 const header = document.getElementsByTagName("h1").item(0);
+	 const header = document.getElementsById(".content").item(0);
 	 header.firstChild.data = "A dynamic document";
 
 	const question_text = document.createTextNode("Where the qestion is going to go");
 
 	const newElement = document.createElement("h1");
 	newElement.appendChild(question_text);
-	para.parentNode.appendChild(newElement);
-})();
+	document.body.appendChild(newElement);
+});
 /* Quiz */
 
 /* Initlialize quiz visual objects */
 
-let range = quiz_meta("Length");
+let range = quiz_meta.get("Length");
 range = range - 1;
 let stop = 0
 
