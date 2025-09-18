@@ -12,17 +12,12 @@ const quiz_a = [];
 quiz_a.push("", "", "", "", "");
 
 /* Pre-quiz screen */
+window.onload = function(){	
+	what();
+	function what(){
+		document.getElementById("game_title").innerHTML = "Its not a python quiz"};
+}
 
-document.querySelector("input").addEventListener("click", () =>  {
-	 const header = document.getElementsById(".content").item(0);
-	 header.firstChild.data = "A dynamic document";
-
-	const question_text = document.createTextNode("Where the qestion is going to go");
-
-	const newElement = document.createElement("h1");
-	newElement.appendChild(question_text);
-	document.body.appendChild(newElement);
-});
 /* Quiz */
 
 /* Initlialize quiz visual objects */
