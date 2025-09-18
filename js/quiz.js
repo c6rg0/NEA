@@ -13,11 +13,10 @@ quiz_a.push("", "", "", "", "");
 
 /* Pre-quiz screen */
 
-window.onload = function(){
-	what();
-	function what(){
-		document.getElementById("game_title").innerHTML = ""};
-}
+function start_quiz() {
+	document.getElementById("game_title").innerHTML = "";
+	document.getElementById("start_button").remove()};
+	
 
 /* Quiz */
 
