@@ -16,11 +16,7 @@ quiz_a.push("", "", "", "", "");
 window.onload = function(){
 	what();
 	function what(){
-		var buttons = document.getElementsByTagName('button');
-		function load_quiz(){	
-			document.getElementById("game_title").innerHTML = "";
-		}
-	}
+		document.getElementById("game_title").innerHTML = ""};
 }
 
 /* Quiz */
