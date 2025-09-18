@@ -16,6 +16,6 @@ Features to add:\
 `A functional backend js script`\
 `Basic styling revamp`\
 `SQL database and dynamic loading`\
-`Quiz creation`
+`Quiz creation`\
 `Using react.js or some other front end library`
 
