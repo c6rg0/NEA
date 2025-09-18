@@ -12,10 +12,15 @@ const quiz_a = [];
 quiz_a.push("", "", "", "", "");
 
 /* Pre-quiz screen */
-window.onload = function(){	
+
+window.onload = function(){
 	what();
 	function what(){
-		document.getElementById("game_title").innerHTML = "Its not a python quiz"};
+		var buttons = document.getElementsByTagName('button');
+		function load_quiz(){	
+			document.getElementById("game_title").innerHTML = "";
+		}
+	}
 }
 
 /* Quiz */
