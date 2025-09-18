@@ -8,26 +8,57 @@ quiz_meta.set("Length", 5);
 const quiz_q = [];
 quiz_q.push("", "", "", "", "");
 
+/* This has a fundamental flaw, in a quiz with 4 choices to 
+ * pick from, you will need to set up a database table row for
+ * each question, and link it to another table with higher data*/
+
 const quiz_a = [];
 quiz_a.push("", "", "", "", "");
 
 /* Pre-quiz screen */
-
 function start_quiz() {
-	document.getElementById("game_title").innerHTML = "";
-	document.getElementById("start_button").remove()};
-	
+	document.getElementById("game_title").remove();
+	document.getElementById("start_button").remove();
+
+	const buttonContainer = document.getElementById("button_container");
 
 /* Quiz */
 
-/* Initlialize quiz visual objects */
+/* Initlialize quiz visual objects
 
 let range = quiz_meta.get("Length");
 range = range - 1;
 let stop = 0
 
-for (let i = 0; i < range; i++) {
-	/* Display quiz_q[i]
+/*for (let i = 0; i < range; i++) {*/
+
+	/* Display quiz_q[i]*/
+
+	const a = document.createElement("BUTTON");
+	const a_node = document.createTextNode(quiz_a[0]);
+	a.appendChild(a_node);
+	a.id = 'choice_a';
+	buttonContainer.appendChild(a);
+
+	const b = document.createElement("BUTTON");
+	const b_node = document.createTextNode(quiz_a[1]);
+	b.appendChild(b_node);
+	b.id = 'choice_b';
+	document.getElementById("button_container").appendChild(b);
+
+	const c = document.createElement("BUTTON");
+	const c_node = document.createTextNode(quiz_a[2]);
+	c.appendChild(c_node);
+	c.id = 'choice_c';
+	document.getElementById("button_container").appendChild(c);
+
+	const d = document.createElement("BUTTON");
+	const d_node = document.createTextNode(quiz_a[3]);
+	d.appendChild(d_node);
+	d.id = 'choice_d';
+	document.getElementById("button_container").appendChild(d);
+
+	/*
 	 * Test the answer
 	 * Display condition
 	 * Effect - score
