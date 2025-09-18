@@ -11,3 +11,11 @@
 `$ http-server`
 
 And vioala, it works (no need to thank me pal)
+
+Features to add:\
+`A functional backend js script`\
+`Basic styling revamp`\
+`SQL database and dynamic loading`\
+`Quiz creation`
+`Using react.js or some other front end library`
+
