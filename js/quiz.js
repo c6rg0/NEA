@@ -6,7 +6,7 @@ quiz_meta.set("Date", 1592025);
 quiz_meta.set("Length", 5);
 
 const quiz_q = [];
-quiz_q.push("", "", "", "", "");
+quiz_q.push("Howdy");
 
 /* This has a fundamental flaw, in a quiz with 4 choices to 
  * pick from, you will need to set up a database table row for
@@ -14,7 +14,6 @@ quiz_q.push("", "", "", "", "");
 
 const quiz_a = [];
 quiz_a.push("One", "One", "Two", "Three", "Four");
-
 
 /* Pre-quiz screen */
 function start_quiz() {
@@ -33,37 +32,46 @@ let stop = 0
 
 /*for (let i = 0; i < range; i++) {*/
 
-	/* Display quiz_q[i]*/
-	
+	/* Display quiz_q[x]*/
 	const newH2 = document.createElement("h2")
-	const q = document.createTextNode("Howdy")
+	const q = document.createTextNode(quiz_q[0])
 	newH2.appendChild(q);
 	document.body.insertBefore(newH2, button_container);
 
+	/*Display quiz_a[x]*/
 	const a = document.createElement("BUTTON");
-	const a_node = document.createTextNode(quiz_a[1]);
+	const a_test = (quiz_a[1]);
+	const a_node = document.createTextNode(a_test);
 	a.appendChild(a_node);
 	a.id = 'choice_a';
 	buttonContainer.appendChild(a);
 
 	const b = document.createElement("BUTTON");
-	const b_node = document.createTextNode(quiz_a[2]);
+	const b_test = (quiz_a[2]);
+	const b_node = document.createTextNode(b_test);
 	b.appendChild(b_node);
 	b.id = 'choice_b';
 	buttonContainer.appendChild(b);
 
 	const c = document.createElement("BUTTON");
-	const c_node = document.createTextNode(quiz_a[2]);
+	const c_test = (quiz_a[3]);
+	const c_node = document.createTextNode(c_test);
 	c.appendChild(c_node);
 	c.id = 'choice_c';
 	buttonContainer.appendChild(c);
 
 	const d = document.createElement("BUTTON");
-	const d_node = document.createTextNode(quiz_a[3]);
+	const d_test = (quiz_a[4]);
+	const d_node = document.createTextNode(d_test);
 	d.appendChild(d_node);
 	d.id = 'choice_d';
 	buttonContainer.appendChild(d);
+	
+	/* Testing for the answer*/
 
+	const answer = (quiz_a[0]);
+	
+	
 	/*
 	 * Test the answer
 	 * Display condition
