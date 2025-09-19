@@ -13,7 +13,8 @@ quiz_q.push("", "", "", "", "");
  * each question, and link it to another table with higher data*/
 
 const quiz_a = [];
-quiz_a.push("", "", "", "", "");
+quiz_a.push("One", "One", "Two", "Three", "Four");
+
 
 /* Pre-quiz screen */
 function start_quiz() {
@@ -33,30 +34,35 @@ let stop = 0
 /*for (let i = 0; i < range; i++) {*/
 
 	/* Display quiz_q[i]*/
+	
+	const newH2 = document.createElement("h2")
+	const q = document.createTextNode("Howdy")
+	newH2.appendChild(q);
+	document.body.insertBefore(newH2, button_container);
 
 	const a = document.createElement("BUTTON");
-	const a_node = document.createTextNode(quiz_a[0]);
+	const a_node = document.createTextNode(quiz_a[1]);
 	a.appendChild(a_node);
 	a.id = 'choice_a';
 	buttonContainer.appendChild(a);
 
 	const b = document.createElement("BUTTON");
-	const b_node = document.createTextNode(quiz_a[1]);
+	const b_node = document.createTextNode(quiz_a[2]);
 	b.appendChild(b_node);
 	b.id = 'choice_b';
-	document.getElementById("button_container").appendChild(b);
+	buttonContainer.appendChild(b);
 
 	const c = document.createElement("BUTTON");
 	const c_node = document.createTextNode(quiz_a[2]);
 	c.appendChild(c_node);
 	c.id = 'choice_c';
-	document.getElementById("button_container").appendChild(c);
+	buttonContainer.appendChild(c);
 
 	const d = document.createElement("BUTTON");
 	const d_node = document.createTextNode(quiz_a[3]);
 	d.appendChild(d_node);
 	d.id = 'choice_d';
-	document.getElementById("button_container").appendChild(d);
+	buttonContainer.appendChild(d);
 
 	/*
 	 * Test the answer
