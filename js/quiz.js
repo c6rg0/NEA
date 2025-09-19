@@ -38,7 +38,9 @@ let stop = 0
 	newH2.appendChild(q);
 	document.body.insertBefore(newH2, button_container);
 
-	/*Display quiz_a[x]*/
+	/* Display quiz_a[x]*/
+	/* Need to add the onclick element/property to the buttons */
+
 	const a = document.createElement("BUTTON");
 	const a_test = (quiz_a[1]);
 	const a_node = document.createTextNode(a_test);
@@ -70,8 +72,39 @@ let stop = 0
 	/* Testing for the answer*/
 
 	const answer = (quiz_a[0]);
-	
-	
+	const choice = "";
+	const evaluate = "";
+
+	a.addEventListener('click', function (choice, evaluate) {
+		choice = a_test;
+		evaluate = true;
+		return choice, evaluate;
+	});
+
+	b.addEventListener('click', function (choice, evaluate) {
+		choice = b_test;
+		evaluate = true;
+		return choice, evaluate;
+	});
+
+	c.addEventListener('click', function (choice, evaluate) {
+		choice = c_test;
+		evaluate = true;
+		return choice, evaluate;
+	});
+
+	d.addEventListener('click', function (choice, evaluate) {
+		choice = d_test;
+		evaluate = true;
+		return choice, evaluate;
+	});
+
+	if (evaluate == true) {
+		if (choice == answer) {
+			alert('You are correct')
+		}
+	}
+
 	/*
 	 * Test the answer
 	 * Display condition
