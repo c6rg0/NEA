@@ -72,42 +72,49 @@ let stop = 0
 	/* Testing for the answer*/
 
 	const answer = (quiz_a[0]);
-	const choice = "";
-	const evaluate = "";
+	let choice;
 
-	a.addEventListener('click', function (choice, evaluate) {
+	a.addEventListener('click', function (event) {
 		choice = a_test;
-		evaluate = true;
-		return choice, evaluate;
+		evaluate(choice)
 	});
 
-	b.addEventListener('click', function (choice, evaluate) {
+	b.addEventListener('click', function (event) {
 		choice = b_test;
-		evaluate = true;
-		return choice, evaluate;
+		evaluate(choice);
+
 	});
 
-	c.addEventListener('click', function (choice, evaluate) {
+	c.addEventListener('click', function (event) {
 		choice = c_test;
-		evaluate = true;
-		return choice, evaluate;
+		evaluate(choice);
 	});
 
-	d.addEventListener('click', function (choice, evaluate) {
+	d.addEventListener('click', function (event) {
 		choice = d_test;
-		evaluate = true;
-		return choice, evaluate;
+		evaluate(choice);
 	});
 
-	if (evaluate == true) {
+
+	/* Test the answer*/
+	function evaluate() {
 		if (choice == answer) {
-			alert('You are correct')
+			alert('You are correct');
+			purge_screen();
+		}
+		else {
+			console.log("Wrong buddy, click a/1");
 		}
 	}
+	
+	function purge_screen() {
+		document.getElementById("choice_a").remove();
+		document.getElementById("choice_b").remove();
+		document.getElementById("choice_c").remove();
+		document.getElementById("choice_d").remove();
+	}
 
-	/*
-	 * Test the answer
-	 * Display condition
+	/* Display condition
 	 * Effect - score
 	 * End */
 }
