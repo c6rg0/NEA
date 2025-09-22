@@ -16,6 +16,7 @@ const quiz_a = [];
 quiz_a.push("One", "One", "Two", "Three", "Four");
 
 /* Pre-quiz screen */
+
 function start_quiz() {
 	document.getElementById("game_title").remove();
 	document.getElementById("start_button").remove();
@@ -24,99 +25,92 @@ function start_quiz() {
 
 /* Quiz */
 
-/* Initlialize quiz visual objects
+	let range = quiz_meta.get("Length");
+	range = range - 1;
+	let stop = 0
 
-let range = quiz_meta.get("Length");
-range = range - 1;
-let stop = 0
+	for (let i = 0; i < range; i++) {
 
-/*for (let i = 0; i < range; i++) {*/
+		/* Display quiz_q[x]*/
+		const newH2 = document.createElement("h2");
+		const q = document.createTextNode(quiz_q[0]);
+		newH2.appendChild(q);
+		document.body.insertBefore(newH2, button_container);
 
-	/* Display quiz_q[x]*/
-	const newH2 = document.createElement("h2")
-	const q = document.createTextNode(quiz_q[0])
-	newH2.appendChild(q);
-	document.body.insertBefore(newH2, button_container);
+		/* Display quiz_a[x]*/
+		/* Need to add the onclick element/property to the buttons */
 
-	/* Display quiz_a[x]*/
-	/* Need to add the onclick element/property to the buttons */
+		const a = document.createElement("BUTTON");
+		const a_test = (quiz_a[1]);
+		const a_node = document.createTextNode(a_test);
+		a.appendChild(a_node);
+		a.id = 'choice_a';
+		buttonContainer.appendChild(a);
 
-	const a = document.createElement("BUTTON");
-	const a_test = (quiz_a[1]);
-	const a_node = document.createTextNode(a_test);
-	a.appendChild(a_node);
-	a.id = 'choice_a';
-	buttonContainer.appendChild(a);
+		const b = document.createElement("BUTTON");
+		const b_test = (quiz_a[2]);
+		const b_node = document.createTextNode(b_test);
+		b.appendChild(b_node);
+		b.id = 'choice_b';
+		buttonContainer.appendChild(b);
 
-	const b = document.createElement("BUTTON");
-	const b_test = (quiz_a[2]);
-	const b_node = document.createTextNode(b_test);
-	b.appendChild(b_node);
-	b.id = 'choice_b';
-	buttonContainer.appendChild(b);
+		const c = document.createElement("BUTTON");
+		const c_test = (quiz_a[3]);
+		const c_node = document.createTextNode(c_test);
+		c.appendChild(c_node);
+		c.id = 'choice_c';
+		buttonContainer.appendChild(c);
 
-	const c = document.createElement("BUTTON");
-	const c_test = (quiz_a[3]);
-	const c_node = document.createTextNode(c_test);
-	c.appendChild(c_node);
-	c.id = 'choice_c';
-	buttonContainer.appendChild(c);
-
-	const d = document.createElement("BUTTON");
-	const d_test = (quiz_a[4]);
-	const d_node = document.createTextNode(d_test);
-	d.appendChild(d_node);
-	d.id = 'choice_d';
-	buttonContainer.appendChild(d);
+		const d = document.createElement("BUTTON");
+		const d_test = (quiz_a[4]);
+		const d_node = document.createTextNode(d_test);
+		d.appendChild(d_node);
+		d.id = 'choice_d';
+		buttonContainer.appendChild(d);
 	
-	/* Testing for the answer*/
+		/* Testing for the answer*/
 
-	const answer = (quiz_a[0]);
-	let choice;
+		const answer = (quiz_a[0]);
 
-	a.addEventListener('click', function (event) {
-		choice = a_test;
-		evaluate(choice)
-	});
+		function listen(i) {
+			if (i < 1000) {
+				function handleClick(choice) {
+					evaluate(choice);
+				}
 
-	b.addEventListener('click', function (event) {
-		choice = b_test;
-		evaluate(choice);
+        			a.addEventListener('click', () => handleClick(a_test));
+        			b.addEventListener('click', () => handleClick(b_test));
+        			c.addEventListener('click', () => handleClick(c_test));
+        			d.addEventListener('click', () => handleClick(d_test));
 
-	});
-
-	c.addEventListener('click', function (event) {
-		choice = c_test;
-		evaluate(choice);
-	});
-
-	d.addEventListener('click', function (event) {
-		choice = d_test;
-		evaluate(choice);
-	});
-
-
-	/* Test the answer*/
-	function evaluate() {
-		if (choice == answer) {
-			alert('You are correct');
-			purge_screen();
+				setTimeout(() => listen(i + 1), 0);
+			}
 		}
-		else {
-			console.log("Wrong buddy, click a/1");
+
+		listen();
+
+		/* Test the answer*/
+		function evaluate() {
+			if (choice == answer) {
+				alert('You are correct');
+				purge_screen();
+			}
+			else {
+				console.log("Wrong buddy, click a/1");
+			}
 		}
-	}
 	
-	function purge_screen() {
-		document.getElementById("choice_a").remove();
-		document.getElementById("choice_b").remove();
-		document.getElementById("choice_c").remove();
-		document.getElementById("choice_d").remove();
-	}
+		function purge_screen() {
+			document.getElementById("choice_a").remove();
+			document.getElementById("choice_b").remove();
+			document.getElementById("choice_c").remove();
+			document.getElementById("choice_d").remove();
+		}
 
-	/* Display condition
-	 * Effect - score
-	 * End */
+		/* Display condition
+		 * Effect - score
+		 * End */
+	}
 }
 
 /* Structure:
