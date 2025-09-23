@@ -21,97 +21,104 @@ function start_quiz() {
 	document.getElementById("game_title").remove();
 	document.getElementById("start_button").remove();
 
-	const buttonContainer = document.getElementById("button_container");
+
+
+	object_creation();
+}
 
 /* Quiz */
-
+function object_creation () {
 	let range = quiz_meta.get("Length");
 	range = range - 1;
 	let stop = 0
 
-	for (let i = 0; i < range; i++) {
+	const buttonContainer = document.getElementById("button_container");
 
-		/* Display quiz_q[x]*/
-		const newH2 = document.createElement("h2");
-		const q = document.createTextNode(quiz_q[0]);
-		newH2.appendChild(q);
-		document.body.insertBefore(newH2, button_container);
+	/* Display quiz_q[x]*/
+	const newH2 = document.createElement("h2");
+	const q = document.createTextNode(quiz_q[0]);
+	newH2.appendChild(q);
+	document.body.insertBefore(newH2, button_container);
 
-		/* Display quiz_a[x]*/
-		/* Need to add the onclick element/property to the buttons */
+	/* Display quiz_a[x]*/
+	/* Need to add the onclick element/property to the buttons */
 
-		const a = document.createElement("BUTTON");
-		const a_test = (quiz_a[1]);
-		const a_node = document.createTextNode(a_test);
-		a.appendChild(a_node);
-		a.id = 'choice_a';
-		buttonContainer.appendChild(a);
+	const a = document.createElement("BUTTON");
+	const a_test = (quiz_a[1]);
+	const a_node = document.createTextNode(a_test);
+	a.appendChild(a_node);
+	a.id = 'choice_a';
+	buttonContainer.appendChild(a);
 
-		const b = document.createElement("BUTTON");
-		const b_test = (quiz_a[2]);
-		const b_node = document.createTextNode(b_test);
-		b.appendChild(b_node);
-		b.id = 'choice_b';
-		buttonContainer.appendChild(b);
+	const b = document.createElement("BUTTON");
+	const b_test = (quiz_a[2]);
+	const b_node = document.createTextNode(b_test);
+	b.appendChild(b_node);
+	b.id = 'choice_b';
+	buttonContainer.appendChild(b);
 
-		const c = document.createElement("BUTTON");
-		const c_test = (quiz_a[3]);
-		const c_node = document.createTextNode(c_test);
-		c.appendChild(c_node);
-		c.id = 'choice_c';
-		buttonContainer.appendChild(c);
+	const c = document.createElement("BUTTON");
+	const c_test = (quiz_a[3]);
+	const c_node = document.createTextNode(c_test);
+	c.appendChild(c_node);
+	c.id = 'choice_c';
+	buttonContainer.appendChild(c);
 
-		const d = document.createElement("BUTTON");
-		const d_test = (quiz_a[4]);
-		const d_node = document.createTextNode(d_test);
-		d.appendChild(d_node);
-		d.id = 'choice_d';
-		buttonContainer.appendChild(d);
-	
+	const d = document.createElement("BUTTON");
+	const d_test = (quiz_a[4]);
+	const d_node = document.createTextNode(d_test);
+	d.appendChild(d_node);
+	d.id = 'choice_d';
+	buttonContainer.appendChild(d);
+
+	waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test);
+		
+}
 		/* Testing for the answer*/
+function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test, answer) {
+	answer = (quiz_a[0]);
+	const choice = "";
 
-		const answer = (quiz_a[0]);
-
-		function listen(i) {
-			if (i < 1000) {
-				function handleClick(choice) {
-					evaluate(choice);
-				}
-
-        			a.addEventListener('click', () => handleClick(a_test));
-        			b.addEventListener('click', () => handleClick(b_test));
-        			c.addEventListener('click', () => handleClick(c_test));
-        			d.addEventListener('click', () => handleClick(d_test));
-
-				setTimeout(() => listen(i + 1), 0);
-			}
+	function listen() {
+		async function handleClick(choice, answer) {
+			await evaluate(choice, answer);
 		}
 
-		listen();
+        	a.addEventListener('click', () => handleClick(a_test));
+        	b.addEventListener('click', () => handleClick(b_test));
+        	c.addEventListener('click', () => handleClick(c_test));
+        	d.addEventListener('click', () => handleClick(d_test));
 
-		/* Test the answer*/
-		function evaluate() {
-			if (choice == answer) {
-				alert('You are correct');
-				purge_screen();
-			}
-			else {
-				console.log("Wrong buddy, click a/1");
-			}
-		}
+	}
+
+	listen();
+}
+
+
+/* Test the answer*/
+function evaluate(choice, answer) {
+	console.log(choice) /* temporary logs */
+	console.log(answer)
+	if (choice == answer) {
+		alert('You are correct');
+		purge_screen();
+	}
+	else {
+		console.log("Wrong buddy, click a/1");
+		purge_screen()
+	}
+}
 	
-		function purge_screen() {
-			document.getElementById("choice_a").remove();
-			document.getElementById("choice_b").remove();
-			document.getElementById("choice_c").remove();
-			document.getElementById("choice_d").remove();
-		}
+function purge_screen() {
+	document.getElementById("choice_a").remove();
+	document.getElementById("choice_b").remove();
+	document.getElementById("choice_c").remove();
+	document.getElementById("choice_d").remove();
+}
 
 		/* Display condition
 		 * Effect - score
 		 * End */
-	}
-}
 
 /* Structure:
  *	Displaying a "Play" screen (before the quiz),
