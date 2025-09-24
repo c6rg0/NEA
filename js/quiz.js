@@ -6,7 +6,7 @@ quiz_meta.set("Date", 1592025);
 quiz_meta.set("Length", 5);
 
 const quiz_q = [];
-quiz_q.push("Howdy");
+quiz_q.push("Click one");
 
 /* This has a fundamental flaw, in a quiz with 4 choices to 
  * pick from, you will need to set up a database table row for
@@ -15,28 +15,27 @@ quiz_q.push("Howdy");
 const quiz_a = [];
 quiz_a.push("One", "One", "Two", "Three", "Four");
 
+var round = 0;
+
 /* Pre-quiz screen */
 
-function start_quiz() {
+function start_quiz(round) {
 	document.getElementById("game_title").remove();
 	document.getElementById("start_button").remove();
 
-	object_creation();
+	object_creation(round);
 }
 
 /* Quiz */
-function object_creation () {
-	let range = quiz_meta.get("Length");
-	range = range - 1;
-	let stop = 0
-
+function object_creation (round) {
+	console.log(round);
 	const buttonContainer = document.getElementById("button_container");
-
+	
 	/* Display quiz_q[x]*/
 	const newH2 = document.createElement("h2");
 	const q = document.createTextNode(quiz_q[0]);
 	newH2.appendChild(q);
-	newH2.id = "question"
+	newH2.id = "question";
 	document.body.insertBefore(newH2, button_container);
 
 	/* Display quiz_a[x]*/
@@ -70,6 +69,7 @@ function object_creation () {
 	d.id = 'choice_d';
 	buttonContainer.appendChild(d);
 
+	round = round + 1;
 	waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test);
 		
 }

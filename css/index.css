@@ -1,8 +1,12 @@
 @font-face {
-	font-family: "JetBrains Mono";
-	src: local('/fonts/JetBrainsMono-medium'), url("/fonts/JetBrainsMono-Medium.woff2") format('woff2');
+	font-family: "Ubuntu-Medium";
+	src: local('/fonts/Ubuntu-Medium'), url("/fonts/Ubuntu-Medium.woff2") format('woff2');
 }
 
+@font-face {
+	font-family: "Ubuntu-Regular";
+	src: local('/fonts/Ubuntu-Regular'), url("/fonts/Ubuntu-Regular.woff2") format('woff2');
+}
 
 #particles-js {
 	position: fixed;
@@ -10,7 +14,7 @@
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: #006969;
+	background-color: #2f3241;
 	z-index: -1;	
 }
 
@@ -21,24 +25,24 @@ html, body {
 .content {
 	position: relative;
 	z-index: 1;
-	font-family: JetBrains Mono;
-	color: black;
+	color: white;
 }
 
 h1 {
 	text-align: left;
 	font-size: 45px;
+	font-family: Ubuntu-Medium;
 
 }
 
 a:link {
-	color: black;
+	color: white;
 	background-color: tranparent;
 	text-decoration: none;
 }
 
 a:visited {
-	color: black;
+	color: white;
 	background-color: tranparent;
 	text-decoration: none;
 }
@@ -50,7 +54,7 @@ a:hover {
 }
 
 a:active {
-	color: #1611B1F;
+	color: #161B1F;
 	background-color: tranparent;
 	text-decoration: none;
 }
@@ -58,16 +62,19 @@ a:active {
 h2 {
 	text-align: left;
 	font-size: 35px;
+	font-family: Ubuntu-Regular;
 }
 
 h3 {
 	text-align: left;
 	font-size: 35px;
+	font-family: Ubuntu-Regular;
 }
 
 h4 {
 	text-align: left;
 	font-size: 35px;
+	font-family: Ubuntu-Regular;
 }
 
 p {
