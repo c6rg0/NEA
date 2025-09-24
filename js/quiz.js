@@ -21,8 +21,6 @@ function start_quiz() {
 	document.getElementById("game_title").remove();
 	document.getElementById("start_button").remove();
 
-
-
 	object_creation();
 }
 
@@ -38,6 +36,7 @@ function object_creation () {
 	const newH2 = document.createElement("h2");
 	const q = document.createTextNode(quiz_q[0]);
 	newH2.appendChild(q);
+	newH2.id = "question"
 	document.body.insertBefore(newH2, button_container);
 
 	/* Display quiz_a[x]*/
@@ -75,13 +74,13 @@ function object_creation () {
 		
 }
 		/* Testing for the answer*/
-function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test, answer) {
-	answer = (quiz_a[0]);
+function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test) {
+
 	const choice = "";
 
 	function listen() {
 		async function handleClick(choice, answer) {
-			await evaluate(choice, answer);
+			await evaluate(choice);
 		}
 
         	a.addEventListener('click', () => handleClick(a_test));
@@ -97,8 +96,9 @@ function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test, answer) {
 
 /* Test the answer*/
 function evaluate(choice, answer) {
-	console.log(choice) /* temporary logs */
-	console.log(answer)
+	answer = (quiz_a[0]);
+	console.log(choice); /* temporary logs */
+	console.log(answer);
 	if (choice == answer) {
 		alert('You are correct');
 		purge_screen();
@@ -110,6 +110,7 @@ function evaluate(choice, answer) {
 }
 	
 function purge_screen() {
+	document.getElementById("question").remove();
 	document.getElementById("choice_a").remove();
 	document.getElementById("choice_b").remove();
 	document.getElementById("choice_c").remove();
