@@ -15,20 +15,27 @@ quiz_q.push("Click one");
 const quiz_a = [];
 quiz_a.push("One", "One", "Two", "Three", "Four");
 
-var round = 0;
-
 /* Pre-quiz screen */
 
-function start_quiz(round) {
+function start_quiz() {
 	document.getElementById("game_title").remove();
 	document.getElementById("start_button").remove();
 
-	object_creation(round);
+	object_creation();
 }
+
+let round = 0;
 
 /* Quiz */
 function object_creation (round) {
+	if (typeof round !== 'undefined') {
+    		round = round + 1;
+	} else {
+    		round = 0;
+	}
+
 	console.log(round);
+	
 	const buttonContainer = document.getElementById("button_container");
 	
 	/* Display quiz_q[x]*/
@@ -69,10 +76,10 @@ function object_creation (round) {
 	d.id = 'choice_d';
 	buttonContainer.appendChild(d);
 
-	round = round + 1;
 	waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test);
 		
 }
+
 		/* Testing for the answer*/
 function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test) {
 
@@ -97,8 +104,6 @@ function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test) {
 /* Test the answer*/
 function evaluate(choice, answer) {
 	answer = (quiz_a[0]);
-	console.log(choice); /* temporary logs */
-	console.log(answer);
 	if (choice == answer) {
 		alert('You are correct');
 		purge_screen();
@@ -115,6 +120,9 @@ function purge_screen() {
 	document.getElementById("choice_b").remove();
 	document.getElementById("choice_c").remove();
 	document.getElementById("choice_d").remove();
+
+	/* Going back to the beginning*/
+	object_creation(round)
 }
 
 		/* Display condition
