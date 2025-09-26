@@ -1,0 +1,26 @@
+{
+  "name": "nea",
+  "version": "1.0.0",
+  "description": "Quiz website",
+  "homepage": "https://github.com/c6rg0/NEA#readme",
+  "bugs": {
+    "url": "https://github.com/c6rg0/NEA/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c6rg0/NEA.git"
+  },
+  "license": "ISC",
+  "author": "Gabriel",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "express": "^5.1.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  }
+}
