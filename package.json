@@ -1,0 +1,24 @@
+{
+  "name": "nea",
+  "version": "1.0.0",
+  "description": "1. Make sure that nodejs and npm packages are installed:\\ `$ sudo pacman -S nodejs`\\ `$ sudo pacman -S npm`",
+  "homepage": "https://github.com/c6rg0/NEA#readme",
+  "bugs": {
+    "url": "https://github.com/c6rg0/NEA/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c6rg0/NEA.git"
+  },
+  "license": "ISC",
+  "author": "Me",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "http-server"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "devDependencies": {}
+}
