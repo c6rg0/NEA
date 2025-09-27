@@ -10,7 +10,6 @@ quiz_q.push("Click one", "Click 1", "Click ONE!");
 
 let round = 0;
 
-/* This has a fundamental flaw, in a quiz with 4 choices to 
  * pick from, you will need to set up a database table row for
  * each question, and link it to another table with higher data*/
 
@@ -107,7 +106,7 @@ function evaluate(choice, answer) {
 		purge_screen();
 	}
 	else {
-		console.log("Wrong buddy, click a/1");
+		alert("Wrong buddy, click a/1");
 		purge_screen()
 	}
 }
