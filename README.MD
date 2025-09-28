@@ -1,23 +1,38 @@
-# How to run the website locally:
+# How to run the project locally:
 
-1. Open up the terminal:
-On windows, do this with cmd.
+1. Open up the terminal:\
+*On windows, do this with cmd.*
 
-2. Make sure that node.js and npm are installed:\
+2. Make sure that git, node.js and npm are installed:
 - If you use arch linux:\
 *(or any other linux distro, replace "pacman -S" with your\
 specific package manager installation command)*\
-`$ sudo pacman -S nodejs`\
-`$ sudo pacman -S npm`\
-*(Note: npm might come with downloading just node.js)*
+`$ sudo pacman -S git nodejs`\
+
 - If you use windows 11:\
+`$ winget install -e --id Git.Git`\
 `$ winget install -e --id OpenJS.NodeJS`\
 *(winget is preinstalled on every win11 machine)*
 
-2. Install the required npm packages:\
+3. Download the project:
+- First, make a new directory/folder:
+(on win and linux):\
+`mkdir [path]`
+
+- Change directory(enter the folder):\
+(on win and linux):\
+`cd [the same path]`\
+
+- Download the project from github using git:\
+`$ git clone https://github.com/c6rg0/NEA.git`\
+
+4. Install the required npm packages:\
+- Check if the packages come with the project folder
+
 `$ npm install express better-sqlite3`
 
-3. Run server.js:\
+
+5. Run server.js:\
 `$ node server.js`
 
 And vioala, it works (no need to thank me pal)
