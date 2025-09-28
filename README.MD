@@ -5,14 +5,14 @@ If you use arch linux:\
 (If you use any other distro, replace "pacman -S" with your\
 specific package manager installation command)\
 `$ sudo pacman -S nodejs`\
-`$ sudo pacman -S npm`
-If you use windows 11:
+`$ sudo pacman -S npm`\
+If you use windows 11:\
 (in cmd)\
 `$ winget install -e --id OpenJS.NodeJS`
 (winget is already installed on every windows11 machine)
 
-2. Install the http-server package with npm:\
-`$ npm install -g express better-sqlite3`
+2. Install the required packages with npm:\
+`$ npm install express better-sqlite3`
 
 3. Run http-server:\
 `$ node server.js`
