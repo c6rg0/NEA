@@ -20,7 +20,7 @@ with your specific package manager installation command)*\
 `mkdir [path]`
 
 - Change directory (enter the folder):\
-*(on win and linux):*
+*(on win and linux):*\
 `cd [the same path]`
 
 - Download the project from github using git:\
@@ -29,7 +29,7 @@ with your specific package manager installation command)*\
 4. Install the required npm packages:
 - Check if the packages come with the project folder:\
 `$ npm list`\
-*If you don't see express and better-sqlite3:*
+*If you don't see express and better-sqlite3:*\
 `$ npm install express better-sqlite3`
 
 5. Run the server:\
