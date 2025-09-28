@@ -5,7 +5,7 @@
 
 2. Make sure that git, node.js and npm are installed:
 - If you use arch linux:\
-*(on any other linux distro or macos, replace "pacman -S"\
+*(on any other linux distro, replace "pacman -S"\
 with your specific package manager installation command)*\
 `$ sudo pacman -S git nodejs`
 
@@ -16,11 +16,11 @@ with your specific package manager installation command)*\
 
 3. Download the project:
 - First, make a new directory/folder:
-(on win and linux):\
+*(on win and linux):\
 `mkdir [path]`
 
-- Change directory(enter the folder):\
-(on win and linux):\
+- Change directory (enter the folder):\
+*(on win and linux):\
 `cd [the same path]`
 
 - Download the project from github using git:\
