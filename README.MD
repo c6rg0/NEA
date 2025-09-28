@@ -16,26 +16,26 @@ with your specific package manager installation command)*\
 
 3. Download the project:
 - First, make a new directory/folder:
-*(on win and linux):\
+*(on win and linux):*
 `mkdir [path]`
 
 - Change directory (enter the folder):\
-*(on win and linux):\
+*(on win and linux):*
 `cd [the same path]`
 
 - Download the project from github using git:\
 `$ git clone https://github.com/c6rg0/NEA.git`
 
-4. Install the required npm packages:\
-- Check if the packages come with the project folder
-`$ npm list`
+4. Install the required npm packages:
+- Check if the packages come with the project folder:\
+`$ npm list`\
 *If you don't see express and better-sqlite3:*
 `$ npm install express better-sqlite3`
 
 5. Run the server:\
 `$ node server.js`
 
-And vioala, it works (no need to thank me pal)
+If you go to http://localhost:8000, you can use/view the website.
 
 Features to add:\
 `A functional backend js quiz script` - nearly finished (waiting on the database)\
