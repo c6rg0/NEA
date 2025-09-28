@@ -15,8 +15,8 @@ with your specific package manager installation command)*\
 *(winget is preinstalled on every win11 machine)*
 
 3. Download the project:
-- First, make a new directory/folder:
-*(on win and linux):*
+- First, make a new directory/folder:\
+*(on win and linux):*\
 `mkdir [path]`
 
 - Change directory (enter the folder):\
