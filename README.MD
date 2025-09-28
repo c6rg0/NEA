@@ -1,15 +1,15 @@
 # How to run the website locally:
 
 1. Make sure that node.js and npm are installed:\
-If you use arch linux:\
-(If you use any other distro, replace "pacman -S" with your\
-specific package manager installation command)\
+-If you use arch linux:\
+*(If you use any other distro, replace "pacman -S" with your\
+specific package manager installation command)*\
 `$ sudo pacman -S nodejs`\
 `$ sudo pacman -S npm`\
-If you use windows 11:\
-(in cmd)\
-`$ winget install -e --id OpenJS.NodeJS`
-(winget is already installed on every windows11 machine)
+-If you use windows 11:*\
+*(in cmd)*\
+`$ winget install -e --id OpenJS.NodeJS`\
+*(winget is preinstalled on every win11 machine)*
 
 2. Install the required packages with npm:\
 `$ npm install express better-sqlite3`
