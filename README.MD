@@ -5,9 +5,9 @@
 
 2. Make sure that git, node.js and npm are installed:
 - If you use arch linux:\
-*(or any other linux distro, replace "pacman -S" with your\
-specific package manager installation command)*\
-`$ sudo pacman -S git nodejs`\
+*(on any other linux distro or macos, replace "pacman -S"\
+with your specific package manager installation command)*\
+`$ sudo pacman -S git nodejs`
 
 - If you use windows 11:\
 `$ winget install -e --id Git.Git`\
@@ -21,18 +21,18 @@ specific package manager installation command)*\
 
 - Change directory(enter the folder):\
 (on win and linux):\
-`cd [the same path]`\
+`cd [the same path]`
 
 - Download the project from github using git:\
-`$ git clone https://github.com/c6rg0/NEA.git`\
+`$ git clone https://github.com/c6rg0/NEA.git`
 
 4. Install the required npm packages:\
 - Check if the packages come with the project folder
-
+`$ npm list`
+*If you don't see express and better-sqlite3:*
 `$ npm install express better-sqlite3`
 
-
-5. Run server.js:\
+5. Run the server:\
 `$ node server.js`
 
 And vioala, it works (no need to thank me pal)
