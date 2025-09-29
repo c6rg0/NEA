@@ -9,13 +9,13 @@ questions = [];
 choices = [];
 answers = [];
 
-const h1 = document.getElementsByTagName("h1");
+const pageTitle = document.getElementById("page_title");
 
-const h2 = document.createElement("h2");
-const h2_child = document.createTextNode("Quiz creation");
-h2.appendChild(h2_child);
-h2.id = "header";
-h2.insertBefore(h2, h1);
+const quizTitle_input = document.createElement("INPUT_TITLE");
+quizTitle_input.setAttribute("type", "text");
+quizTitle_input.setAttribute("value", "Hello_world");
+document.body.appendChild(quizTitle_input);
 
-let title = document.createElement("INPUT");
-title.setAttribute("type", "text");
+const quizAuthor_input = document.createElement("INPUT_AUTHOR");
+
+
