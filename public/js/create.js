@@ -9,7 +9,7 @@ questions = [];
 choices = [];
 answers = [];
 
-const pageTitle = document.getElementById("page_title");
+const f1_parent = document.getElementById("quiz_title");
 
 const quizTitle_input = document.createElement("INPUT_TITLE");
 quizTitle_input.setAttribute("type", "text");
@@ -18,4 +18,15 @@ document.body.appendChild(quizTitle_input);
 
 const quizAuthor_input = document.createElement("INPUT_AUTHOR");
 
+document.getElementById('title').addEventListener('submit', function(event) {
+	event.preventDefault();
+
+	recievedData();
+});
+
+function recievedData() {
+	quizTitle = document.getElementById('title');
+	quizAuthor = document.getElementById('author');
+
+}
 

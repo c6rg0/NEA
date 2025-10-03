@@ -10,8 +10,8 @@ quiz_q.push("Click one", "Click 1", "Click ONE!");
 
 let round = 0;
 
- * pick from, you will need to set up a database table row for
- * each question, and link it to another table with higher data*/
+// ... pick from, you will need to set up a database table row for
+// each question, and link it to another table with higher data*/
 
 const quiz_a = [];
 quiz_a.push("One", "One", "Two", "Three", "Four");

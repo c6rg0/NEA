@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const Pool = require('pg').Pool;
+// const cors = require('cors');
 
 const pool = new Pool({
 	user: 'postgres',
@@ -27,7 +28,8 @@ pool.connect((err, client, release) => {
 	})
 })
 
-
+//app.use(cors());
+//app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,6 +48,21 @@ app.get("/play", (req, res) => {
 app.get("/create", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'create.html'));
 })
+
+// Example route to handle POST request,
+// The POST request is in:
+// $ views/create.html
+// $ public/js/creation.js
+// app.post('/submit-quiz-metadata', (req, res) => {
+	// The code underneath this comment neads to be fixed
+	// for now, it's dummy code.
+//	const userData = req.body;
+//	console.log('Recieve data from client:', userdata);
+
+	// Database (sql) logic comes here	
+
+//	res.json({ message: 'Data recieved', data: userData });
+// });
 
 const PORT = 8000;
 app.listen(PORT, () => {

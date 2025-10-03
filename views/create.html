@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Creating a quiz</title>
-	<link rel="stylesheet" href="/css/index.css">
+	<link rel="stylesheet" href="/css/create.css">
 </head>
 
 <body>
@@ -20,10 +20,23 @@
 	
 	</script>
 
-	<h1><a href="/">Simple quiz site</a></h1>
-	<h2 id="page_title">Quiz creation:</h2>
+	<h1><a href="/">Simple quiz site</a> | Quiz creation</h1>
 
-	<script src="/js/creation.js"></script>
+	<form method="post">
+
+		<p>
+			<label for="title">Quiz title:</label>
+			<input type="text" id="title" name="quiz_title"/>
+		</p>
+
+		<p>
+			<label for="author">Your name:</label>
+			<input type="text" id="author" name="quiz_author"/>
+		</p>
+
+	</form>
+
+	<script src="/js/create.js"></script>
 
 
 </body>
