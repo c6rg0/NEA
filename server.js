@@ -1,16 +1,33 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const Pool = require('pg').Pool;
+
+const pool = new Pool({
+	user: 'postgres',
+	host: 'localhost',
+	database: 'data',
+	password: 'postgres',
+	dialect: 'postgres',
+	port: 5432
+});
+
+pool.connect((err, client, release) => {
+	if (err) {
+		return console.error(
+			'Error aquiring client', err.stack)
+	}
+	client.query('SELECT NOW()', (err, result) => {
+		release()
+		if (err) {
+			return console.error(
+				'Error excecuting query', err.stack)
+		}
+		console.log("Connected to database!")
+	})
+})
 
 
-try {
-	const db = require('better-sqlite3')('database.db', options);
-	const row = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
-	console.log(row.firstName, row.lastName, row.email);
-}
-catch(err) {
-	console.log('Database setup error!');
-}
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -32,5 +49,5 @@ app.get("/create", (req, res) => {
 
 const PORT = 8000;
 app.listen(PORT, () => {
-	console.log("Servers started at http://localhost:8000");
+	console.log("Server's started at http://localhost:8000");
 })
