@@ -18,10 +18,13 @@ with your specific package manager installation command)*\
 - First, make a new directory/folder:\
 *(on win and linux):*\
 `mkdir [path]`
+Example:
+`mkdir /Code/NEA/` or `mkdir c:\Code\NEA\`
 
 - Change directory (enter the folder):\
 *(on win and linux):*\
-`cd [the same path]`
+`cd [the path you used before]`
+Now your in the folder!
 
 - Download the project from github using git:\
 `$ git clone https://github.com/c6rg0/NEA.git`
@@ -29,13 +32,21 @@ with your specific package manager installation command)*\
 4. Install the required npm packages:
 - Check if the packages come with the project folder:\
 `$ npm list`\
-*If you don't see express and better-sqlite3:*\
-`$ npm install express better-sqlite3`
+*If you don't see anything (or get any errors when running later):*\
+`$ npm install express pg pg-hstore body-parser`
+
+5. Setting up postgresql:
+- Install postgre
+Linux:
+`sudo pacman -S postgre`?
 
 5. Run the server:\
 `$ node server.js`
 
 If you go to http://localhost:8000, you can use/view the website.
+
+
+
 
 Features to add:\
 `A functional backend js quiz script` - nearly finished (waiting on the database)\

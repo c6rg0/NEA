@@ -33,7 +33,6 @@ h1 {
 	font-size: 45px;
 	font-family: Ubuntu-Medium;
 	color: white;
-
 }
 
 a:link {
@@ -87,5 +86,7 @@ p {
 
 .button_container {
 	font-size: 60px;
+	text-align: center;
+	font-family: Ubuntu-Regular;
 }
 	

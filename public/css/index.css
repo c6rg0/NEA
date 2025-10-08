@@ -77,6 +77,12 @@ h4 {
 	font-family: Ubuntu-Regular;
 }
 
+h5 {
+	text-align: left;
+	font-size: 35px;
+	font-family: Ubuntu-Regular;
+}
+
 p {
 	text-align: center;
 	font-size: 30px;

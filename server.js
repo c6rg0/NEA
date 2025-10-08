@@ -49,6 +49,24 @@ app.get("/create", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'create.html'));
 })
 
+app.get("/account", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'account.html'));
+})
+
+app.get("/signup", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'signup.html'));
+})
+
+
+app.get("/signup", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'signup.html'));
+})
+
+app.get("/login", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'login.html'));
+})
+
+
 // Example route to handle POST request,
 // The POST request is in:
 // $ views/create.html
