@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Create a quiz</title>
+	<link rel="stylesheet" href="/css/create.css">
+</head>
+
+<body>
+
+	<div id="particles-js"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+	<script>
+		particlesJS.load('particles-js', 'js/particles.json', function() {
+		console.log('callback - particles.js config loaded');
+		});
+	
+	</script>
+
+	<h1><a href="/">Simple quiz site</a> | Account signup</h1>
+
+	<form action="http://localhost:8000" method="POST">
+
+		<p>
+			<label for="name">Quiz name:</label>
+			<input type="text" id="quiz_name"/>
+		</p>
+
+		<div class="button_container">
+			<button type="submit">Send your data to be sold</button>
+		</div>
+
+	</form>
+
+</body>
+</html> 
