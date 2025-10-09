@@ -47,6 +47,8 @@ quiz_db.exec(`
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Setting up the different parts of my website
+// Example: "/play" -> "http://localhost:8000/play"
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'index.html'));
 })
