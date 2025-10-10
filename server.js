@@ -6,9 +6,10 @@ const Database = require('better-sqlite3');
 const quiz_db = new Database('quiz.db', { verbose: console.log });
 const account_db = new Database('account.db', { verbose: console.log });
 
-quiz_db.pragma('journal_mode = WAL')
-account_db.pragma('journal_mode = WAL')
+quiz_db.pragma('journal_mode = WAL');
+account_db.pragma('journal_mode = WAL');
 
+// The code below doesn't work:
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,21 +83,16 @@ app.get("/login", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login.html'));
 })
 
+app.post('/submit-quiz-metadata', (req, res) => {
+	const userData = req.body;
+	console.log('Recieve data from client:', userdata);
 
-// Example route to handle POST request,
-// The POST request is in:
-// $ views/create.html
-// $ public/js/creation.js
-// app.post('/submit-quiz-metadata', (req, res) => {
-	// The code underneath this comment neads to be fixed
-	// for now, it's dummy code.
-//	const userData = req.body;
-//	console.log('Recieve data from client:', userdata);
+	// SQL logic below:
+	
+	quiz_db.prepare('INSERT INTO table (value1, value2, value3) VALUES(?, ?, ?)');
+	insert.run('value1', 'value2', 'value3');
 
-	// Database (sql) logic comes here	
-
-//	res.json({ message: 'Data recieved', data: userData });
-// });
+});
 
 const PORT = 8000;
 app.listen(PORT, () => {
