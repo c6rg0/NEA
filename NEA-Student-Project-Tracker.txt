@@ -1,0 +1,51 @@
+- Analysis:
+
+Objectives:
+
+The problem:
+
+Third parties: 
+
+Research:
+
+Interviews:
+
+Modelling of the problem:
+
+Project objectives:
+
+
+#############################################################################################################################################
+
+- Documented design:
+
+Objectives:
+
+Structure/hierarchy diagrams:
+
+System flowcharts:
+
+Data flow diagrams:
+
+Object-oriented design:
+
+Database design:
+
+Algorithms:
+
+Data structures and advanced technologies:
+
+File structures:
+
+HCI (Human-computer interaction) / Screen design:
+
+Hardware selection:
+
+Fully articulated design:
+
+
+#############################################################################################################################################
+
+- Technical solution
+
+
