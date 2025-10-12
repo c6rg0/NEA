@@ -3,8 +3,8 @@ const app = express();
 import path = require('path');
 
 import Database = require('better-sqlite3');
-const quiz_db = new Database('quiz.db', { verbose: console.log });
-const account_db = new Database('account.db', { verbose: console.log });
+const quiz_db = new Database('public/database/quiz.db', { verbose: console.log });
+const account_db = new Database('public/database/account.db', { verbose: console.log });
 
 quiz_db.pragma('journal_mode = WAL');
 account_db.pragma('journal_mode = WAL');
