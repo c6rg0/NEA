@@ -11,7 +11,7 @@ Database: SQLite3 (with the use of better-sqlite3)
 *On windows, do this with cmd.*
 - Every *$* symbol represents the start of a command.
 
-2. Make sure that git and NodeJS are installed:
+2. Make sure that git and NodeJS are installed:\
 *Git is a version control tool, and it will be used to*\
 *download the latest version of the project*\
 *(If you're interested in CS, knowing git is a requirement*\
@@ -46,7 +46,7 @@ Now your in the folder!
 - Check if the packages come with the project folder:\
 `$ npm list`\
 *If you don't see anything (or get any errors when running later):*\
-`$ npm install express pg pg-hstore body-parser`
+Submit the problem in the "issues" tab
 
 5. Run the server:\
 `$ node server.js`
