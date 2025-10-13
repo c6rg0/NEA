@@ -12,10 +12,10 @@ Database: SQLite3 (with the use of better-sqlite3)
 - Every *$* symbol represents the start of a command.
 
 2. Make sure that git and NodeJS are installed:
-*Git is a version control tool, and it will be used to*
-*download the latest version of the project*
-*(If you're interested in CS, knowing git is a requirement*
-* for doing anything practical).*
+*Git is a version control tool, and it will be used to*\
+*download the latest version of the project*\
+*(If you're interested in CS, knowing git is a requirement*\
+*for doing anything practical).*
 
 - If you use arch linux:\
 *(on any other linux distro, replace "pacman -S"\
