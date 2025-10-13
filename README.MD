@@ -1,5 +1,5 @@
 # Technologies used:
-Languages: TypeScript, JavaScript
+Languages: TypeScript, JavaScript\
 Markdown: HTML5, CSS\
 Package managers: pacman(system package manager), npm\
 Server-side technolgy: NodeJS + express\
@@ -11,7 +11,12 @@ Database: SQLite3 (with the use of better-sqlite3)
 *On windows, do this with cmd.*
 - Every *$* symbol represents the start of a command.
 
-2. Make sure that git, node.js and npm are installed:
+2. Make sure that git and NodeJS are installed:
+*Git is a version control tool, and it will be used to*
+*download the latest version of the project*
+*(If you're interested in CS, knowing git is a requirement*
+* for doing anything practical).*
+
 - If you use arch linux:\
 *(on any other linux distro, replace "pacman -S"\
 with your specific package manager installation command)*\
@@ -25,8 +30,8 @@ with your specific package manager installation command)*\
 3. Download the project:
 - First, make a new directory/folder:\
 *(on win and linux):*\
-`mkdir [path]`
-Example:
+`mkdir [path]`\
+Example:\
 `mkdir /Code/NEA/` or `mkdir c:\Code\NEA\`
 
 - Change directory (enter the folder):\
