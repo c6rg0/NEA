@@ -9,54 +9,12 @@ const account_db = new Database('public/database/account.db', { verbose: console
 quiz_db.pragma('journal_mode = WAL');
 account_db.pragma('journal_mode = WAL');
 
-// The code below doesn't work:
-quiz_db.exec(`
-	CREATE TABLE IF NOT EXISTS Meta(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		[key] TEXT UNIQUE,
-		[value] TEXT
-	);
-
-	CREATE TABLE IF NOT EXISTS Settings(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT UNIQUE,
-		value TEXT
-	);
-
-	CREATE TABLE IF NOT EXISTS Questions(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_text TEXT,
-		category TEXT
-	);
-
-	CREATE TABLE IF NOT EXISTS Options(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_id INTEGER,
-		option_text TEXT,
-		FOREIGN KEY (question_id) REFERENCES Questions(id)
-	);
-
-	CREATE TABLE IF NOT EXISTS Answers(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_id INTEGER,
-		option_id INTEGER,
-		FOREIGN KEY (question_id) REFERENCES Questions(id),
-		FOREIGN KEY (option_id) REFERENCES Options(id)
-		
-	);
-`);
-
-
-account_db.exec(`
-	CREATE TABLE IF NOT EXISTS Logins(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		[username] TEXT UNIQUE,
-		[password] TEXT
-	);
-`);
-
-
 app.use(express.static(path.join(__dirname, 'public')));
+
+const PORT = 8000;
+app.listen(PORT, () => {
+	console.log("Server's started at http://localhost:8000");
+})
 
 // Setting up the different parts of my website
 // Example: "/play" -> "http://localhost:8000/play"
@@ -97,26 +55,66 @@ app.get("/login", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login.html'));
 })
 
-// Login post (to compare and validate account/passwords)
+app.post('/submit-quiz-metadata', (req, res) => {
+	const userData = req.body;
+	console.log('Recieve data from client:', userData);
 
-// Signup check (to make sure that unique logins are being
-// created)
-
-// Signup post (to insert the new logins into the database
-
-//app.post('/submit-quiz-metadata', (req, res) => {
-//	const userData = req.body;
-//	console.log('Recieve data from client:', userdata);
-//
 	// SQL logic below:
-//	
-//	quiz_db.prepare('INSERT INTO table (value1, value2, value3) VALUES(?, ?, ?)');
-//	insert.run('value1', 'value2', 'value3');
-//});
+	
+	const insert = quiz_db.prepare('INSERT INTO table (value1, value2, value3) VALUES(?, ?, ?)');
+	insert.run('value1', 'value2', 'value3');
+	quiz_db.close();
+});
 
-const PORT = 8000;
-app.listen(PORT, () => {
-	console.log("Server's started at http://localhost:8000");
-})
+quiz_db.exec(`
+	CREATE TABLE IF NOT EXISTS Meta(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		[key] TEXT UNIQUE,
+		[value] TEXT
+	);
+
+	CREATE TABLE IF NOT EXISTS Settings(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT UNIQUE,
+		value TEXT
+	);
+
+	CREATE TABLE IF NOT EXISTS Questions(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		question_text TEXT,
+		category TEXT
+	);
+
+	CREATE TABLE IF NOT EXISTS Options(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		question_id INTEGER,
+		option_text TEXT,
+		FOREIGN KEY (question_id) REFERENCES Questions(id)
+	);
+
+	CREATE TABLE IF NOT EXISTS Answers(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		question_id INTEGER,
+		option_id INTEGER,
+		FOREIGN KEY (question_id) REFERENCES Questions(id),
+		FOREIGN KEY (option_id) REFERENCES Options(id)
+		
+	);
+`);
 
 quiz_db.close();
+
+account_db.exec(`
+	CREATE TABLE IF NOT EXISTS Logins(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		[username] TEXT UNIQUE,
+		[password] TEXT
+	);
+`);
+
+account_db.close();
+
+
+
+
+

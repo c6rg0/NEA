@@ -22,11 +22,45 @@
 
 	<h1><a href="/">Simple quiz site</a> | Account signup</h1>
 
-	<form action="http://localhost:8000" method="POST">
+	<form action="http://localhost:8000/submist-quiz-metadata" method="POST">
 
 		<p>
 			<label for="name">Quiz name:</label>
 			<input type="text" id="quiz_name"/>
+		</p>
+
+		<div class="button_container">
+			<button type="submit">Send your data to be sold</button>
+		</div>
+
+	</form>
+
+
+	<form action="http://localhost:8000/submist-quiz-content" method="POST">
+
+		<p>
+			<label for="question">Quiz name:</label>
+			<input type="text" id="question"/>
+		</p>
+
+		<p>
+		<label for="option-1">Option 1:</label>
+			<input type="text" id="option-1"/>
+		</p>
+
+		<p>
+			<label for="option-2">Option 2</label>
+			<input type="text" id="option-2"/>
+		</p>
+
+		<p>
+		<label for="option-1">Option 1:</label>
+			<input type="text" id="option-1"/>
+		</p>
+
+		<p>
+			<label for="option-2">Option 2</label>
+			<input type="text" id="option-2"/>
 		</p>
 
 		<div class="button_container">

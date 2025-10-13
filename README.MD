@@ -1,7 +1,15 @@
+# Technologies used:
+Languages: TypeScript, JavaScript
+Markdown: HTML5, CSS\
+Package managers: pacman(system package manager), npm\
+Server-side technolgy: NodeJS + express\
+Database: SQLite3 (with the use of better-sqlite3)
+
 # How to run the project locally:
 
 1. Open up the terminal:\
 *On windows, do this with cmd.*
+- Every *$* symbol represents the start of a command.
 
 2. Make sure that git, node.js and npm are installed:
 - If you use arch linux:\
@@ -35,20 +43,12 @@ Now your in the folder!
 *If you don't see anything (or get any errors when running later):*\
 `$ npm install express pg pg-hstore body-parser`
 
-5. Setting up postgresql:
-- Install postgre
-Linux:
-`sudo pacman -S postgre`?
-
 5. Run the server:\
 `$ node server.js`
 
 If you go to http://localhost:8000, you can use/view the website.
 
-
-
-
-Features to add:\
+# Plan:\
 `A functional backend js quiz script` - nearly finished (waiting on the database)\
 `Basic styling revamp` - half done\
 `Quiz creation` - began coding it\
