@@ -7,8 +7,6 @@ quiz_meta.set("Length", 5);
 
 const quiz_q = ["Click one", "Click 1", "Click ONE!"];
 
-let round = 0;
-
 // ... pick from, you will need to set up a database table row for
 // each question, and link it to another table with higher data*/
 
@@ -19,17 +17,14 @@ const quiz_a = ["One", "One", "Two", "Three", "Four"];
 function start_quiz() {
 	document.getElementById("game_title").remove();
 	document.getElementById("start_button").remove();
+	let round = 0;
 	object_creation(round);
 }
 
 /* Quiz */
 function object_creation (round: number) {
-	if (typeof round == 'undefined'){
-		let round = 0;
-	} else {
-		round += 1;
-	}
-
+	round ++;
+	
 	console.log(round);
 	
 	const buttonContainer = document.getElementById("button_container");
@@ -72,22 +67,22 @@ function object_creation (round: number) {
 	d.id = 'choice_d';
 	buttonContainer.appendChild(d);
 
-	waiting_for_ans(a, b , c, d, a_test, b_test, c_test, d_test);
+	waiting_for_ans(a, b , c, d, a_test, b_test, c_test, d_test, round);
 		
 }
 
 		/* Testing for the answer*/
-function waiting_for_ans(a: HTMLElement, b: HTMLElement, c: HTMLElement, d: HTMLElement, a_test: string, b_test: string, c_test: string, d_test: string) {
+function waiting_for_ans(a: HTMLElement, b: HTMLElement, c: HTMLElement, d: HTMLElement, a_test: string, b_test: string, c_test: string, d_test: string, round: number) {
 
 	function listen() {
-		async function handleClick(choice: string) {
-			evaluate(choice);
+		async function handleClick(choice: string, round: number) {
+			evaluate(choice, round);
 		}
 
-        	a.addEventListener('click', () => handleClick(a_test));
-        	b.addEventListener('click', () => handleClick(b_test));
-        	c.addEventListener('click', () => handleClick(c_test));
-        	d.addEventListener('click', () => handleClick(d_test));
+        	a.addEventListener('click', () => handleClick(a_test, round));
+        	b.addEventListener('click', () => handleClick(b_test, round));
+        	c.addEventListener('click', () => handleClick(c_test, round));
+        	d.addEventListener('click', () => handleClick(d_test, round));
 
 	}
 
@@ -95,19 +90,19 @@ function waiting_for_ans(a: HTMLElement, b: HTMLElement, c: HTMLElement, d: HTML
 }
 
 /* Test the answer*/
-function evaluate(choice: string) {
+function evaluate(choice: string, round: number) {
 	let answer: string  = (quiz_a[0]);
 	if (choice == answer) {
 		alert('You are correct');
-		purge_screen();
+		purge_screen(round);
 	}
 	else {
 		alert("Wrong buddy, click a/1");
-		purge_screen()
+		purge_screen(round)
 	}
 }
 	
-function purge_screen() {
+function purge_screen(round: number) {
 	document.getElementById("question").remove();
 	document.getElementById("choice_a").remove();
 	document.getElementById("choice_b").remove();
