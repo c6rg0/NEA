@@ -42,7 +42,7 @@ quiz_meta.set("Date", 1592025);
 var quiz_q = ["Click one", "Click 1", "Click ONE!"];
 // ... pick from, you will need to set up a database table row for
 // each question, and link it to another table with higher data*/
-var quiz_a = ["One", "One", "Two", "Three", "Four"]; // double "one" is most likely a depreciated feature now
+var quiz_a = ["One", "One", "Two", "Three", "Four"];
 // Pre-quiz screen 
 function start_quiz() {
     document.getElementById("game_title").remove();
@@ -50,24 +50,24 @@ function start_quiz() {
     // 'game_title' is 'possibly null'.
     document.getElementById("start_button").remove();
     var round = 0;
-    var score = 0;
-    verification(round, score);
+    verification(round);
 }
 // Field verification:
 // To check if there is any more questions left, 
 // if not, the end screen will be triggered.
-function verification(round, score) {
+function verification(round) {
     round++;
+    console.log(round);
     if ((quiz_q[round - 1]) == null) {
         console.log("The game has finished");
-        end_screen(round, score);
+        end_screen();
     }
     else {
-        object_creation(round, score);
+        object_creation(round);
     }
 }
 // Quiz 
-function object_creation(round, score) {
+function object_creation(round) {
     var buttonContainer = document.getElementById("button_container");
     /* Display quiz_q[x]*/
     var newH2 = document.createElement("h2");
@@ -101,51 +101,48 @@ function object_creation(round, score) {
     d.appendChild(d_node);
     d.id = 'choice_d';
     buttonContainer.appendChild(d);
-    waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test, round, score);
+    waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test, round);
 }
 /* Testing for the answer*/
-function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test, round, score) {
+function waiting_for_ans(a, b, c, d, a_test, b_test, c_test, d_test, round) {
     function listen() {
-        function handleClick(choice, round, score) {
+        function handleClick(choice, round) {
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
-                    evaluate(choice, round, score);
+                    evaluate(choice, round);
                     return [2 /*return*/];
                 });
             });
         }
-        a.addEventListener('click', function () { return handleClick(a_test, round, score); });
-        b.addEventListener('click', function () { return handleClick(b_test, round, score); });
-        c.addEventListener('click', function () { return handleClick(c_test, round, score); });
-        d.addEventListener('click', function () { return handleClick(d_test, round, score); });
+        a.addEventListener('click', function () { return handleClick(a_test, round); });
+        b.addEventListener('click', function () { return handleClick(b_test, round); });
+        c.addEventListener('click', function () { return handleClick(c_test, round); });
+        d.addEventListener('click', function () { return handleClick(d_test, round); });
     }
     listen();
 }
 // Test the answer
-function evaluate(choice, round, score) {
+function evaluate(choice, round) {
     var answer = (quiz_a[0]);
     if (choice == answer) {
-        score++;
-        console.log('You are correct');
-        console.log(score + '/' + round);
-        purge_screen(round, score);
+        alert('You are correct');
+        purge_screen(round);
     }
     else {
-        console.log("Wrong buddy, click a/1");
-        console.log(score + '/' + round);
-        purge_screen(round, score);
+        alert("Wrong buddy, click a/1");
+        purge_screen(round);
     }
 }
-function purge_screen(round, score) {
+function purge_screen(round) {
     document.getElementById("question").remove();
     document.getElementById("choice_a").remove();
     document.getElementById("choice_b").remove();
     document.getElementById("choice_c").remove();
     document.getElementById("choice_d").remove();
     // Restarting the loop of functions
-    verification(round, score);
+    verification(round);
 }
-function end_screen(round, score) {
+function end_screen() {
     var endScreenContainer = document.getElementById('end_screen_container');
     var end_banner = document.createElement('h1');
     var end_banner_node = document.createTextNode("Congratulations!");
@@ -154,7 +151,7 @@ function end_screen(round, score) {
     endScreenContainer.appendChild(end_banner);
     // I haven't made a score tracker yet
     var end_score = document.createElement('h2');
-    var end_score_node = document.createTextNode("Your score is " + score + "/" + (round - 1));
+    var end_score_node = document.createTextNode("Your score is...");
     end_score.appendChild(end_score_node);
     end_score.id = "endScore";
     endScreenContainer.appendChild(end_score);
