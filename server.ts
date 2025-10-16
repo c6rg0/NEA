@@ -55,7 +55,7 @@ app.get("/login", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login.html'));
 })
 
-app.post('/submit-quiz-metadata', (req, res) => {
+app.get('/submit-quiz-metadata', (req, res) => {
 	const userData = req.body;
 	console.log('Recieve data from client:', userData);
 

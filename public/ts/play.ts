@@ -1,9 +1,9 @@
-const quiz_meta = new Map();
+const quiz_meta = new Map(); // I do not remember doing this, what does it even do?
 
 quiz_meta.set("Name", "Python quiz");
 quiz_meta.set("Author", "Gabriel Drozbik");
 quiz_meta.set("Date", 1592025);
-quiz_meta.set("Length", 5);
+// quiz_meta.set("Length", 5);
 
 const quiz_q = ["Click one", "Click 1", "Click ONE!"];
 
@@ -12,21 +12,35 @@ const quiz_q = ["Click one", "Click 1", "Click ONE!"];
 
 const quiz_a = ["One", "One", "Two", "Three", "Four"];
 
-/* Pre-quiz screen */
+// Pre-quiz screen 
 
 function start_quiz() {
-	document.getElementById("game_title").remove();
-	document.getElementById("start_button").remove();
+	document.getElementById("game_title")!.remove(); 
+	// The exclamation mark removes the error stating that
+	// 'game_title' is 'possibly null'.
+	document.getElementById("start_button")!.remove();
 	let round = 0;
-	object_creation(round);
+	verification(round);
 }
 
-/* Quiz */
-function object_creation (round: number) {
+// Field verification:
+// To check if there is any more questions left, 
+// if not, the end screen will be triggered.
+
+function verification (round: number) {
 	round ++;
-	
 	console.log(round);
-	
+	if ((quiz_q[round - 1]) == null){
+		console.log("The game has finished");
+		end_screen();
+	}
+	else{
+		object_creation(round);
+	}
+}
+
+// Quiz 
+function object_creation (round: number) {
 	const buttonContainer = document.getElementById("button_container");
 	
 	/* Display quiz_q[x]*/
@@ -44,28 +58,28 @@ function object_creation (round: number) {
 	const a_node = document.createTextNode(a_test);
 	a.appendChild(a_node);
 	a.id = 'choice_a';
-	buttonContainer.appendChild(a);
+	buttonContainer!.appendChild(a);
 	
 	const b = document.createElement("BUTTON");
 	const b_test = (quiz_a[2]);
 	const b_node = document.createTextNode(b_test);
 	b.appendChild(b_node);
 	b.id = 'choice_b';
-	buttonContainer.appendChild(b);
+	buttonContainer!.appendChild(b);
 
 	const c = document.createElement("BUTTON");
 	const c_test = (quiz_a[3]);
 	const c_node = document.createTextNode(c_test);
 	c.appendChild(c_node);
 	c.id = 'choice_c';
-	buttonContainer.appendChild(c);
+	buttonContainer!.appendChild(c);
 
 	const d = document.createElement("BUTTON");
 	const d_test = (quiz_a[4]);
 	const d_node = document.createTextNode(d_test);
 	d.appendChild(d_node);
 	d.id = 'choice_d';
-	buttonContainer.appendChild(d);
+	buttonContainer!.appendChild(d);
 
 	waiting_for_ans(a, b , c, d, a_test, b_test, c_test, d_test, round);
 		
@@ -89,7 +103,7 @@ function waiting_for_ans(a: HTMLElement, b: HTMLElement, c: HTMLElement, d: HTML
 	listen();
 }
 
-/* Test the answer*/
+// Test the answer
 function evaluate(choice: string, round: number) {
 	let answer: string  = (quiz_a[0]);
 	if (choice == answer) {
@@ -103,19 +117,32 @@ function evaluate(choice: string, round: number) {
 }
 	
 function purge_screen(round: number) {
-	document.getElementById("question").remove();
-	document.getElementById("choice_a").remove();
-	document.getElementById("choice_b").remove();
-	document.getElementById("choice_c").remove();
-	document.getElementById("choice_d").remove();
+	document.getElementById("question")!.remove();
+	document.getElementById("choice_a")!.remove();
+	document.getElementById("choice_b")!.remove();
+	document.getElementById("choice_c")!.remove();
+	document.getElementById("choice_d")!.remove();
 
-	/* Going back to the beginning*/
-	object_creation(round);
+	// Restarting the loop of functions
+	verification(round);
 }
 
-		/* Display condition
-		 * Effect - score
-		 * End */
+function end_screen(){
+	const endScreenContainer = document.getElementById('end_screen_container');
+
+	const end_banner = document.createElement('h1');
+	const end_banner_node = document.createTextNode("Congratulations!");
+	end_banner.appendChild(end_banner_node);
+	end_banner.id = "endBanner";
+	endScreenContainer!.appendChild(end_banner);
+	
+	// I haven't made a score tracker yet
+	const end_score = document.createElement('h2');
+	const end_score_node = document.createTextNode("Your score is...");
+	end_score.appendChild(end_score_node);
+	end_score.id = "endScore";
+	endScreenContainer!.appendChild(end_score);
+}
 
 /* Structure:
  *	Displaying a "Play" screen (before the quiz),

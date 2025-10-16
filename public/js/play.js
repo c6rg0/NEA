@@ -34,26 +34,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var quiz_meta = new Map();
+var quiz_meta = new Map(); // I do not remember doing this, what does it even do?
 quiz_meta.set("Name", "Python quiz");
 quiz_meta.set("Author", "Gabriel Drozbik");
 quiz_meta.set("Date", 1592025);
-quiz_meta.set("Length", 5);
+// quiz_meta.set("Length", 5);
 var quiz_q = ["Click one", "Click 1", "Click ONE!"];
 // ... pick from, you will need to set up a database table row for
 // each question, and link it to another table with higher data*/
 var quiz_a = ["One", "One", "Two", "Three", "Four"];
-/* Pre-quiz screen */
+// Pre-quiz screen 
 function start_quiz() {
     document.getElementById("game_title").remove();
     document.getElementById("start_button").remove();
     var round = 0;
-    object_creation(round);
+    verification(round);
 }
-/* Quiz */
-function object_creation(round) {
+// Field verification:
+// To check if there is any more questions left, 
+// if not, the end screen will be triggered.
+function verification(round) {
     round++;
     console.log(round);
+    if ((quiz_q[round - 1]) == null) {
+        console.log("The game has finished");
+        end_screen();
+    }
+    else {
+        object_creation(round);
+    }
+}
+// Quiz 
+function object_creation(round) {
     var buttonContainer = document.getElementById("button_container");
     /* Display quiz_q[x]*/
     var newH2 = document.createElement("h2");
@@ -126,11 +138,24 @@ function purge_screen(round) {
     document.getElementById("choice_c").remove();
     document.getElementById("choice_d").remove();
     /* Going back to the beginning*/
-    object_creation(round);
+    verification(round);
 }
-/* Display condition
- * Effect - score
- * End */
+function end_screen() {
+    // Add an end screen here please
+    var endScreenContainer = document.getElementById('end_screen_container');
+    var end_banner = document.createElement('h1');
+    var end_banner_node = document.createTextNode("Congratulations!");
+    end_banner.appendChild(end_banner_node);
+    end_banner.id = "endBanner";
+    endScreenContainer.appendChild(end_banner);
+    var end_score = document.createElement('h2');
+    var end_score_node = document.createTextNode("Your score is...");
+    end_score.appendChild(end_score_node);
+    end_score.id = "endScore";
+    endScreenContainer.appendChild(end_score);
+}
+/* Display score
+* End */
 /* Structure:
  *	Displaying a "Play" screen (before the quiz),
  *	Removing the existing objects,

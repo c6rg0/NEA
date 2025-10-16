@@ -54,10 +54,13 @@ Submit the problem in the "issues" tab
 If you go to http://localhost:8000, you can use/view the website.
 
 # Plan:\
-`A functional backend js quiz script` - nearly finished (waiting on the database)\
-`Basic styling revamp` - half done\
-`Quiz creation` - began coding it\
-`SQL database` - planned the database structure\
-`Server side api calling` - will code this once the previous steps are cleared
-`Using a front end library - nowhere close, will do this at the end`
+- Fronend:
+`Write up all the markdown` - close to completion\
+`Use a frontend library` - 0% 
+
+- Backend:
+`Create the quiz logic` - completed\
+`Quiz creation` - 33%\
+`SQL database` - 33%\
+`Server side api calling` - 0%
 
