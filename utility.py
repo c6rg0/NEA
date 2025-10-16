@@ -35,7 +35,7 @@ def compile():
     print()
 
     print("> Cleaning up...")
-    subprocess.run(["cp", "-v", "src/server.js", "/"])
+    subprocess.run(["cp", "-v", "src/server.js", "server.js"])
     subprocess.run(["cp", "-v", "src/play.js", "public/js/play.js"])
     #subprocess.run(["cp", "-v", "src/create.js", "public/js/create.js"])
     #subprocess.run(["cp", "-v", "src/form.js", "public/js/form.js"])
@@ -49,12 +49,19 @@ def compile():
     print()
     menu()
 
+def website_run():
+    print("> Running server.js")
+    print("> (Press [crtl + c] to quit")
+    subprocess.run(["node", "server.js"])
+    print()
+    print(">> The server has been stopped")
+    print()
+    menu()
+
 def remove_compiled():
     print("> Removing preexisting javascript files:")
-    if os.path.isdir("public/js/"):
-        subprocess.run(["rm", "-rfv", "public/js/"])
-    if os.path.isdir("server.js"):
-        subprocess.run(["rm", "-v", "server.js"])
+    subprocess.run(["rm", "-rfv", "public/js/"])
+    subprocess.run(["rm", "-v", "server.js"])
     print()
     print(">> All done!")
     print()
@@ -64,8 +71,9 @@ def menu():
     print("PROJECT TOOL:")
     print("#############")
     print("(1) compile source ")
-    print("(2) remove compiled code ")
-    print("(3) exit ")
+    print("(2) run the website")
+    print("(3) remove compiled code")
+    print("(4) exit ")
 
     choice = int(input())
     print()
@@ -78,9 +86,14 @@ def menu():
     if choice == 2:
         print("##########################")
         print()
-        remove_compiled()
+        website_run()
 
     if choice == 3:
+        print("##########################")
+        print()
+        remove_compiled()
+
+    if choice == 4:
         print("##########################")
         print()
         print("Goodbye!")
