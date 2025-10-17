@@ -2,6 +2,9 @@ import express = require('express');
 const app = express();
 import path = require('path');
 
+import bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }))
+
 import Database = require('better-sqlite3');
 const quiz_db = new Database('public/database/quiz.db', { verbose: console.log });
 const account_db = new Database('public/database/account.db', { verbose: console.log });
@@ -55,13 +58,13 @@ app.get("/login", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login.html'));
 })
 
-app.get('/submit-quiz-metadata', (req, res) => {
-	const userData = req.body;
-	console.log('Recieve data from client:', userData);
+app.post('/submit-quiz-metadata', (req, res) => {
+	res.render('the_template', { name: req.body.name });
+	//console.log('Recieve data from client:', userData);
 
 	// SQL logic below:
 	
-	const insert = quiz_db.prepare('INSERT INTO table (value1, value2, value3) VALUES(?, ?, ?)');
+	const insert = quiz_db.prepare('INSERT INTO Meta (value1, value2, value3) VALUES(?, ?, ?)');
 	insert.run('value1', 'value2', 'value3');
 	quiz_db.close();
 });
@@ -69,8 +72,8 @@ app.get('/submit-quiz-metadata', (req, res) => {
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		[key] TEXT UNIQUE,
-		[value] TEXT
+		name TEXT
+		creator TEXT
 	);
 
 	CREATE TABLE IF NOT EXISTS Settings(

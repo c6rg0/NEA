@@ -1,8 +1,13 @@
 // https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Sending_forms_through_JavaScript
+export {};
 
-const form = document.querySelector("#quizmeta");
+const form = document.querySelector("#quizmeta") as HTMLFormElement;
 
-async function sendData() {
+if (!form) {
+	throw new Error("Form element not found")
+}
+
+async function sendData(form: HTMLFormElement) {
 	// Associate the FormData object with the form element
 	const formData = new FormData(form);
 
@@ -21,7 +26,7 @@ async function sendData() {
 // Take over form submission
 form.addEventListener("submit", (event) => {
 	event.preventDefault();
-	sendData();
+	sendData(form);
 });
 
 
