@@ -2,7 +2,22 @@ import subprocess
 import os
 import time
 
-def compile(): 
+def remove_compiled():
+    start = time.time()
+    print("> Removing preexisting javascript files:")
+    subprocess.run(["rm", "-rfv", "public/js/"])
+    subprocess.run(["rm", "-v", "server.js"])
+    subprocess.run(["rm", "-v", "public/particles/particles_app.js"])
+    print()
+    end = time.time()
+    elapsed = round((end - start), 3)
+    print(">> All done! (completed in "+str(elapsed)+" seconds)")
+    print()
+    menu()
+
+def compile():
+    start = time.time()
+
     if os.path.isdir("public/js/"):
         print("> directory (public/js/) exists!")
         subprocess.run(["rm", "-rf", "public/js/"])
@@ -50,21 +65,16 @@ def compile():
     subprocess.run(["rm", "-v", "src/create.js"])
     #subprocess.run(["rm", "-v", "src/form.js"])
     print()
-    print(">> All done! ")
+    end = time.time()
+    elapsed = round((end - start), 3)
+    print(">> All done! (completed in "+str(elapsed)+")")
     print()
     menu()
 
-def remove_compiled():
-    print("> Removing preexisting javascript files:")
-    subprocess.run(["rm", "-rfv", "public/js/"])
-    subprocess.run(["rm", "-v", "server.js"])
-    subprocess.run(["rm", "-v", "public/particles/particles_app.js"])
-    print()
-    print(">> All done!")
-    print()
-    menu()
+
 
 def refresh_database():
+    start = time.time()
     print("> Removing databse")
     subprocess.run(["rm", "-rfv", "public/database/"])
     print(">> Removed database!")
@@ -84,16 +94,12 @@ def refresh_database():
     print("[DEBUG] Server thread has been killed!")
     print(">> Generated new database")
     print()
-    print(">>All done!")
+    end = time.time()
+    elapsed = round((end - start), 3)
+    print(">> All done! (completed in "+str(elapsed)+" seconds)")
     print()
     menu()
     
-
-    print()
-    print(">> All done! ")
-    print()
-    menu()
-
 def menu():
     print("PROJECT TOOL:")
     print("#############")

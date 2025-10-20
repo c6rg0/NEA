@@ -72,7 +72,7 @@ app.post('/submit-quiz-metadata', (req, res) => {
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT
+		name TEXT,
 		creator TEXT
 	);
 
