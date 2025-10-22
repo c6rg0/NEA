@@ -38,13 +38,12 @@ Structure/hierarchy diagrams:
 
 
 System flowcharts:
-
+(Made one on krita)
 
 Data flow diagrams:
-
+(make one that shows the flow of data: user action -> ts script -> server.js ->  database -> server.js -> ts script (e.x. game)
 
 Object-oriented design:
-I hate classes and objects, procedual is just better 
 
 
 Database design:
@@ -126,8 +125,8 @@ HCI (Human-computer interaction) / Screen design:
 
 Hardware selection:
 I'm making use of standard hardware (I'm not using a rasbery-pi or anything), however, the operating system I'm using should be considered.
-Using a distrobution of linux on my laptop (arch linux), file paths use forward slashes, unlike windows back slashes. Statistically, if the 
-website was to be ran on a server, it would most likely use debian or another linux distrobution, and file paths wouldn't be a problem.
+Using a distribution of linux on my laptop (arch linux), file paths use forward slashes, unlike windows back slashes. Statistically, if the 
+website was to be ran on a server, it would most likely use debian or another linux distribution, and file paths wouldn't be a problem.
 Still, if the website was to be run on windows, I should make sure that the file paths work.
 
 Fully articulated design:
