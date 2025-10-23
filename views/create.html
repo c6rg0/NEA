@@ -17,7 +17,7 @@
 
 	<h1><a href="/">Simple quiz site</a> | Quiz creation</h1>
 
-	<form id="quizmeta">
+	<form action="/submit-quiz-metadata" method="POST">
 		<p>
 			<label for="name">Quiz name:</label>
 			<input type="text" id="quiz_name"/>
@@ -28,43 +28,6 @@
 		</div>
 
 	</form>
-
-	<script url="public/js/create.js"></script>
-
-	<form id="quizcontent">
-
-		<p>
-			<label for="question">Quiz name:</label>
-			<input type="text" id="question"/>
-		</p>
-
-		<p>
-		<label for="option-1">Option 1:</label>
-			<input type="text" id="option-1"/>
-		</p>
-
-		<p>
-			<label for="option-2">Option 2</label>
-			<input type="text" id="option-2"/>
-		</p>
-
-		<p>
-		<label for="option-1">Option 1:</label>
-			<input type="text" id="option-1"/>
-		</p>
-
-		<p>
-			<label for="option-2">Option 2</label>
-			<input type="text" id="option-2"/>
-		</p>
-
-		<div class="button_container">
-			<button type="submit">Send your data to be sold</button>
-		</div>
-
-	</form>
-
-
 
 </body>
 </html> 

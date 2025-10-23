@@ -1,9 +1,10 @@
 import express = require('express');
 const app = express();
+
 import path = require('path');
 
 import bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded());
 
 import Database = require('better-sqlite3');
 const quiz_db = new Database('public/database/quiz.db', { verbose: console.log });
@@ -58,17 +59,6 @@ app.get("/login", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login.html'));
 })
 
-app.post('/submit-quiz-metadata', (req, res) => {
-	res.render('the_template', { name: req.body.name });
-	//console.log('Recieve data from client:', userData);
-
-	// SQL logic below:
-	
-	const insert = quiz_db.prepare('INSERT INTO Meta (value1, value2, value3) VALUES(?, ?, ?)');
-	insert.run('value1', 'value2', 'value3');
-	quiz_db.close();
-});
-
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,8 +95,6 @@ quiz_db.exec(`
 	);
 `);
 
-quiz_db.close();
-
 account_db.exec(`
 	CREATE TABLE IF NOT EXISTS Logins(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -115,9 +103,18 @@ account_db.exec(`
 	);
 `);
 
-account_db.close();
-
-
-
-
+app.post('/submit-quiz-metadata', (req, res) => {
+	const temp = req.body;
+	console.log(temp);
+	if (temp == "") {
+		console.log("Form data is empty :(");
+	}
+	else{
+		// SQL logic below:
+		// TypeError: The database connection is not open,
+		const insert = quiz_db.prepare('INSERT INTO Meta(name) VALUES');
+		insert.run(temp);
+		console.log("Data inserted successfully");
+	}
+});
 

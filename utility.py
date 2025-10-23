@@ -7,6 +7,7 @@ def remove_compiled():
     print("> Removing preexisting javascript files:")
     subprocess.run(["rm", "-rfv", "public/js/"])
     subprocess.run(["rm", "-v", "server.js"])
+    subprocess.run(["rm", "-v", "src/server.js"])
     subprocess.run(["rm", "-v", "public/particles/particles_app.js"])
     print()
     end = time.time()
