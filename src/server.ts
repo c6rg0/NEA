@@ -104,16 +104,18 @@ account_db.exec(`
 `);
 
 app.post('/submit-quiz-metadata', (req, res) => {
+	const columns = quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	const temp = req.body;
 	console.log(temp);
-	if (temp == "") {
-		console.log("Form data is empty :(");
+	if (!temp || !temp.name) {
+		return res.status(400).json({ error: "Name is required" });
 	}
 	else{
 		// SQL logic below:
-		// TypeError: The database connection is not open,
-		const insert = quiz_db.prepare('INSERT INTO Meta(name) VALUES');
-		insert.run(temp);
+		const insert = quiz_db.prepare('INSERT INTO Meta (name) VALUES(@name);');
+		// Using (@name), the statement worked, 
+		// the value is [null] though...
+		insert.run({ name: temp.name});
 		console.log("Data inserted successfully");
 	}
 });
