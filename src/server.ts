@@ -1,6 +1,5 @@
 import express = require('express');
 const app = express();
-
 import path = require('path');
 
 import bodyParser = require('body-parser');
@@ -20,44 +19,15 @@ app.listen(PORT, () => {
 	console.log("Server's started at http://localhost:8000");
 })
 
-// Setting up the different parts of my website
-// Example: "/play" -> "http://localhost:8000/play"
-app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'index.html'));
-})
+let index = require('routes/index.js');
+let browse = require('routes/browse.js');
+let play = require('routes/play.js');
+let create = require('routes/create.js');
 
-app.get("/browse", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'browse.html'));
-})
-
-app.get("/play", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'play.html'));
-})
-
-app.get("/create", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'create.html'));
-})
-
-app.get("/account", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'account.html'));
-})
-
-app.get("/signup", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'signup.html'));
-})
-
-
-app.get("/signup", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'signup.html'));
-})
-
-app.get("/signup-success", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'signup-success.html'));
-})
-
-app.get("/login", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'login.html'));
-})
+app.use('/', index());
+app.use('/browse', browse());
+app.use('/play', play());
+app.use('/create', create());
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(

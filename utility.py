@@ -8,6 +8,8 @@ def remove_compiled():
     start = time.time()
     print("> Removing preexisting javascript files:")
     subprocess.run(["rm", "-rfv", "public/js/"])
+    subprocess.run(["rm", "-rfv", "node_modules/routes/"])
+    subprocess.run(["rm", "-rfv", "routes/"])
     subprocess.run(["rm", "-v", "server.js"])
     subprocess.run(["rm", "-v", "src/server.js"])
     subprocess.run(["rm", "-v", "public/particles/particles_app.js"])
@@ -28,46 +30,88 @@ def compile():
         print(">> (public/js/) has been removed")
         print()
 
+    if os.path.isdir("routes/"):
+        print("> directory (routes/) exists!")
+        subprocess.run(["rm", "-rf", "routes/"])
+        print(">> (routes/) has been removed")
+        print()
+
+    if os.path.isdir("node_modules/routes/"):
+        print("> directory (routes/) exists!")
+        subprocess.run(["rm", "-rf", "routes/"])
+        print(">> (routes/) has been removed")
+        print()
+
     print("> creating (public/js/)...")
     subprocess.run(["mkdir", "public/js/"])
     print(">> (public/js/) has been created")
     print()
 
-    print("> Compiling source...")
+    print("> creating (node_modules/routes/)...")
+    subprocess.run(["mkdir", "node_modules/routes/"])
+    print(">> (node_modules/routes/) has been created")
+    print()
 
-    print("$tsc server.ts")
+    print("> Compiling source")
+
+    print("[1/8] compiling server.ts. ")
     subprocess.run(["tsc", "src/server.ts"])
     print(">> done")
 
-    print("$ tsc public/ts/play.ts...")
+    print("[2/8] compiling play.ts.. ")
     subprocess.run(["tsc", "src/play.ts"])
     print(">> done")
 
-    print("$ tsc public/particles/particles_app.ts...")
+    print("[3/8] compiling particles_app.ts...")
     subprocess.run(["tsc", "public/particles/particles_app.ts"])
     print(">> done")
 
-    print("$ tsc public/ts/create.ts...")
-    subprocess.run(["tsc", "src/create.ts"])
-    print(">> done")
+    #print("[4/8] compiling create.ts.")
+    #subprocess.run(["tsc", "src/create.ts"])
+    #print(">> done")
 
     #print("$ tsc public/ts/form.ts...")
     #subprocess.run(["tsc", "src/form.ts"])
     #print(">> done")
 
+    print("[5/8] compiling (router) index.ts..")
+    subprocess.run(["tsc", "src/routes/index.ts"])
+    print(">> done")
+
+    print("[6/8] compiling (router) browse.ts...")
+    subprocess.run(["tsc", "src/routes/browse.ts"])
+    print(">> done")
+
+    print("[7/8] compiling (router) play.ts.")
+    subprocess.run(["tsc", "src/routes/play.ts"])
+    print(">> done")
+
+    print("[8/8] compiling (router) create.ts..")
+    subprocess.run(["tsc", "src/routes/create.ts"])
+    print(">> done")
+    
     print(">> All the source files have been compiled!")
     print()
 
     print("> Cleaning up...")
     subprocess.run(["cp", "-v", "src/server.js", "server.js"])
     subprocess.run(["cp", "-v", "src/play.js", "public/js/play.js"])
-    subprocess.run(["cp", "-v", "src/create.js", "public/js/create.js"])
+    #subprocess.run(["cp", "-v", "src/create.js", "public/js/create.js"])
     #subprocess.run(["cp", "-v", "src/form.js", "public/js/form.js"])
+    subprocess.run(["cp", "-v", "src/routes/index.js", "node_modules/routes/index.js"])
+    subprocess.run(["cp", "-v", "src/routes/browse.js", "node_modules/routes/browse.js"])
+    subprocess.run(["cp", "-v", "src/routes/play.js", "node_modules/routes/play.js"])
+    subprocess.run(["cp", "-v", "src/routes/create.js", "node_modules/routes/create.js"])
 
     subprocess.run(["rm", "-v", "src/server.js"])
     subprocess.run(["rm", "-v", "src/play.js"])
-    subprocess.run(["rm", "-v", "src/create.js"])
+    #subprocess.run(["rm", "-v", "src/create.js"])
     #subprocess.run(["rm", "-v", "src/form.js"])
+    subprocess.run(["rm", "-v", "src/routes/index.js"])
+    subprocess.run(["rm", "-v", "src/routes/browse.js"])
+    subprocess.run(["rm", "-v", "src/routes/play.js"])
+    subprocess.run(["rm", "-v", "src/routes/create.js"])
+
     print()
     end = time.time()
     elapsed = round((end - start), 3)

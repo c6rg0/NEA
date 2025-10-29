@@ -3,6 +3,8 @@
 		"strict": true,
 		"noImplicitAny": true,
 		"scrictNullChecks": true,
-		"notUsedLocals": false	
+		"notUsedLocals": false,
+		"esModuleInterop": true
+
 	}
 }
