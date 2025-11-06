@@ -19,15 +19,41 @@ app.listen(PORT, () => {
 	console.log("Server's started at http://localhost:8000");
 })
 
-let index = require('routes/index.js');
-let browse = require('routes/browse.js');
-let play = require('routes/play.js');
-let create = require('routes/create.js');
+app.get("/", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'index.html'));
+})
 
-app.use('/', index());
-app.use('/browse', browse());
-app.use('/play', play());
-app.use('/create', create());
+app.get("/browse", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'browse.html'));
+})
+
+app.get("/create", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'create.html'));
+})
+
+app.get("/create", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'create.html'));
+})
+
+app.get("/play", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'play.html'));
+})
+
+app.get("/account", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'account.html'));
+})
+
+app.get("/signup", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'signup.html'));
+})
+
+app.get("/signup-success", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'signup-success.html'));
+})
+
+app.get("/login", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'login.html'));
+})
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
@@ -74,16 +100,18 @@ account_db.exec(`
 `);
 
 app.post('/submit-quiz-metadata', (req, res) => {
+	const columns = quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	const temp = req.body;
 	console.log(temp);
-	if (temp == "") {
-		console.log("Form data is empty :(");
+	if (!temp || !temp.name) {
+		return res.status(400).json({ error: "Name is required" });
 	}
 	else{
 		// SQL logic below:
-		// TypeError: The database connection is not open,
-		const insert = quiz_db.prepare('INSERT INTO Meta(name) VALUES');
-		insert.run(temp);
+		const insert = quiz_db.prepare('INSERT INTO Meta (name) VALUES(@name);');
+		// Using (@name), the statement worked, 
+		// the value is [null] though...
+		insert.run({ name: temp.name});
 		console.log("Data inserted successfully");
 	}
 });

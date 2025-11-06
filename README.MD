@@ -36,7 +36,7 @@ Example:\
 
 - Change directory (enter the folder):\
 *(on win and linux):*\
-`cd [the path you used before]`
+`cd [the path you used before]`\
 Now your in the folder!
 
 - Download the project from github using git:\
@@ -48,12 +48,15 @@ Now your in the folder!
 *If you don't see anything (or get any errors when running later):*\
 Submit the problem in the "issues" tab
 
-5. Run the server:\
-`$ node server.js`
+5. Run utility.py:\
+`$ py utility.py`\
+- and enter option number 2,
 
+6. Run the website!\
+`$ node server.js`\
 If you go to http://localhost:8000, you can use/view the website.
 
-# Plan:\
+# Plan:
 - Fronend:
 `Write up all the markdown` - close to completion\
 `Use a frontend library` - 0% 
