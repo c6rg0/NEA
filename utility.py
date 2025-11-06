@@ -2,8 +2,6 @@ import subprocess
 import os
 import time
 
-subprocess.run(["clear"])
-
 def remove_compiled():
     start = time.time()
     print("> Removing preexisting javascript files:")
@@ -16,8 +14,7 @@ def remove_compiled():
     print()
     end = time.time()
     elapsed = round((end - start), 3)
-    subprocess.run(["clear"])
-    print(">> All clean! (completed in "+str(elapsed)+" seconds)")
+    print(">> All done! (completed in "+str(elapsed)+" seconds)")
     print()
     menu()
 
@@ -115,8 +112,7 @@ def compile():
     print()
     end = time.time()
     elapsed = round((end - start), 3)
-    subprocess.run(["clear"])
-    print(">> Compilation complete! (done in "+str(elapsed)+")")
+    print(">> All done! (completed in "+str(elapsed)+")")
     print()
     menu()
 
@@ -145,8 +141,7 @@ def refresh_database():
     print()
     end = time.time()
     elapsed = round((end - start), 3)
-    subprocess.run(["clear"])
-    print(">> Database rebuilt! (in "+str(elapsed)+" seconds)")
+    print(">> All done! (completed in "+str(elapsed)+" seconds)")
     print()
     menu()
     
@@ -159,46 +154,29 @@ def menu():
     print("(3) remove and remake database")
     print("(4) exit ")
 
-    try:
-        choice = int(input())
-        print()
-
-    except:
-        subprocess.run(["clear"])
-        print("Please enter a number (1-4)")
-        print()
-        menu()
+    choice = int(input())
+    print()
 
     if choice == 1:
         print("##########################")
         print()
-        subprocess.run(["clear"])
-        print("Scrubing...")
         remove_compiled()
 
     if choice == 2:
         print("##########################")
         print()
-        subprocess.run(["clear"])
-        print("Building...")
         compile()
 
     if choice == 3:
         print("##########################")
         print()
-        subprocess.run(["clear"])
-        print("Remaking...")
         refresh_database()
 
     if choice == 4:
         print("##########################")
         print()
         print("Goodbye!")
-        subprocess.run(["clear"])
         exit()
-    
-
-
 
 menu()
 
