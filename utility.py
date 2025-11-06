@@ -47,11 +47,6 @@ def compile():
     print(">> (public/js/) has been created")
     print()
 
-    print("> creating (node_modules/routes/)...")
-    subprocess.run(["mkdir", "node_modules/routes/"])
-    print(">> (node_modules/routes/) has been created")
-    print()
-
     print("> Compiling source")
 
     print("[1/3] compiling server.ts. ")

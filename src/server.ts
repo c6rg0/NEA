@@ -100,9 +100,9 @@ account_db.exec(`
 `);
 
 app.post('/submit-quiz-metadata', (req, res) => {
-	const columns = quiz_db.prepare("PRAGMA table_info(Meta)").all();
+	quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	const temp = req.body;
-	console.log(temp);
+	console.log("request:", req.body);
 	if (!temp || !temp.name) {
 		return res.status(400).json({ error: "Name is required" });
 	}
@@ -110,7 +110,7 @@ app.post('/submit-quiz-metadata', (req, res) => {
 		// SQL logic below:
 		const insert = quiz_db.prepare('INSERT INTO Meta (name) VALUES(@name);');
 		// Using (@name), the statement worked, 
-		// the value is [null] though...
+		// the value is [null] though... until I changed the html lol
 		insert.run({ name: temp.name});
 		console.log("Data inserted successfully");
 	}
