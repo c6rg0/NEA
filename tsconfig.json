@@ -4,7 +4,7 @@
 		"noImplicitAny": true,
 		"scrictNullChecks": true,
 		"notUsedLocals": false,
-		"esModuleInterop": true
-
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true
 	}
 }

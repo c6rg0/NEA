@@ -22,55 +22,6 @@ html, body {
 	overflow: hidden;
 }
 
-.index_content {
-	position: relative;
-	z-index: 1;
-	color: white;
-
-	h1 {
-		text-align: left;
-		font-size: 45px;
-		font-family: Ubuntu-Medium;
-	}
-	h2 {
-		text-align: left;
-		font-size: 35px;
-		font-family: Ubuntu-Regular;
-	}
-
-	h3 {
-		text-align: left;
-		font-size: 35px;
-		font-family: Ubuntu-Regular;
-	}
-
-	h4 {
-		text-align: left;
-		font-size: 35px;
-		font-family: Ubuntu-Regular;
-	}
-
-	h5 {
-		text-align: left;
-		font-size: 35px;
-		font-family: Ubuntu-Regular;
-	}
-
-	p {
-		text-align: center;
-		font-size: 30px;
-	}
-}
-
-.start_button {
-	font-size: 60px;
-	font-family: Ubuntu-Regular;
-
-.button_container {
-	font-size: 60px;
-	font-family: Ubuntu-Regular;
-}
-
 h1 {
 	text-align: left;
 	font-size: 45px;
@@ -127,6 +78,15 @@ a:active {
 	color: #161B1F;
 	background-color: tranparent;
 	text-decoration: none;
+}
+
+.start_button {
+	font-size: 60px;
+	font-family: Ubuntu-Regular;
+
+.button_container {
+	font-size: 60px;
+	font-family: Ubuntu-Regular;
 }
 
 

@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/c6rg0/NEA.git"
   },
-  "license": "ISC",
+  "license": "",
   "author": "Gabriel",
   "type": "commonjs",
   "main": "server.js",

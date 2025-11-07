@@ -6,8 +6,8 @@ import bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded());
 
 import Database = require('better-sqlite3');
-const quiz_db = new Database('public/database/quiz.db', { verbose: console.log });
-const account_db = new Database('public/database/account.db', { verbose: console.log });
+const quiz_db = new Database('database/quiz.db', { verbose: console.log });
+const account_db = new Database('database/account.db', { verbose: console.log });
 
 quiz_db.pragma('journal_mode = WAL');
 account_db.pragma('journal_mode = WAL');
@@ -28,11 +28,15 @@ app.get("/browse", (req, res) => {
 })
 
 app.get("/create", (req, res) => {
+	res.redirect('/create/name');
+})
+
+app.get("/create/name", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'create.html'));
 })
 
-app.get("/create", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'create.html'));
+app.get("/create/content", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'create-content.html'));
 })
 
 app.get("/play", (req, res) => {
@@ -113,6 +117,38 @@ app.post('/submit-quiz-metadata', (req, res) => {
 		// the value is [null] though... until I changed the html lol
 		insert.run({ name: temp.name});
 		console.log("Data inserted successfully");
+		res.redirect('/signup/content');
+	}
+});
+
+app.post('/submit-signup', (req, res) => {
+	account_db.prepare("PRAGMA table_info(Meta)").all();
+	const temp = req.body;
+	console.log("request:", req.body);
+	if (!temp || !temp.username) {
+		return res.status(400).json({ error: "Username is required" });
+	}
+
+	if (!temp || !temp.password) {
+		return res.status(400).json({ error:"Password is required" });
+	}
+	
+	const value = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(temp.username);
+	if (value) {
+		console.log("Username already exists; please try again!");
+		res.redirect("/signup");
+	}
+	else{
+		const insert = account_db.prepare(`
+			INSERT INTO Logins (username, password) VALUES
+				(@username , @password);`);
+		try {
+			insert.run({ username: temp.username, password: temp.password});
+		} catch (err) {
+			console.log(err);
+		}
+		console.log("Data inserted successfully");
+		res.redirect('/signup-success');
 	}
 });
 
