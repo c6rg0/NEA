@@ -14,17 +14,17 @@ commands work.
 # If you have recieved this project through a zip file, read below:
 The latest version of this project is uploaded onto github:
 `https://github/c6rg0/NEA`.
-To install the project, you'll still have to follow the below\
+To install the project, you'll still have to follow the below
 instructions, and using the zip file is harder compared to\
 cloning the git repository if you're going to use wsl2.
 
 # How to run the project locally:
-*NOTE: "$" is used to represent terminal commands*
+*NOTE: "$" is used to represent terminal commands, don't include in your commands.*
 
 1. Open up the terminal:\
 If you're on linux or macos, and you have the terminal open,
 you can go to step 2.\
-*On windows, use up wsl2 (a command line open source virtual machine):*
+*On windows, we'll set up wsl2 (a command line virtual machine):*
 
 *To do so, open up cmd,*\
 *enter `$ wsl`, let it download and reboot your machine once it's done.*
@@ -38,7 +38,7 @@ you can go to step 2.\
 
 2. Make sure that git and NodeJS are installed:
 - On ubuntu (which is the distro we installed for wsl2):\
-`$ sudo apt install git nodejs npm pythonpy node-typescript`.
+`$ sudo apt install git nodejs npm pythonpy node-typescript`
 - On macos (using the homebrew package manager - `https://brew.sh/`)\
 *NOTE: if you want to use homebrew, you'll have to install it with a command first,*\
 `$ brew instal git node typescript`\
@@ -46,24 +46,26 @@ You also need to download python from `https://www.python.org`.
 
 3. Clone the project:\
 *NOTE: "~/" is used to represent the home directory, and "cd" to change directory.*\
-`$ cd ~/` (by defualt, wsl2 puts you in the windows filesystem)\ 
-`$ git clone https://github.com/c6rg0/NEA.git && cd NEA/.`
+`$ cd ~/ && git clone https://github.com/c6rg0/NEA.git && cd NEA/`
 
 4. Install the npm packages and dependencies:\
-`$ npm install`.
+*NOTE: You're now in the project directory*\
+`$ npm install`
 - To make sure that the packages are up to date:\
-`$ npm update`.
+`$ npm update`
 
 5. Run utility.py:\
-*NOTE: utility.py is a quick script I made to compile, and clean up project:*\
-`$ python3 utility.py`,\
-and press the according option to compile the code.
+*NOTE: utility.py is a quick script I made to compile, and clean up the project.*\
+*It isn't the best approach for compilation, so it's really just usefull for*\
+*keeping my project organized.*\
+`$ python3 utility.py`\
+and press the according option (2) to compile the code.
 
 6. Run the website!\
 `$ node server.js`\
 If you go to `http://localhost:8000` in the browser, you can use/view the website.\
 *NOTE: To be clear, you can run the website in wsl, and use the browser in windows
-to view the website*\
+to view the website.*\
 *If an error occurs relating to mismatched versions occur:*\
 *Use `$ npm ci`.*
 
