@@ -2,6 +2,7 @@
   "name": "nea",
   "version": "1.0.0",
   "description": "Quiz website",
+  "keywords": [],
   "homepage": "https://github.com/c6rg0/NEA#readme",
   "bugs": {
     "url": "https://github.com/c6rg0/NEA/issues"
@@ -10,14 +11,17 @@
     "type": "git",
     "url": "git+https://github.com/c6rg0/NEA.git"
   },
-  "license": "",
+  "license": "GPL-3.0",
   "author": "Gabriel",
-  "type": "commonjs",
+  "type": "typescript",
   "main": "server.js",
-  "scripts": {
-    "test": "node server.js"
+  "directories": {
+    "doc": "docs"
   },
-  "keywords": [],
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
   "dependencies": {
     "better-sqlite3": "^12.4.1",
     "body-parser": "^2.2.0",

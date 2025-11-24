@@ -5,58 +5,53 @@ Package managers: pacman(system package manager), npm\
 Server-side technolgy: NodeJS + express\
 Database: SQLite3 (with the use of better-sqlite3)
 
+# Requirements:
+- Linux (If you're using windows you'll have to install wsl2; a
+virtual machine so that the file paths and commands work)  
+- NodeJS
+
 # How to run the project locally:
 
+*NOTE: "$" is used to represent terminal commands*\
+
 1. Open up the terminal:\
-*On windows, do this with cmd.*
-- Every *$* symbol represents the start of a command.
+If you're on linux, you can go to step 2;\
+*on windows, open up wsl2 (a command line open source virtual machine):*\
+
+*To do so, open up cmd,*\
+*enter `$ wsl`, let it download and reboot your machine once it's done.*\
+
+*Once rebooted, go to cmd again, and enter `$ wsl --install ubuntu`,*\
+*and follow the prompts.*\
+
+*In wsl, type `$ sudo apt update` to upate the packages on the system,*\
+*and then `$ sudo apt upgrade` to upgrade the packages - you now have a*\
+*functional ubuntu linux vm.*\
 
 2. Make sure that git and NodeJS are installed:\
-*Git is a version control tool, and it will be used to*\
-*download the latest version of the project*\
-*(If you're interested in CS, knowing git is a requirement*\
-*for doing anything practical).*
+- On ubuntu (which is the distro we installed for wsl2):\
+`$ sudo apt install git nodejs`.\
 
-- If you use arch linux:\
-*(on any other linux distro, replace "pacman -S"\
-with your specific package manager installation command)*\
-`$ sudo pacman -S git nodejs`
+3. Clone the project:
+*NOTE: "~/" is used to represent the home directory, and "cd" to change directory.*\
+`$ cd ~/`, *by defualt, wsl2 puts you in the windows filesystem*\ 
+`$ git clone https://github.com/c6rg0/NEA.git && cd NEA/.`
 
-- If you use windows 11:\
-`$ winget install -e --id Git.Git`\
-`$ winget install -e --id OpenJS.NodeJS`\
-*(winget is preinstalled on every win11 machine)*
-
-3. Download the project:
-- First, make a new directory/folder:\
-*(on win and linux):*\
-`mkdir [path]`\
-Example:\
-`mkdir /Code/NEA/` or `mkdir c:\Code\NEA\`
-
-- Change directory (enter the folder):\
-*(on win and linux):*\
-`cd [the path you used before]`\
-Now your in the folder!
-
-- Download the project from github using git:\
-`$ git clone https://github.com/c6rg0/NEA.git`
-
-4. Install the required npm packages:
-- Check if the packages come with the project folder:\
-`$ npm list`\
-*If you don't see anything (or get any errors when running later):*\
-Submit the problem in the "issues" tab
+4. Install the npm packages and dependencies:
+`$ npm install`.\
+- To make sure that the packages are up to date:\
+`$ npm update`.\
 
 5. Run utility.py:\
-`$ py utility.py`\
-- and enter option number 2,
+*NOTE: utility.py is a quick script I made to compile, and clean up project:*\
+`$ py utility.py`,\
+and press the according option to compile the code.
 
 6. Run the website!\
 `$ node server.js`\
-If you go to http://localhost:8000, you can use/view the website.\
-- If an error occurs, run:\
-`npm ci`, otherwise submit a ticket.
+If you go to `http://localhost:8000` in the browser, you can use/view the website.\
+*If an error occurs relating to mismatched versions occur:*\
+*Use `$ npm ci`.*\
 
 # Plan:
 Fronend:

@@ -103,9 +103,10 @@ def compile():
 
 def refresh_database():
     start = time.time()
-    print("> Removing databse")
-    subprocess.run(["rm", "-rfv", "public/database/"])
-    print(">> Removed database!")
+    print("> Removing databases")
+    subprocess.run(["rm", "-v", "public/database/account.db"])
+    subprocess.run(["rm", "-v", "public/database/quiz.db"])
+    print(">> Removed databases!")
     print("> Making database folder")
     subprocess.run(["mkdir", "-pv", "public/database/"])
     print(">> Made new database folder!")
