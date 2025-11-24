@@ -100,15 +100,14 @@ def compile():
     menu()
 
 
-
 def refresh_database():
     start = time.time()
     print("> Removing databases")
-    subprocess.run(["rm", "-v", "public/database/account.db"])
-    subprocess.run(["rm", "-v", "public/database/quiz.db"])
+    subprocess.run(["rm", "-v", "database/"])
+    subprocess.run(["rm", "-v", "public/database/"])
     print(">> Removed databases!")
     print("> Making database folder")
-    subprocess.run(["mkdir", "-pv", "public/database/"])
+    subprocess.run(["mkdir", "-pv", "database/"])
     print(">> Made new database folder!")
     print()
     
@@ -131,6 +130,7 @@ def refresh_database():
     menu()
     
 def menu():
+    print("#############")
     print("PROJECT TOOL:")
     print("#############")
 

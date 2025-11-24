@@ -8,7 +8,7 @@ Database: SQLite3 (with the use of better-sqlite3)
 # Requirements:
 - A UNIX (MacOS)or UNIX-like (linux) OS - If you're using windows you'll have to 
 install wsl2: the Windows Subsystem for Linux so that the file paths and 
-commands work.\
+commands work.
 - NodeJS and git to be installed on the system
 
 # If you have recieved this project through a zip file, read below:
@@ -19,37 +19,38 @@ instructions, and using the zip file is harder compared to\
 cloning the git repository if you're going to use wsl2.
 
 # How to run the project locally:
-*NOTE: "$" is used to represent terminal commands*\
+*NOTE: "$" is used to represent terminal commands*
 
 1. Open up the terminal:\
 If you're on linux or macos, and you have the terminal open,
 you can go to step 2.\
-*On windows, use up wsl2 (a command line open source virtual machine):*\
+*On windows, use up wsl2 (a command line open source virtual machine):*
 
 *To do so, open up cmd,*\
-*enter `$ wsl`, let it download and reboot your machine once it's done.*\
+*enter `$ wsl`, let it download and reboot your machine once it's done.*
 
 *Once rebooted, go to cmd again, and enter `$ wsl --install ubuntu`,*\
-*and follow the prompts.*\
+*and follow the prompts.*
 
 *In wsl, type `$ sudo apt update` to upate the packages on the system,*\
 *and then `$ sudo apt upgrade` to upgrade the packages - you now have a*\
 *functional ubuntu linux vm.*
 
-2. Make sure that git and NodeJS are installed:\
+2. Make sure that git and NodeJS are installed:
 - On ubuntu (which is the distro we installed for wsl2):\
-`$ sudo apt install git nodejs npm pythonpy node-typescript`.\
+`$ sudo apt install git nodejs npm pythonpy node-typescript`.
 - On macos (using the homebrew package manager - `https://brew.sh/`)\
-*NOTE: if you want to use homebrew, you'll have to install it with a command,*\
-`$ brew instal git node `
+*NOTE: if you want to use homebrew, you'll have to install it with a command first,*\
+`$ brew instal git node typescript`\
+You also need to download python from `https://www.python.org`.
 
-3. Clone the project:
+3. Clone the project:\
 *NOTE: "~/" is used to represent the home directory, and "cd" to change directory.*\
-`$ cd ~/`, *by defualt, wsl2 puts you in the windows filesystem*\ 
+`$ cd ~/` (by defualt, wsl2 puts you in the windows filesystem)\ 
 `$ git clone https://github.com/c6rg0/NEA.git && cd NEA/.`
 
-4. Install the npm packages and dependencies:
-`$ npm install`.\
+4. Install the npm packages and dependencies:\
+`$ npm install`.
 - To make sure that the packages are up to date:\
 `$ npm update`.
 
@@ -68,18 +69,18 @@ to view the website*\
 
 # Plan:
 Fronend:
-- `Write up all the markdown` - completed for now\
+- `Write up all the markdown` - completed for now
 - `Use a frontend library` - low on my priority list 
 
 Backend:
-- `Create the quiz logic` - completed\
-- `Quiz creation` - just began, I have a vague template of how to follow up\
-- `Account management` - in its infant stages\
-- `Cookies/session management` - don't remind me that I have to do this\
+- `Create the quiz logic` - completed
+- `Quiz creation` - just began, I have a vague template of how to follow up
+- `Account management` - in its infant stages
+- `Cookies/session management` - don't remind me that I have to do this
 - `SQL database` - same status as quiz creation and account management
 
-Features I expect to have made by the end:\
-- Basic quiz creation and playing\
-- Boolean algebra lessons and calculator\
+Features I expect to have made by the end:
+- Basic quiz creation and playing
+- Boolean algebra lessons and calculator
 - Assembly language lessons and "assembler" (emulator)
 
