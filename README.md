@@ -38,10 +38,10 @@ you can go to step 2.\
 
 2. Make sure that git and NodeJS are installed:\
 - On ubuntu (which is the distro we installed for wsl2):\
-`$ sudo apt install git nodejs`.\
+`$ sudo apt install git nodejs npm pythonpy node-typescript`.\
 - On macos (using the homebrew package manager - `https://brew.sh/`)\
 *NOTE: if you want to use homebrew, you'll have to install it with a command,*\
-`$ brew instal node git`
+`$ brew instal git node `
 
 3. Clone the project:
 *NOTE: "~/" is used to represent the home directory, and "cd" to change directory.*\
@@ -55,7 +55,7 @@ you can go to step 2.\
 
 5. Run utility.py:\
 *NOTE: utility.py is a quick script I made to compile, and clean up project:*\
-`$ py utility.py`,\
+`$ python3 utility.py`,\
 and press the according option to compile the code.
 
 6. Run the website!\

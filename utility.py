@@ -50,15 +50,15 @@ def compile():
     print("> Compiling source")
 
     print("[1/3] compiling server.ts. ")
-    subprocess.run(["tsc", "src/server.ts"])
+    subprocess.run(["tsc", "src/server.ts", "--skipLibCheck"])
     print(">> done")
 
     print("[2/3] compiling play.ts.. ")
-    subprocess.run(["tsc", "src/play.ts"])
+    subprocess.run(["tsc", "src/play.ts", "--skipLibCheck"])
     print(">> done")
 
     print("[3/3] compiling particles_app.ts...")
-    subprocess.run(["tsc", "public/particles/particles_app.ts"])
+    subprocess.run(["tsc", "public/particles/particles_app.ts", "--skipLibCheck"])
     print(">> done")
 
     #print("[4/8] compiling create.ts.")
