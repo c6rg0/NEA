@@ -17,7 +17,7 @@
 
 	<h1><a href="/">Simple quiz site</a> | Account Login</h1>
 
-	<form method="post">
+	<form action="/submit-login" method="POST">
 
 		<p>
 			<label for="username">Username:</label>
@@ -28,6 +28,10 @@
 			<label for="password">Password:</label>
 			<input name="password" id="password" type="password"/>
 		</p>
+
+		<div class="button_container">
+			<button type="submit">Send your data to be checked</button>
+		</div>
 
 	</form>
 

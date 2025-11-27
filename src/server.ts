@@ -53,10 +53,16 @@ app.get("/signup", (req, res) => {
 
 app.get("/signup-success", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'signup-success.html'));
+	res.redirect("/login");
 })
 
 app.get("/login", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login.html'));
+})
+
+app.get("/login-success", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'login-success.html'));
+	res.redirect("/");
 })
 
 quiz_db.exec(`
@@ -109,6 +115,7 @@ app.post('/submit-quiz-metadata', (req, res) => {
 	console.log("request:", req.body);
 	if (!temp || !temp.name) {
 		return res.status(400).json({ error: "Name is required" });
+		console.log();
 	}
 	else{
 		// SQL logic below:
@@ -118,6 +125,7 @@ app.post('/submit-quiz-metadata', (req, res) => {
 		insert.run({ name: temp.name});
 		console.log("Data inserted successfully");
 		res.redirect('/signup/content');
+		console.log();
 	}
 });
 
@@ -127,16 +135,20 @@ app.post('/submit-signup', (req, res) => {
 	console.log("request:", req.body);
 	if (!temp || !temp.username) {
 		return res.status(400).json({ error: "Username is required" });
+		console.log();
 	}
 
 	if (!temp || !temp.password) {
 		return res.status(400).json({ error:"Password is required" });
+		console.log();
 	}
 	
+	// THIS IS ALL WORKING //
 	const value = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(temp.username);
 	if (value) {
-		console.log("Username already exists; please try again!");
+		console.log("Username already exists: please try again!");
 		res.redirect("/signup");
+		console.log();
 	}
 	else{
 		const insert = account_db.prepare(`
@@ -146,9 +158,44 @@ app.post('/submit-signup', (req, res) => {
 			insert.run({ username: temp.username, password: temp.password});
 		} catch (err) {
 			console.log(err);
+			console.log();
 		}
-		console.log("Data inserted successfully");
+		console.log("New login inserted successfully!");
+		console.log();
 		res.redirect('/signup-success');
 	}
 });
+
+app.post('/submit-login', (req, res) => {
+	account_db.prepare("PRAGMA table_info(Meta)").all();
+	const temp = req.body;
+	console.log("request:", req.body);
+	if (!temp || !temp.username) {
+		return res.status(400).json({ error: "Username is required" });
+		console.log();
+	}
+
+	if (!temp || !temp.password) {
+		return res.status(400).json({ error:"Password is required" });
+		console.log();
+	}
+	
+	// This doesn't work, everything is incorrect
+	const value = account_db.prepare(`SELECT password FROM Logins WHERE password = ?`).get(temp.password);
+	if (value) {
+		console.log("Login success! you may continue to use the website");
+		console.log();
+		res.redirect("/login-success");
+	}
+	else{
+		console.log("Incorrect.");
+		console.log();
+		res.redirect("/login");
+	}
+})
+
+
+
+
+
 

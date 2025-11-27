@@ -77,7 +77,7 @@ Fronend:
 Backend:
 - `Create the quiz logic` - completed
 - `Quiz creation` - just began, I have a vague template of how to follow up
-- `Account management` - in its infant stages
+- `Account management` - signup works from a practical perspective (*1)
 - `Cookies/session management` - don't remind me that I have to do this
 - `SQL database` - same status as quiz creation and account management
 
@@ -85,4 +85,8 @@ Features I expect to have made by the end:
 - Basic quiz creation and playing
 - Boolean algebra lessons and calculator
 - Assembly language lessons and "assembler" (emulator)
+
+*1: The sql and nodejs code works, you can't make an account with a username that already exists, credentials get stored
+without any complications. Database passwords need to be encrypted with SHA256 to make it sight unreadable, info (this username 
+"already exists", "enter a password" etc) need to be displayed in the browser (atm, it's just displayed on the server side).
 
