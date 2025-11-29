@@ -40,8 +40,8 @@ you can go to step 2.\
 - On ubuntu (which is the distro we installed for wsl2):\
 `$ sudo apt install git nodejs npm pythonpy node-typescript`
 - On macos (using the homebrew package manager - `https://brew.sh/`)\
-*NOTE: if you want to use homebrew, you'll have to install it with a command first,*\
-`$ brew instal git node typescript`\
+*NOTE: if you want to use homebrew, you'll have to install it beforehand,*\
+`$ brew install git node typescript`\
 You also need to download python from `https://www.python.org`.
 
 3. Clone the project:\
@@ -51,42 +51,37 @@ You also need to download python from `https://www.python.org`.
 4. Install the npm packages and dependencies:\
 *NOTE: You're now in the project directory*\
 `$ npm install`
-- To make sure that the packages are up to date:\
-`$ npm update`
+*You can update packages with `npm update`, but it'll likely cause errors.*
 
-5. Run utility.py:\
-*NOTE: utility.py is a quick script I made to compile, and clean up the project.*\
-*It isn't the best approach for compilation, so it's really just usefull for*\
-*keeping my project organized.*\
-`$ python3 utility.py`\
-and press the according option (2) to compile the code.
+5. Compile the source code:\
+`$ node script build`
 
 6. Run the website!\
-`$ node server.js`\
+`$ node script start`\
 If you go to `http://localhost:8000` in the browser, you can use/view the website.\
 *NOTE: To be clear, you can run the website in wsl, and use the browser in windows
 to view the website.*\
 *If an error occurs relating to mismatched versions occur:*\
-*Use `$ npm ci`.*
+*Use `$ npm ci`,*\
+*it does a clean install, and disregards existsing node modules in the project.*
 
 # Plan:
-Fronend:
-- `Write up all the markdown` - completed for now
-- `Use a frontend library` - low on my priority list 
+Frontend:
+- `Write up all the markdown` - completed until further notice
+- `Use a frontend library` - will do this once everything else is done
 
 Backend:
-- `Create the quiz logic` - completed
-- `Quiz creation` - just began, I have a vague template of how to follow up
-- `Account management` - signup works from a practical perspective (*1)
-- `Cookies/session management` - don't remind me that I have to do this
-- `SQL database` - same status as quiz creation and account management
+- `Create the quiz logic` - completed as a template for later
+- `sql database management` - at it's best
+- `Cookies/session management` - my priority now
+- `Quiz creation` - just tipped my toes into it
 
 Features I expect to have made by the end:
 - Basic quiz creation and playing
 - Boolean algebra lessons and calculator
-- Assembly language lessons and "assembler" (emulator)
+- Assembly language lessons and "assembler"(emulator)
 
-*1: The sql and nodejs code works, you can't make an account with a username that already exists, credentials get stored
-without any complications. Database passwords need to be encrypted with SHA256 to make it sight unreadable, info (this username 
-"already exists", "enter a password" etc) need to be displayed in the browser (atm, it's just displayed on the server side).
+(star 1) Database passwords need to be encrypted with SHA256 to make it sight unreadable, info such as "this username\
+"already exists" or "enter a password" etc need to be displayed in the browser (atm, it's just displayed on the server side).\
+The website is http so traffic is unencrypted (for a project, it's not a big deal).
 

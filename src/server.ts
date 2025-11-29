@@ -16,7 +16,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = 8000;
 app.listen(PORT, () => {
-	console.log("Server's started at http://localhost:8000");
+	try {
+		console.log("Server's started at http://localhost:8000");
+	} catch (err) {
+		console.log(err);
+	}
 })
 
 app.get("/", (req, res) => {
@@ -111,10 +115,10 @@ account_db.exec(`
 
 app.post('/submit-quiz-metadata', (req, res) => {
 	quiz_db.prepare("PRAGMA table_info(Meta)").all();
-	const temp = req.body;
-	console.log("request:", req.body);
-	if (!temp || !temp.name) {
-		return res.status(400).json({ error: "Name is required" });
+	const user_input = req.body;
+	console.log("request:", user_input);
+	if (!user_input || !user_input.name) {
+		console.log("400: Password is required");
 		console.log();
 	}
 	else{
@@ -122,40 +126,40 @@ app.post('/submit-quiz-metadata', (req, res) => {
 		const insert = quiz_db.prepare('INSERT INTO Meta (name) VALUES(@name);');
 		// Using (@name), the statement worked, 
 		// the value is [null] though... until I changed the html lol
-		insert.run({ name: temp.name});
+		insert.run({ name: user_input.name});
 		console.log("Data inserted successfully");
-		res.redirect('/signup/content');
 		console.log();
+		res.redirect('/signup/content');
 	}
 });
 
 app.post('/submit-signup', (req, res) => {
 	account_db.prepare("PRAGMA table_info(Meta)").all();
-	const temp = req.body;
-	console.log("request:", req.body);
-	if (!temp || !temp.username) {
-		return res.status(400).json({ error: "Username is required" });
+	const user_input = req.body;
+	console.log("request:", user_input);
+	if (!user_input || !user_input) {
+		console.log("400: Password is required");
 		console.log();
 	}
 
-	if (!temp || !temp.password) {
-		return res.status(400).json({ error:"Password is required" });
+	if (!user_input || !user_input) {
+		console.log("400: Password is required");
 		console.log();
 	}
 	
 	// THIS IS ALL WORKING //
-	const value = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(temp.username);
-	if (value) {
-		console.log("Username already exists: please try again!");
-		res.redirect("/signup");
+	const existing_user = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(user_input.username);
+	if (existing_user) {
+		console.log("409: Username already exists");
 		console.log();
+		res.redirect("/signup");
 	}
 	else{
 		const insert = account_db.prepare(`
 			INSERT INTO Logins (username, password) VALUES
 				(@username , @password);`);
 		try {
-			insert.run({ username: temp.username, password: temp.password});
+			insert.run({ username: user_input.username, password: user_input.password});
 		} catch (err) {
 			console.log(err);
 			console.log();
@@ -168,27 +172,39 @@ app.post('/submit-signup', (req, res) => {
 
 app.post('/submit-login', (req, res) => {
 	account_db.prepare("PRAGMA table_info(Meta)").all();
-	const temp = req.body;
-	console.log("request:", req.body);
-	if (!temp || !temp.username) {
-		return res.status(400).json({ error: "Username is required" });
+	const user_input = req.body;
+	console.log("request:", user_input);
+	if (!user_input || !user_input.username) {
+		console.log("400: Username is required");
 		console.log();
 	}
-
-	if (!temp || !temp.password) {
-		return res.status(400).json({ error:"Password is required" });
+	if (!user_input || !user_input.password) {
+		console.log("400: Password is required");
 		console.log();
 	}
 	
-	// This doesn't work, everything is incorrect
-	const value = account_db.prepare(`SELECT password FROM Logins WHERE password = ?`).get(temp.password);
-	if (value) {
-		console.log("Login success! you may continue to use the website");
+	interface userPassword {
+		password: string;
+	}
+
+	const result = account_db.prepare
+	(`SELECT password FROM Logins WHERE username = ?`)
+	.get(user_input.username) as userPassword | undefined;
+	
+	const db_password = result?.password; // Parses 
+	// the output of result
+
+	console.log("Database password:");
+	console.log(db_password);
+	console.log("User password:");
+	console.log(user_input.password);
+
+	if (db_password == user_input.password) {
+		console.log("Login success!");
 		console.log();
 		res.redirect("/login-success");
-	}
-	else{
-		console.log("Incorrect.");
+	} else {
+		console.log("401: Incorrect");
 		console.log();
 		res.redirect("/login");
 	}

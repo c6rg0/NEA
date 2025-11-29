@@ -4,15 +4,15 @@
 		"listFiles": true,
 		"strict": true,
 		"noImplicitAny": true,
-		"noUnusedLocals": false,
 		"strictNullChecks": true,
+		"noUnusedLocals": false,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
     		"target": "ES2020",
     		"module": "commonjs",
-    		"outDir": "./",
-    		"rootDir": "./src"
+    		"outDir": "./public/js/",
+    		"rootDir": "./src/public/"
 	},
-  		"include": ["src/server.ts"],
-  		"exclude": ["src/public/"]
+  		"include": ["src/public."],
+  		"exclude": ["src/server.ts"]
 }
