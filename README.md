@@ -1,31 +1,34 @@
 # Technologies used:
-Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage\
-and use the project, as well as automating the removal of existing compiled code\
-unrelated to the functionality of the project),\
-Markdown: `HTML5` (`CSS` for styling),\
-Package managers: `Nix` (personally), `APT` and `Homebrew` (examples included in the\
-instructions), `npm` (nodejs package manager, in the instructions too),\
-Server-side technolgy: `NodeJS` + `express`,\
-Database: `SQLite3` (with the use of `better-sqlite3`),
+- Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage\
+  and use the project, as well as automating the removal of existing compiled code\
+  unrelated to the functionality of the project),\
+- Markdown: `HTML5` (`CSS` for styling),\
+- Package managers: `Nix` (personally), `APT` and `Homebrew` (examples included in the\
+  instructions), `npm` (nodejs package manager, in the instructions too),\
+- Server-side technolgy: `NodeJS` + `express`,\
+- Database: `SQLite3` (with the use of `better-sqlite3`),
+
+> Any other things I forgot to mention are stated in package.json.
 
 # Requirements:
 - A `UNIX` (MacOS for example) OS or `Linux` distro - If you're using windows\
-you'll have to install `wsl2`: the Windows Subsystem for Linux so that the file\
-paths work (rational below).\
+you'll have to install `wsl2`: the Windows Subsystem for Linux so that everything\
+works (explanation below).
+
 - NodeJS and git to be installed on the system (instructions are below).
 
-- Why can't I run this project with windows?
-I use NixOS on my laptop, a distrubution of linux, and linux being inspired by UNIX
-has forward slashes (/), however windows inconveniently uses back slashes (\).
-File paths won't work, and the server will just crash.
+- Explanation:\
+I use NixOS on my laptop, a distrubution of linux. Linux being inspired by UNIX\
+has forward slashes ( / ), however windows inconveniently uses back slashes ( \ ).\
+File paths won't work and the server will simply crash.
 
 
 # If you have recieved this project through a zip file, read below:
 The latest version of this project is uploaded onto github:
-`https://github/c6rg0/NEA`.
+`https://github/c6rg0/NEA`.\
 To install the project, you'll have to follow the below instructions,but\
 using the contents of the zip file is harder compared to cloning the git\
-repository if you're going to use wsl2, added onto the fact that you'll be 
+repository if you're going to use wsl2, added onto the fact that you'll be\
 using outdated instructions which I fix pretty frequently.
 
 # How to run the project locally:
@@ -50,9 +53,9 @@ you can go to step 2.\
 - On ubuntu (which is the distro we installed for wsl2):\
 *NOTE: Any other distro works, I'm just using ubuntu for the examples*\
 `$ sudo apt install git nodejs npm node-typescript`
-- On macos (using the homebrew package manager - `https://brew.sh/`)\
+- On macos (using the homebrew package manager - `https://www.brew.sh`)\
 *NOTE: if you want to use homebrew, you'll have to install it beforehand,*\
-`$ brew install git node typescript`\
+`$ brew install git node typescript`
 
 3. Clone the project:\
 *NOTE: "~/" is used to represent the home directory, and "cd" to change directory.*\
@@ -71,9 +74,10 @@ you can go to step 2.\
 If you go to `http://localhost:8000` in the browser, you can use and test the website.\
 *NOTE: To be clear, you can run the website in wsl, and use the browser in windows
 to view the website.*\
-*If an error occurs relating to `mismatched versions`:*\
-*Use `$ npm ci`,*\
-*it does a clean install, and disregards existsing node modules in the project.*
+
+> If an error occurs relating to `mismatched versions`:
+> Use `$ npm ci`,
+> it does a clean install, and disregards existsing node modules in the project.
 
 # Plan:
 Frontend:
