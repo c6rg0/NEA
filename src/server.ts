@@ -125,7 +125,7 @@ app.post('/submit-quiz-metadata', (req, res) => {
 		// SQL logic below:
 		const insert = quiz_db.prepare('INSERT INTO Meta (name) VALUES(@name);');
 		// Using (@name), the statement worked, 
-		// the value is [null] though... until I changed the html lol
+		// the value was [null] until I changed the html lol
 		insert.run({ name: user_input.name});
 		console.log("Data inserted successfully");
 		console.log();

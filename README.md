@@ -1,25 +1,35 @@
 # Technologies used:
-Languages: TypeScript, JavaScript, Python\
-Markdown: HTML5, CSS\
-Package managers: system wide package manager, npm\
-Server-side technolgy: NodeJS + express\
-Database: SQLite3 (with the use of better-sqlite3)
+Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage\
+and use the project, as well as automating the removal of existing compiled code\
+unrelated to the functionality of the project),\
+Markdown: `HTML5` (`CSS` for styling),\
+Package managers: `Nix` (personally), `APT` and `Homebrew` (examples included in the\
+instructions), `npm` (nodejs package manager, in the instructions too),\
+Server-side technolgy: `NodeJS` + `express`,\
+Database: `SQLite3` (with the use of `better-sqlite3`),
 
 # Requirements:
-- A UNIX (MacOS)or UNIX-like (linux) OS - If you're using windows you'll have to 
-install wsl2: the Windows Subsystem for Linux so that the file paths and 
-commands work.
-- NodeJS and git to be installed on the system
+- A `UNIX` (MacOS for example) OS or `Linux` distro - If you're using windows\
+you'll have to install `wsl2`: the Windows Subsystem for Linux so that the file\
+paths work (rational below).\
+- NodeJS and git to be installed on the system (instructions are below).
+
+- Why can't I run this project with windows?
+I use NixOS on my laptop, a distrubution of linux, and linux being inspired by UNIX
+has forward slashes (/), however windows inconveniently uses back slashes (\).
+File paths won't work, and the server will just crash.
+
 
 # If you have recieved this project through a zip file, read below:
 The latest version of this project is uploaded onto github:
 `https://github/c6rg0/NEA`.
-To install the project, you'll still have to follow the below
-instructions, and using the zip file is harder compared to\
-cloning the git repository if you're going to use wsl2.
+To install the project, you'll have to follow the below instructions,but\
+using the contents of the zip file is harder compared to cloning the git\
+repository if you're going to use wsl2, added onto the fact that you'll be 
+using outdated instructions which I fix pretty frequently.
 
 # How to run the project locally:
-*NOTE: "$" is used to represent terminal commands, don't include in your commands.*
+*NOTE: "$" is used to represent terminal commands, don't include it in the terminal.*
 
 1. Open up the terminal:\
 If you're on linux or macos, and you have the terminal open,
@@ -30,7 +40,7 @@ you can go to step 2.\
 *enter `$ wsl`, let it download and reboot your machine once it's done.*
 
 *Once rebooted, go to cmd again, and enter `$ wsl --install ubuntu`,*\
-*and follow the prompts.*
+*and follow the prompts.* 
 
 *In wsl, type `$ sudo apt update` to upate the packages on the system,*\
 *and then `$ sudo apt upgrade` to upgrade the packages - you now have a*\
@@ -38,11 +48,11 @@ you can go to step 2.\
 
 2. Make sure that git and NodeJS are installed:
 - On ubuntu (which is the distro we installed for wsl2):\
-`$ sudo apt install git nodejs npm pythonpy node-typescript`
+*NOTE: Any other distro works, I'm just using ubuntu for the examples*\
+`$ sudo apt install git nodejs npm node-typescript`
 - On macos (using the homebrew package manager - `https://brew.sh/`)\
 *NOTE: if you want to use homebrew, you'll have to install it beforehand,*\
 `$ brew install git node typescript`\
-You also need to download python from `https://www.python.org`.
 
 3. Clone the project:\
 *NOTE: "~/" is used to represent the home directory, and "cd" to change directory.*\
@@ -51,17 +61,17 @@ You also need to download python from `https://www.python.org`.
 4. Install the npm packages and dependencies:\
 *NOTE: You're now in the project directory*\
 `$ npm install`
-*You can update packages with `npm update`, but it'll likely cause errors.*
+*You can update packages with `npm update`, but it's likely to cause errors.*
 
 5. Compile the source code:\
 `$ node script build`
 
 6. Run the website!\
 `$ node script start`\
-If you go to `http://localhost:8000` in the browser, you can use/view the website.\
+If you go to `http://localhost:8000` in the browser, you can use and test the website.\
 *NOTE: To be clear, you can run the website in wsl, and use the browser in windows
 to view the website.*\
-*If an error occurs relating to mismatched versions occur:*\
+*If an error occurs relating to `mismatched versions`:*\
 *Use `$ npm ci`,*\
 *it does a clean install, and disregards existsing node modules in the project.*
 
@@ -74,7 +84,7 @@ Backend:
 - `Create the quiz logic` - completed as a template for later
 - `sql database management` - at it's best
 - `Cookies/session management` - my priority now
-- `Quiz creation` - just tipped my toes into it
+- `Quiz creation` - just dipped my toes into it
 
 Features I expect to have made by the end:
 - Basic quiz creation and playing

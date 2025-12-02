@@ -13,6 +13,6 @@
     		"outDir": "./public/js/",
     		"rootDir": "./src/public/"
 	},
-  		"include": ["src/public."],
+  		"include": ["src/public/"],
   		"exclude": ["src/server.ts"]
 }
