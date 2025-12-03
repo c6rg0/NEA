@@ -2,6 +2,8 @@ import express = require('express');
 const app = express();
 import path = require('path');
 
+import bcrypt = require('bcrypt');
+
 import bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded());
 
@@ -133,21 +135,20 @@ app.post('/submit-quiz-metadata', (req, res) => {
 	}
 });
 
-app.post('/submit-signup', (req, res) => {
+app.post('/submit-signup', async (req, res) => {
 	account_db.prepare("PRAGMA table_info(Meta)").all();
 	const user_input = req.body;
 	console.log("request:", user_input);
-	if (!user_input || !user_input) {
-		console.log("400: Password is required");
+	if (!user_input || !user_input.username) {
+		console.log("400: Username is required");
 		console.log();
 	}
 
-	if (!user_input || !user_input) {
+	if (!user_input || !user_input.password) {
 		console.log("400: Password is required");
 		console.log();
 	}
 	
-	// THIS IS ALL WORKING //
 	const existing_user = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(user_input.username);
 	if (existing_user) {
 		console.log("409: Username already exists");
@@ -155,11 +156,22 @@ app.post('/submit-signup', (req, res) => {
 		res.redirect("/signup");
 	}
 	else{
+		const parsed_pass = user_input.password;
+		
+		async function hashPassword(parsed_pass: string): Promise<string> {
+			const saltRounds = 10;
+			const hashed_pass = await bcrypt.hash(parsed_pass, saltRounds);
+			return hashed_pass;
+		}
+
+		const hashed_pass = await hashPassword(parsed_pass);
+		console.log(hashed_pass);
+
 		const insert = account_db.prepare(`
 			INSERT INTO Logins (username, password) VALUES
 				(@username , @password);`);
 		try {
-			insert.run({ username: user_input.username, password: user_input.password});
+			insert.run({ username: user_input.username, password: hashed_pass });
 		} catch (err) {
 			console.log(err);
 			console.log();
@@ -170,7 +182,7 @@ app.post('/submit-signup', (req, res) => {
 	}
 });
 
-app.post('/submit-login', (req, res) => {
+app.post('/submit-login', async (req, res) => {
 	account_db.prepare("PRAGMA table_info(Meta)").all();
 	const user_input = req.body;
 	console.log("request:", user_input);
@@ -191,15 +203,21 @@ app.post('/submit-login', (req, res) => {
 	(`SELECT password FROM Logins WHERE username = ?`)
 	.get(user_input.username) as userPassword | undefined;
 	
-	const db_password = result?.password; // Parses 
-	// the output of result
+	if (!result || result.password) {
+		return res.status(401).send('Invlaid username or password.');
+	}
 
-	console.log("Database password:");
-	console.log(db_password);
-	console.log("User password:");
-	console.log(user_input.password);
+	const parsed_pass = user_input.password;
+	const hashed_pass = result.password; 
 
-	if (db_password == user_input.password) {
+	async function verifyPassword(parsed_pass: string, hashed_pass: string): Promise<boolean> {
+		const check = await bcrypt.compare(parsed_pass, hashed_pass);
+		return check;
+	}
+
+	const check = await verifyPassword(parsed_pass, hashed_pass);
+
+	if (check == true) {
 		console.log("Login success!");
 		console.log();
 		res.redirect("/login-success");
