@@ -7,6 +7,9 @@ import bcrypt = require('bcrypt');
 import bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded());
 
+import cookieSession = require('cookie-session');
+app.set('trust proxy', 1);
+
 import Database = require('better-sqlite3');
 const quiz_db = new Database('database/quiz.db', { verbose: console.log });
 const account_db = new Database('database/account.db', { verbose: console.log });
@@ -16,6 +19,14 @@ account_db.pragma('journal_mode = WAL');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cookieSession({
+	name: 'session',
+	keys: [/* Secret keys */],
+
+	// Cookie options
+	maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
 const PORT = 8000;
 app.listen(PORT, () => {
 	try {
@@ -23,53 +34,53 @@ app.listen(PORT, () => {
 	} catch (err) {
 		console.log(err);
 	}
-})
+});
 
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'index.html'));
-})
+});
 
 app.get("/browse", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'browse.html'));
-})
+});
 
 app.get("/create", (req, res) => {
 	res.redirect('/create/name');
-})
+});
 
 app.get("/create/name", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'create.html'));
-})
+});
 
 app.get("/create/content", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'create-content.html'));
-})
+});
 
 app.get("/play", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'play.html'));
-})
+});
 
 app.get("/account", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'account.html'));
-})
+});
 
 app.get("/signup", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'signup.html'));
-})
+});
 
 app.get("/signup-success", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'signup-success.html'));
 	res.redirect("/login");
-})
+});
 
 app.get("/login", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login.html'));
-})
+});
 
 app.get("/login-success", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login-success.html'));
 	res.redirect("/");
-})
+});
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
@@ -203,7 +214,7 @@ app.post('/submit-login', async (req, res) => {
 	(`SELECT password FROM Logins WHERE username = ?`)
 	.get(user_input.username) as userPassword | undefined;
 	
-	if (!result || result.password) {
+	if (!result || !result.password) {
 		return res.status(401).send('Invlaid username or password.');
 	}
 
@@ -226,7 +237,7 @@ app.post('/submit-login', async (req, res) => {
 		console.log();
 		res.redirect("/login");
 	}
-})
+});
 
 
 
