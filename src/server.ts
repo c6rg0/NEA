@@ -1,40 +1,45 @@
-import express = require('express');
+import express from 'express';
+import { Response, NextFunction } from 'express';
 const app = express();
-import path = require('path');
+import path from 'path';
 
-import bcrypt = require('bcrypt');
+import server from 'socket.io';
 
-import bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded());
-
-import cookieSession = require('cookie-session');
+import session from 'express-session';
 app.set('trust proxy', 1);
 
-import Database = require('better-sqlite3');
+import Database from 'better-sqlite3';
 const quiz_db = new Database('database/quiz.db', { verbose: console.log });
 const account_db = new Database('database/account.db', { verbose: console.log });
 
 quiz_db.pragma('journal_mode = WAL');
 account_db.pragma('journal_mode = WAL');
 
+import bcrypt from 'bcrypt';
+
+import bodyParser from 'body-parser';
+app.use(bodyParser.urlencoded());
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cookieSession({
-	name: 'session',
-	keys: [/* Secret keys */],
-
-	// Cookie options
-	maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}));
-
-const PORT = 8000;
-app.listen(PORT, () => {
+const port = 8000;
+app.listen(port, () => {
 	try {
 		console.log("Server's started at http://localhost:8000");
 	} catch (err) {
 		console.log(err);
 	}
 });
+
+const sessionMiddleware = session({
+	secret: 'r278429@!£$dytcvyubn',
+	resave: false,
+	saveUninitialized: false,
+
+});
+
+app.use(sessionMiddleware);
 
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'index.html'));
@@ -231,6 +236,9 @@ app.post('/submit-login', async (req, res) => {
 	if (check == true) {
 		console.log("Login success!");
 		console.log();
+		// Initialise session here
+		
+
 		res.redirect("/login-success");
 	} else {
 		console.log("401: Incorrect");
