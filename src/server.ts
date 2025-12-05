@@ -20,7 +20,6 @@ import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser';
 app.use(bodyParser.urlencoded());
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 const port = 8000;
