@@ -1,12 +1,12 @@
 # Technologies used:
-- Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage\
-  and use the project, as well as automating the removal of existing compiled code\
-  unrelated to the functionality of the project),\
-- Markdown: `HTML5` (`CSS` for styling),\
-- Package managers: `Nix` (personally), `APT` and `Homebrew` (examples included in the\
-  instructions), `npm` (nodejs package manager, in the instructions too),\
-- Server-side technolgy: `NodeJS` + `express`,\
-- Database: `SQLite3` (with the use of `better-sqlite3`),
+- Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage
+  the compilation of the project, as well as to automate the removal of existing compiled 
+  code unrelated to the functionality),
+- Markdown: `HTML5` (`CSS` for styling),
+- Package managers: `Nix` (personally), `APT` and `Homebrew` (examples included in the
+  instructions), `npm` (nodejs package manager, in the instructions too),
+- JavaScript runtime: `NodeJS`
+- NPM packages: `express`, `express-session`, `better-sqlite3`, `bcrypt`
 
 > Any other things I forgot to mention are stated in package.json.
 
@@ -21,15 +21,6 @@ works (explanation below).
 I use NixOS on my laptop, a distrubution of linux. Linux being inspired by UNIX\
 has forward slashes ( / ), however windows inconveniently uses back slashes ( \ ).\
 File paths won't work and the server will simply crash.
-
-
-# If you have recieved this project through a zip file, read below:
-The latest version of this project is uploaded onto github:
-`https://github/c6rg0/NEA`.\
-To install the project, you'll have to follow the below instructions,but\
-using the contents of the zip file is harder compared to cloning the git\
-repository if you're going to use wsl2, added onto the fact that you'll be\
-using outdated instructions which I fix pretty frequently.
 
 # How to run the project locally:
 *NOTE: "$" is used to represent terminal commands, don't include it in the terminal.*
