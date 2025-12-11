@@ -7,6 +7,11 @@ import server from 'socket.io';
 
 import session from 'express-session';
 app.set('trust proxy', 1);
+declare module "express-session" {
+	export interface SessionData {
+		user: { [username: string]: any };
+	}
+}
 
 import Database from 'better-sqlite3';
 const quiz_db = new Database('database/quiz.db', { verbose: console.log });
@@ -40,12 +45,38 @@ const sessionMiddleware = session({
 
 app.use(sessionMiddleware);
 
+app.use((req, res, next) => {
+	console.log('Session', req.session);
+	next();
+});
+
+app.get("/get-session", (req, res) => {
+	if (req.session.user) {
+		res.send("Session data: " + JSON.stringify(req.session.user));
+	} else {
+		res.send("No session data found");
+	}
+});
+
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-app.get("/browse", (req, res) => {
+app.get("/browse", async (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'browse.html'));
+	quiz_db.prepare("PRAGMA table_info(Meta)").all();
+	const user_search = req.body;
+	console.log("Search:", user_search);
+
+	const select_search = quiz_db.prepare(`SELECT title FROM Logins WHERE username = ?`).get(user_search.username);
+	if (select_search) {
+		console.log("Results shown");
+		console.log();
+	}
+	else{
+		console.log("501: Not implemented");
+		console.log();
+	}
 });
 
 app.get("/create", (req, res) => {
@@ -85,6 +116,26 @@ app.get("/login-success", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'login-success.html'));
 	res.redirect("/");
 });
+
+app.get("/disable-cookies", (req, res) => {
+
+	req.session.destroy((err) => {
+		if (err) {
+			console.error('Error destroying session', err);
+			res.send('Error destroying session');
+			res.redirect("/account");
+		} else {
+			res.send('Session destroyed');
+			app.use(sessionMiddleware);
+			res.redirect("/");
+		};
+	}
+)});
+
+app.get("/logout", (req, res) => {
+	req.session.user = { username: "" };
+});
+
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
@@ -233,10 +284,9 @@ app.post('/submit-login', async (req, res) => {
 	const check = await verifyPassword(parsed_pass, hashed_pass);
 
 	if (check == true) {
+		req.session.user = { username: user_input.username };
 		console.log("Login success!");
 		console.log();
-		// Initialise session here
-		
 
 		res.redirect("/login-success");
 	} else {
