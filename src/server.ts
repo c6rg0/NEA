@@ -3,7 +3,7 @@ import { Response, NextFunction } from 'express';
 const app = express();
 import path from 'path';
 
-import server from 'socket.io';
+// import Server from 'socket.io';
 
 import session from 'express-session';
 app.set('trust proxy', 1);
@@ -19,6 +19,50 @@ const account_db = new Database('database/account.db', { verbose: console.log })
 
 quiz_db.pragma('journal_mode = WAL');
 account_db.pragma('journal_mode = WAL');
+
+quiz_db.exec(`
+	CREATE TABLE IF NOT EXISTS Meta(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT NOT NULL,
+		creator TEXT NOT NULL
+	);
+
+	CREATE TABLE IF NOT EXISTS Settings(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT UNIQUE NOT NULL,
+		value TEXT NOT NULL
+	);
+
+	CREATE TABLE IF NOT EXISTS Questions(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		question_text TEXT NOT NULL,
+		category TEXT NOT NULL
+	);
+
+	CREATE TABLE IF NOT EXISTS Options(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		question_id INTEGER NOT NULL,
+		option_text TEXT NOT NULL,
+		FOREIGN KEY (question_id) REFERENCES Questions(id)
+	);
+
+	CREATE TABLE IF NOT EXISTS Answers(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		question_id INTEGER NOT NULL,
+		option_id INTEGER NOT NULL,
+		FOREIGN KEY (question_id) REFERENCES Questions(id),
+		FOREIGN KEY (option_id) REFERENCES Options(id)
+		
+	);
+`);
+
+account_db.exec(`
+	CREATE TABLE IF NOT EXISTS Logins(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		[username] TEXT UNIQUE NOT NULL,
+		[password] TEXT NOT NULL
+	);
+`);
 
 import bcrypt from 'bcrypt';
 
@@ -64,19 +108,24 @@ app.get("/", (req, res) => {
 
 app.get("/browse", async (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'browse.html'));
+});
+
+app.post("/search-request", async (req, res) => {
 	quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	const user_search = req.body;
 	console.log("Search:", user_search);
 
-	const select_search = quiz_db.prepare(`SELECT title FROM Logins WHERE username = ?`).get(user_search.username);
+	const select_search = quiz_db.prepare(`SELECT name FROM Table(Meta);`).get(user_search.name);
+
 	if (select_search) {
 		console.log("Results shown");
 		console.log();
-	}
-	else{
+	} else{
 		console.log("501: Not implemented");
 		console.log();
 	}
+
+	res.redirect('/browse');
 });
 
 app.get("/create", (req, res) => {
@@ -136,50 +185,17 @@ app.get("/logout", (req, res) => {
 	req.session.user = { username: "" };
 });
 
+app.get("/dev", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'dev.html'));
+});
 
-quiz_db.exec(`
-	CREATE TABLE IF NOT EXISTS Meta(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT,
-		creator TEXT
-	);
-
-	CREATE TABLE IF NOT EXISTS Settings(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT UNIQUE,
-		value TEXT
-	);
-
-	CREATE TABLE IF NOT EXISTS Questions(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_text TEXT,
-		category TEXT
-	);
-
-	CREATE TABLE IF NOT EXISTS Options(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_id INTEGER,
-		option_text TEXT,
-		FOREIGN KEY (question_id) REFERENCES Questions(id)
-	);
-
-	CREATE TABLE IF NOT EXISTS Answers(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_id INTEGER,
-		option_id INTEGER,
-		FOREIGN KEY (question_id) REFERENCES Questions(id),
-		FOREIGN KEY (option_id) REFERENCES Options(id)
-		
-	);
-`);
-
-account_db.exec(`
-	CREATE TABLE IF NOT EXISTS Logins(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		[username] TEXT UNIQUE,
-		[password] TEXT
-	);
-`);
+app.get("/dev-clear", (req, res) => {
+	res.sendFile(path.join(__dirname, 'views', 'dev-clear.html'));
+	quiz_db.prepare("PRAGMA table_info(Meta)").all();
+	account_db.prepare("PRAGMA table_info(Meta)").all();
+	const drop_logins = quiz_db.prepare('DROP Table (logins);');
+	drop_logins.run();
+});
 
 app.post('/submit-quiz-metadata', (req, res) => {
 	quiz_db.prepare("PRAGMA table_info(Meta)").all();
@@ -197,7 +213,7 @@ app.post('/submit-quiz-metadata', (req, res) => {
 		insert.run({ name: user_input.name});
 		console.log("Data inserted successfully");
 		console.log();
-		res.redirect('/signup/content');
+		res.redirect('/create/content');
 	}
 });
 
