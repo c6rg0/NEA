@@ -1,1 +1,9 @@
-node_nodules/
+# Ignore node_modules
+*node_modules/
+
+# Ignore compiled code
+*server.js
+*public/js/play.js
+*public/particles/particles_app.js
+
+
