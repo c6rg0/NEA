@@ -126,6 +126,9 @@ app.post("/search-request", async (req, res) => {
 	}
 
 	res.redirect('/browse');
+	/*
+	Info about dynamic routing:
+	https://stackoverflow.com/questions/25623041/how-to-configure-dynamic-routes-with-express-js*/
 });
 
 app.get("/create", (req, res) => {
@@ -133,7 +136,7 @@ app.get("/create", (req, res) => {
 });
 
 app.get("/create/name", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'create.html'));
+	res.sendFile(path.join(__dirname, 'views', 'create-name.html'));
 });
 
 app.get("/create/content", (req, res) => {
@@ -193,7 +196,7 @@ app.get("/dev-clear", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'dev-clear.html'));
 	quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	account_db.prepare("PRAGMA table_info(Meta)").all();
-	const drop_logins = quiz_db.prepare('DROP Table (logins);');
+	const drop_logins = account_db.prepare('DELETE FROM Logins;');
 	drop_logins.run();
 });
 
