@@ -12,6 +12,10 @@
 [x] - Hash new passwords
 [x] - Add session management
 
+[ ] - Split up the routes into seperate files
+[ ] - Make a quiz creation system
+[ ] - Use a frontend framework
+
 [ ] - Show info (such as `incorrect password`, `logged in` at index) to the user
 [ ] - Make a quiz broswing system
 [ ] - Reorganize the quiz database 
