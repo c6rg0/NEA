@@ -3,22 +3,16 @@ import { Response, NextFunction } from 'express';
 const app = express();
 import path from 'path';
 
-// import Server from 'socket.io';
-
-import session from 'express-session';
-app.set('trust proxy', 1);
-declare module "express-session" {
-	export interface SessionData {
-		user: { [username: string]: any };
-	}
-}
-
 import Database from 'better-sqlite3';
 const quiz_db = new Database('database/quiz.db', { verbose: console.log });
 const account_db = new Database('database/account.db', { verbose: console.log });
 
 quiz_db.pragma('journal_mode = WAL');
 account_db.pragma('journal_mode = WAL');
+
+// Routes import:
+import * as masterRouter from '/routes/index.ts'
+app.use('/', masterRouter);
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
@@ -100,10 +94,6 @@ app.get("/get-session", (req, res) => {
 	} else {
 		res.send("No session data found");
 	}
-});
-
-app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 app.get("/browse", async (req, res) => {
