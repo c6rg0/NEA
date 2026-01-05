@@ -10,10 +10,11 @@ const account_db = new Database("database/account.db", { verbose: console.log })
 quiz_db.pragma("journal_mode = WAL");
 account_db.pragma("journal_mode = WAL");
 
-// Routes import:
+// Master route import:
 import router from "./routes/index";
-app.use("/", router);
 
+import bodyParser from 'body-parser';
+app.use(bodyParser.urlencoded());
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
@@ -59,16 +60,9 @@ account_db.exec(`
 	);
 `);
 
-import bcrypt from 'bcrypt';
-
-import bodyParser from 'body-parser';
-app.use(bodyParser.urlencoded());
-
 app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'views'));
 
 import session from "express-session";
-
 declare module "express-session" {
   interface SessionData {
     user: { username: string};
@@ -95,6 +89,8 @@ app.get("/get-session", (req, res) => {
 		res.send("No session data found");
 	}
 });
+
+app.use("/", router);
 
 app.get("/browse", async (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'browse.html'));
@@ -188,26 +184,6 @@ app.get("/dev-clear", (req, res) => {
 	account_db.prepare("PRAGMA table_info(Meta)").all();
 	const drop_logins = account_db.prepare('DELETE FROM Logins;');
 	drop_logins.run();
-});
-
-app.post('/submit-quiz-metadata', (req, res) => {
-	quiz_db.prepare("PRAGMA table_info(Meta)").all();
-	const user_input = req.body;
-	console.log("request:", user_input);
-	if (!user_input || !user_input.name) {
-		console.log("400: Password is required");
-		console.log();
-	}
-	else{
-		// SQL logic below:
-		const insert = quiz_db.prepare('INSERT INTO Meta (name) VALUES(@name);');
-		// Using (@name), the statement worked, 
-		// the value was [null] until I changed the html lol
-		insert.run({ name: user_input.name});
-		console.log("Data inserted successfully");
-		console.log();
-		res.redirect('/create/content');
-	}
 });
 
 const port = 8000;

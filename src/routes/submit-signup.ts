@@ -6,10 +6,20 @@ import bcrypt from 'bcrypt';
 const router = express.Router();
 
 import Database from 'better-sqlite3';
-const quiz_db = Database('database/quiz.db', { verbose: console.log });
-const account_db = Database('database/account.db', { verbose: console.log });
+const quiz_db = Database('./database/quiz.db', { verbose: console.log });
+const account_db = Database('./database/account.db', { verbose: console.log });
 
-router.post('/submit-signup', async (req, res) => {
+declare module 'express-session' {
+  interface SessionData {
+    user: { username: string };
+  }
+}
+
+interface userPassword {
+	password: string;
+}
+
+router.post('/', async (req, res) => {
 	account_db.prepare("PRAGMA table_info(Meta)").all();
 	const user_input = req.body;
 	console.log("request:", user_input);

@@ -10,16 +10,16 @@
 [x] - Make a signup system
 [x] - Make a login system
 [x] - Hash new passwords
+
 [x] - Add session management
+[x] - Split up the routes into seperate files
+[ ] - Use fetch API to give users messages (for incorrect pass)
 
-[ ] - Split up the routes into seperate files
+[ ] - Redesign the quiz database (atm it's a mess)
 [ ] - Make a quiz creation system
-[ ] - Use a frontend framework
-
-[ ] - Show info (such as `incorrect password`, `logged in` at index) to the user
 [ ] - Make a quiz broswing system
-[ ] - Reorganize the quiz database 
-[ ] - Link quizes from database with play.ts
+
+[ ] - Make quizes in database playable
 [ ] - Make a score/leaderboard system
 [ ] - Make the website look better
 

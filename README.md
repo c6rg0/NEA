@@ -70,23 +70,27 @@ to view the website.*\
 > Use `$ npm ci`,
 > it does a clean install, and disregards existsing node modules in the project.
 
-# Plan:
-Frontend:
-- `Write up all the markdown` - completed until further notice
-- `Use a frontend library` - will do this once everything else is done
+# Checklist:
+[x] - Find a way to run a website
+[x] - Create the markdown
+[x] - Create a simple quiz game
+[x] - Create the sql tables
+[x] - Switch to typescript
 
-Backend:
-- `Create the quiz logic` - completed as a template for later
-- `sql database management` - at it's best
-- `Cookies/session management` - my priority now
-- `Quiz creation` - just dipped my toes into it
+[x] - Make it possible to insert to database
+[x] - Make a signup system
+[x] - Make a login system
+[x] - Hash new passwords
 
-Features I expect to have made by the end:
-- Basic quiz creation and playing
-- Boolean algebra lessons and calculator
-- Assembly language lessons and "assembler"(emulator)
+[x] - Add session management
+[x] - Split up the routes into seperate files
+[ ] - Use fetch API to give users messages (for incorrect pass)
 
-(star 1) Database passwords need to be encrypted with SHA256 to make it sight unreadable, info such as "this username\
-"already exists" or "enter a password" etc need to be displayed in the browser (atm, it's just displayed on the server side).\
-The website is http so traffic is unencrypted (for a project, it's not a big deal).
+[ ] - Redesign the quiz database (atm it's a mess)
+[ ] - Make a quiz creation system
+[ ] - Make a quiz broswing system
+
+[ ] - Make quizes in database playable
+[ ] - Make a score/leaderboard system
+[ ] - Make the website look better
 
