@@ -1,14 +1,18 @@
 {
 	"compilerOptions": {
-		"listEmittedFiles": true,
-		"listFiles": true,
 		"strict": true,
+		"listEmittedFiles": true,
 		"noImplicitAny": true,
-		"strictNullChecks": true,
 		"noUnusedLocals": false,
+		"strictNullChecks": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"noEmitOnError": true,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
-    		"target": "ES2020",
+
+		"target": "ES2020",
     		"module": "commonjs",
     		"outDir": "./public/particles/",
     		"rootDir": "./public/particles/"
@@ -16,4 +20,7 @@
   		"include": ["public/particles/particles_app.ts"],
   		"exclude": []
 }
+
+
+
 

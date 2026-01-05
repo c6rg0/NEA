@@ -1,18 +1,19 @@
 import express from "express";
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction } from "express";
 const app = express();
-import path from 'path';
+import path from "path";
 
-import Database from 'better-sqlite3';
-const quiz_db = new Database('database/quiz.db', { verbose: console.log });
-const account_db = new Database('database/account.db', { verbose: console.log });
+import Database from "better-sqlite3";
+const quiz_db = new Database("database/quiz.db", { verbose: console.log });
+const account_db = new Database("database/account.db", { verbose: console.log });
 
-quiz_db.pragma('journal_mode = WAL');
-account_db.pragma('journal_mode = WAL');
+quiz_db.pragma("journal_mode = WAL");
+account_db.pragma("journal_mode = WAL");
 
 // Routes import:
-import * as masterRouter from '/routes/index.ts'
-app.use('/', masterRouter);
+import router from "./routes/index";
+app.use("/", router);
+
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(
@@ -64,21 +65,20 @@ import bodyParser from 'body-parser';
 app.use(bodyParser.urlencoded());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
 
-const port = 8000;
-app.listen(port, () => {
-	try {
-		console.log("Server's started at http://localhost:8000");
-	} catch (err) {
-		console.log(err);
-	}
-});
+import session from "express-session";
+
+declare module "express-session" {
+  interface SessionData {
+    user: { username: string};
+  }
+}
 
 const sessionMiddleware = session({
 	secret: 'r278429@!£$dytcvyubn',
 	resave: false,
 	saveUninitialized: false,
-
 });
 
 app.use(sessionMiddleware);
@@ -210,103 +210,13 @@ app.post('/submit-quiz-metadata', (req, res) => {
 	}
 });
 
-app.post('/submit-signup', async (req, res) => {
-	account_db.prepare("PRAGMA table_info(Meta)").all();
-	const user_input = req.body;
-	console.log("request:", user_input);
-	if (!user_input || !user_input.username) {
-		console.log("400: Username is required");
-		console.log();
-	}
-
-	if (!user_input || !user_input.password) {
-		console.log("400: Password is required");
-		console.log();
-	}
-	
-	const existing_user = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(user_input.username);
-	if (existing_user) {
-		console.log("409: Username already exists");
-		console.log();
-		res.redirect("/signup");
-	}
-	else{
-		const parsed_pass = user_input.password;
-		
-		async function hashPassword(parsed_pass: string): Promise<string> {
-			const saltRounds = 10;
-			const hashed_pass = await bcrypt.hash(parsed_pass, saltRounds);
-			return hashed_pass;
-		}
-
-		const hashed_pass = await hashPassword(parsed_pass);
-		console.log(hashed_pass);
-
-		const insert = account_db.prepare(`
-			INSERT INTO Logins (username, password) VALUES
-				(@username , @password);`);
-		try {
-			insert.run({ username: user_input.username, password: hashed_pass });
-		} catch (err) {
-			console.log(err);
-			console.log();
-		}
-		console.log("New login inserted successfully!");
-		console.log();
-		res.redirect('/signup-success');
+const port = 8000;
+app.listen(port, () => {
+	try {
+		console.log("Server's started at http://localhost:8000");
+	} catch (err) {
+		console.log(err);
 	}
 });
-
-app.post('/submit-login', async (req, res) => {
-	account_db.prepare("PRAGMA table_info(Meta)").all();
-	const user_input = req.body;
-	console.log("request:", user_input);
-	if (!user_input || !user_input.username) {
-		console.log("400: Username is required");
-		console.log();
-	}
-	if (!user_input || !user_input.password) {
-		console.log("400: Password is required");
-		console.log();
-	}
-	
-	interface userPassword {
-		password: string;
-	}
-
-	const result = account_db.prepare
-	(`SELECT password FROM Logins WHERE username = ?`)
-	.get(user_input.username) as userPassword | undefined;
-	
-	if (!result || !result.password) {
-		return res.status(401).send('Invlaid username or password.');
-	}
-
-	const parsed_pass = user_input.password;
-	const hashed_pass = result.password; 
-
-	async function verifyPassword(parsed_pass: string, hashed_pass: string): Promise<boolean> {
-		const check = await bcrypt.compare(parsed_pass, hashed_pass);
-		return check;
-	}
-
-	const check = await verifyPassword(parsed_pass, hashed_pass);
-
-	if (check == true) {
-		req.session.user = { username: user_input.username };
-		console.log("Login success!");
-		console.log();
-
-		res.redirect("/login-success");
-	} else {
-		console.log("401: Incorrect");
-		console.log();
-		res.redirect("/login");
-	}
-});
-
-
-
-
 
 
