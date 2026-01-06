@@ -54,11 +54,11 @@ you can go to step 2.\
 
 4. Install the npm packages and dependencies:\
 *NOTE: You're now in the project directory*\
-`$ npm install`
-*You can update packages with `npm update`, but it's likely to cause errors.*
 
 5. Compile the source code:\
-`$ node script build`
+*NOTE: Chmod is used to set file permisions*
+`$ sudo chmod +x build.sh`
+`$ ./build`
 
 6. Run the website!\
 `$ node script start`\
