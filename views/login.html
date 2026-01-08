@@ -17,23 +17,26 @@
 
 	<h1><a href="/">Simple quiz site</a> | Account Login</h1>
 
-	<form action="/submit-login" method="POST">
+	<form id="login_form">
+               <p>
+                       <label for="username">Username:</label>
+                       <input name="username" id="username" />
+               </p>
 
-		<p>
-			<label for="username">Username:</label>
-			<input name="username" id="username"/>
-		</p>
-
-		<p>
-			<label for="password">Password:</label>
-			<input name="password" id="password" type="password"/>
-		</p>
-
+               <p>
+                       <label for="password">Password:</label>
+                       <input name="password" id="password" type="password"/>
+               </p>
 		<div class="button_container">
-			<button type="submit">Send your data to be checked</button>
+			<button type="submit">Send your data to be sold</button>
 		</div>
 
 	</form>
+	
+	<div id="result"></div>
+	<p id="error" style="color: red"></p>
+	
+	<script src="js/login.js"></script>
 
 </body>
 </html> 

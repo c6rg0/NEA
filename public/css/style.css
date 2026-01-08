@@ -58,6 +58,13 @@ p {
 	color: white;
 }
 
+#error {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: red;
+}
+
 a:link {
 	color: white;
 	background-color: tranparent;

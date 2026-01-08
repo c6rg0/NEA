@@ -40,29 +40,35 @@ router.post('/', async (req, res) => {
 		res.redirect("/signup");
 	}
 	else{
-		const parsed_pass = user_input.password;
-		
-		async function hashPassword(parsed_pass: string): Promise<string> {
-			const saltRounds = 10;
-			const hashed_pass = await bcrypt.hash(parsed_pass, saltRounds);
-			return hashed_pass;
-		}
+		let passLength: number = user_input.password.length;
+		if ( passLength < 6) {
+			console.log("Password too short");
+			res.redirect("/signup");
+		} else {
+			const parsed_pass = user_input.password;
+			
+			async function hashPassword(parsed_pass: string): Promise<string> {
+				const saltRounds = 10;
+				const hashed_pass = await bcrypt.hash(parsed_pass, saltRounds);
+				return hashed_pass;
+			}
 
-		const hashed_pass = await hashPassword(parsed_pass);
-		console.log(hashed_pass);
+			const hashed_pass = await hashPassword(parsed_pass);
+			console.log(hashed_pass);
 
-		const insert = account_db.prepare(`
-			INSERT INTO Logins (username, password) VALUES
-				(@username , @password);`);
-		try {
-			insert.run({ username: user_input.username, password: hashed_pass });
-		} catch (err) {
-			console.log(err);
+			const insert = account_db.prepare(`
+				INSERT INTO Logins (username, password) VALUES
+					(@username , @password);`);
+			try {
+				insert.run({ username: user_input.username, password: hashed_pass });
+			} catch (err) {
+				console.log(err);
+				console.log();
+			}
+			console.log("New login inserted successfully!");
 			console.log();
+			res.redirect('/signup-success');
 		}
-		console.log("New login inserted successfully!");
-		console.log();
-		res.redirect('/signup-success');
 	}
 });
 

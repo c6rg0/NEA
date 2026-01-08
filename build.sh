@@ -7,7 +7,7 @@ tsc
 tsc -p tsconfig.json
 
 tsc 
-tsc -p tsconfig.backend.json
+tsc -p tsconfig.public.json
 
 tsc
 tsc -p tsconfig.frontend.json

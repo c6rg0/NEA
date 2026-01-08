@@ -3,7 +3,7 @@
 
 # Ignore compiled code
 *server.js
-*public/js/play.js
+*public/js/*
 *routes/
 *public/particles/particles_app.js
 
