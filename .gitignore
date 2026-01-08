@@ -4,7 +4,7 @@
 # Ignore compiled code
 *server.js
 *public/js/*
-*routes/
+*routes/*
 *public/particles/particles_app.js
 
 

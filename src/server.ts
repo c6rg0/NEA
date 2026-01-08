@@ -75,7 +75,10 @@ const sessionMiddleware = session({
 	saveUninitialized: false,
 });
 
-app.use(sessionMiddleware);
+let cookiePerm: boolean = true;
+if (cookiePerm == true) {
+	app.use(sessionMiddleware);
+}
 
 app.use((req, res, next) => {
 	console.log('Session', req.session);
@@ -92,31 +95,6 @@ app.get("/get-session", (req, res) => {
 
 app.use("/", router);
 
-app.get("/browse", async (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'browse.html'));
-});
-
-app.post("/search-request", async (req, res) => {
-	quiz_db.prepare("PRAGMA table_info(Meta)").all();
-	const user_search = req.body;
-	console.log("Search:", user_search);
-
-	const select_search = quiz_db.prepare(`SELECT name FROM Table(Meta);`).get(user_search.name);
-
-	if (select_search) {
-		console.log("Results shown");
-		console.log();
-	} else{
-		console.log("501: Not implemented");
-		console.log();
-	}
-
-	res.redirect('/browse');
-	/*
-	Info about dynamic routing:
-	https://stackoverflow.com/questions/25623041/how-to-configure-dynamic-routes-with-express-js*/
-});
-
 app.get("/create", (req, res) => {
 	res.redirect('/create/name');
 });
@@ -127,10 +105,6 @@ app.get("/create/name", (req, res) => {
 
 app.get("/create/content", (req, res) => {
 	res.sendFile(path.join(__dirname, 'views', 'create-content.html'));
-});
-
-app.get("/play", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'play.html'));
 });
 
 app.get("/account", (req, res) => {
@@ -156,7 +130,6 @@ app.get("/login-success", (req, res) => {
 });
 
 app.get("/disable-cookies", (req, res) => {
-
 	req.session.destroy((err) => {
 		if (err) {
 			console.error('Error destroying session', err);
@@ -164,7 +137,7 @@ app.get("/disable-cookies", (req, res) => {
 			res.redirect("/account");
 		} else {
 			res.send('Session destroyed');
-			app.use(sessionMiddleware);
+			cookiePerm = false;
 			res.redirect("/");
 		};
 	}
@@ -172,18 +145,6 @@ app.get("/disable-cookies", (req, res) => {
 
 app.get("/logout", (req, res) => {
 	req.session.user = { username: "" };
-});
-
-app.get("/dev", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'dev.html'));
-});
-
-app.get("/dev-clear", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'dev-clear.html'));
-	quiz_db.prepare("PRAGMA table_info(Meta)").all();
-	account_db.prepare("PRAGMA table_info(Meta)").all();
-	const drop_logins = account_db.prepare('DELETE FROM Logins;');
-	drop_logins.run();
 });
 
 const port = 8000;
@@ -194,5 +155,3 @@ app.listen(port, () => {
 		console.log(err);
 	}
 });
-
-

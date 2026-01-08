@@ -1,15 +1,30 @@
 //index.ts
 import express from "express";
 import path from "path";
+
 import submitSignup from "./submit-signup";
 import submitLogin from "./submit-login";
 import submitQuizMetadata from "./submit-quiz-metadata";
+
+import devMenu from "./dev/dev";
+import dropDatabase from "./dev/dev-clear";
+
+import searchRequest from "./search-request";
+import browse from "./browse";
+import play from "./play";
+// import missing from "./404";
 
 const router = express.Router();
 
 router.use("/submit-signup", submitSignup);
 router.use("/submit-login", submitLogin);
 router.use("/submit-quiz-metadata", submitQuizMetadata);
+router.use("/dev", devMenu);
+router.use("/dev/clear", dropDatabase);
+router.use("/search-request", searchRequest);
+router.use("/browse", browse);
+router.use("/play", play);
+// router.use("*", missing);
 
 router.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname,"..", "views", "index.html"));
