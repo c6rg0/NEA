@@ -10,11 +10,12 @@ const account_db = new Database("database/account.db", { verbose: console.log })
 quiz_db.pragma("journal_mode = WAL");
 account_db.pragma("journal_mode = WAL");
 
+import bodyParser from 'body-parser';
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 // Master route import:
 import router from "./routes/index";
-
-import bodyParser from 'body-parser';
-app.use(bodyParser.urlencoded());
 
 quiz_db.exec(`
 	CREATE TABLE IF NOT EXISTS Meta(

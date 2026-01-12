@@ -12,7 +12,7 @@
 
 - [x] Add session management
 - [x] Split up the routes into seperate files
-- [ ] Use fetch API to give users messages (for incorrect pass)
+- [x] Use fetch API to give users messages (for incorrect pass)
 
 - [ ] Redesign the quiz database (atm it's a mess)
 - [ ] Make a quiz creation system

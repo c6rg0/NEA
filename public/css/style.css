@@ -14,7 +14,7 @@
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: #2f3241;
+	background-color: #fbf1c7;
 	z-index: -1;	
 }
 
@@ -26,7 +26,7 @@ h1 {
 	text-align: left;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: white;
+	color: #3c3836;
 
 }
 
@@ -34,66 +34,91 @@ h2 {
 	text-align: left;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: white;
+	color: #3c3836;
 }
 
 h3 {
 	text-align: center;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: white;
+	color: #3c3836;
 }
 
 h4 {
 	text-align: center;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: white;
+	color: #3c3836;
 }
 
 p {
 	text-align: left;
 	font-size: 35px;
 	font-family: ubuntu-medium;
-	color: white;
+	color: #3c3836;
 }
 
-#error {
+.exists {
 	text-align: left;
 	font-size: 25px;
 	font-family: ubuntu-medium;
-	color: red;
+	color: #cc241d;
 }
 
+.length {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: #cc241d;
+}
+.nums {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: #cc241d;
+}
+.symbol {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: #cc241d;
+}
+
+
+
+
 a:link {
-	color: white;
+	color: #3c3836;
 	background-color: tranparent;
 	text-decoration: none;
 }
 
 a:visited {
-	color: white;
+	color: #3c3836;
 	background-color: tranparent;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #161B1F;
+	color: #7c6f64;
 	background-color: tranparent;
 	text-decoration: underline;
 }
 
 a:active {
-	color: #161B1F;
+	color: #7c6f64;
 	background-color: tranparent;
 	text-decoration: none;
 }
 
 .start_button {
+	color: #ebdbb2
 	font-size: 60px;
 	font-family: Ubuntu-Regular;
+}
 
 .button_container {
+	color: #ebdbb2
 	font-size: 60px;
 	font-family: Ubuntu-Regular;
 }
