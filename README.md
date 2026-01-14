@@ -84,13 +84,19 @@ to view the website.*\
 
 - [x] Add session management
 - [x] Split up the routes into seperate files
-- [ ] Use fetch API to give users messages (for incorrect pass)
+- [x] Use fetch API to give users messages: Pass lenght, use of digits and symbols
+- [ ] ../: "Account already exists"
 
+- [ ] Mitigate SQL injection vulns
 - [ ] Redesign the quiz database (atm it's a mess)
-- [ ] Make a quiz creation system
 - [ ] Make a quiz broswing system
+- [ ] Make a quiz creation system
 
 - [ ] Make quizes in database playable
 - [ ] Make a score/leaderboard system
 - [ ] Make the website look better
+
+
+
+
 

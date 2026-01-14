@@ -24,26 +24,24 @@ router.post('/', async (req, res) => {
 	const user_input = req.body;
 	console.log("request:", user_input);
 	if (!user_input || !user_input.username) {
-		console.log("400: Username is required");
-		console.log();
+		return console.log("400: Username is required");
 	}
 
 	if (!user_input || !user_input.password) {
-		console.log("400: Password is required");
-		console.log();
+		return console.log("400: Password is required");
 	}
 	
 	const existing_user = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(user_input.username);
 	if (existing_user) {
 		console.log("409: Username already exists");
 		console.log();
-		res.redirect("/signup");
+		return res.redirect("/signup");
 	}
 	else{
 		let passLength: number = user_input.password.length;
 		if ( passLength < 6) {
 			console.log("Password too short");
-			res.redirect("/signup");
+			return res.redirect("/signup");
 		} else {
 			const parsed_pass = user_input.password;
 			
@@ -62,12 +60,11 @@ router.post('/', async (req, res) => {
 			try {
 				insert.run({ username: user_input.username, password: hashed_pass });
 			} catch (err) {
-				console.log(err);
-				console.log();
+				return console.log(err);
 			}
 			console.log("New login inserted successfully!");
 			console.log();
-			res.redirect('/signup-success');
+			return res.redirect('/signup-success');
 		}
 	}
 });

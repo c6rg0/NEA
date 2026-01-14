@@ -51,15 +51,12 @@ router.post('/', async (req, res) => {
 	const check = await verifyPassword(parsed_pass, hashed_pass);
 
 	if (check) {
-		req.session.user = { username: user_input.username };
+		req.session.user = user_input.username ;
 		console.log("Login success!");
-		console.log();
-
-		res.redirect("/login-success");
+		return res.redirect("/login-success");
 	} else {
 		console.log("401: Incorrect");
-		console.log();
-		res.redirect("/login");
+		return res.redirect("/login");
 	}
 });
 

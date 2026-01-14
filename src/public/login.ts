@@ -1,15 +1,38 @@
 async function logPost(user: string, pass: string) {
-	const response = await fetch(
-		"http://localhost:8000/submit-login", {
+	const sending = await fetch("http://localhost:8000/submit-login", {
 		method: 'POST',
-		body: new URLSearchParams({ username: user,
-					  password: pass })
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({username: user, password: pass }),
+
 	});
 }
+
+/*
+async function getStatus() {
+	const response = await fetch("http://localhost:8000/account-exists", {
+		method: 'GET',
+	});
+	const result = await response.json();
+	console.log(result);
+	if (result == "e"){
+		sigExists.innerHTML = "Account username already exists :(";
+	}
+	if (result == "s"){
+		sigExists.innerHTML = "Success!";
+	}
+}
+
+
+});
+*/
 
 const logForm = document.
 	getElementById("login_form") as HTMLFormElement;
 
+const logExist = document.
+	getElementById('exists') as HTMLParagraphElement;
 const logLength = document.
 	getElementById('length') as HTMLParagraphElement;
 const logNums = document.
@@ -23,7 +46,7 @@ logForm.addEventListener("submit", (event) => {
         const password = (document.getElementById("password") as HTMLInputElement).value;
 
         if (username.trim() === " || password.trim() === ") {
-        	logLength.innerHTML = 
+        	return logLength.innerHTML = 
 			"Please fill in the fields";
         }
 
@@ -31,9 +54,9 @@ logForm.addEventListener("submit", (event) => {
 	let len = true;
 
 	if (passLen < 6) {
-		logLength.innerHTML = 
-		"Password must be 6 characters or more!";
 		len = false; 
+		return logLength.innerHTML = 
+		"Password must be 6 characters or more!";
 	}
 	
 	let num = true;
@@ -41,10 +64,10 @@ logForm.addEventListener("submit", (event) => {
 
 	for(let i = 0; i < passLen; i++){
 		const char: string = password[i];
-		if (typeof char === 'number'){
+		if (char >= '0' && char <= '9'){
 			num = true;
 		}
-		else if (typeof char === 'symbol'){
+		else if (!/[a-zA-Z0-9]/.test(char)){
 			symbol = true;
 		}
 	}
@@ -54,8 +77,8 @@ logForm.addEventListener("submit", (event) => {
 		logNums.innerHTML = "";
 		logSymbol.innerHTML = "";
 
-		const user = JSON.stringify({username: "string"});
-		const pass = JSON.stringify({password: "string"});
+		const user: string = username;
+		const pass: string = password;
 		logPost(user, pass);
 	}
 
@@ -66,3 +89,5 @@ logForm.addEventListener("submit", (event) => {
 		logSymbol.innerHTML = "Please include at least 1 symbol!";
 	}
 });
+
+

@@ -3,6 +3,8 @@ import { Response, NextFunction } from "express";
 const app = express();
 import path from "path";
 
+app.set('view engine', 'ejs');
+
 import Database from "better-sqlite3";
 const quiz_db = new Database("database/quiz.db", { verbose: console.log });
 const account_db = new Database("database/account.db", { verbose: console.log });
@@ -65,9 +67,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 import session from "express-session";
 declare module "express-session" {
-  interface SessionData {
-    user: { username: string};
-  }
+	interface SessionData {
+		user: { username: string};
+  	}
 }
 
 const sessionMiddleware = session({
@@ -86,13 +88,6 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.get("/get-session", (req, res) => {
-	if (req.session.user) {
-		res.send("Session data: " + JSON.stringify(req.session.user));
-	} else {
-		res.send("No session data found");
-	}
-});
 
 app.use("/", router);
 
