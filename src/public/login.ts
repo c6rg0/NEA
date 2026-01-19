@@ -1,5 +1,5 @@
 async function logPost(user: string, pass: string) {
-	const sending = await fetch("http://localhost:8000/submit-login", {
+	const response = await fetch("http://localhost:8000/submit-login", {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -7,31 +7,29 @@ async function logPost(user: string, pass: string) {
 		body: JSON.stringify({username: user, password: pass }),
 
 	});
+
+	const status = await response.json();
+	console.log(status);
+
+	if (status == 401){
+		logExists.innerHTML = "Incorrect username or password!";
+
+	}
+	if (status == 200){
+		logExists.innerHTML = "Success!";
+	}
+
+	else {
+		logExists.innerHTML = "501";
+	}
+
 }
 
-/*
-async function getStatus() {
-	const response = await fetch("http://localhost:8000/account-exists", {
-		method: 'GET',
-	});
-	const result = await response.json();
-	console.log(result);
-	if (result == "e"){
-		sigExists.innerHTML = "Account username already exists :(";
-	}
-	if (result == "s"){
-		sigExists.innerHTML = "Success!";
-	}
-}
-
-
-});
-*/
 
 const logForm = document.
 	getElementById("login_form") as HTMLFormElement;
 
-const logExist = document.
+const logExists = document.
 	getElementById('exists') as HTMLParagraphElement;
 const logLength = document.
 	getElementById('length') as HTMLParagraphElement;

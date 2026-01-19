@@ -1,6 +1,6 @@
-- Analysis:
+# Analysis:
 
-Objectives + Problems:
+##  Objectives + Problems:
 A lot of people (maybe?) and myself included struggle with focus, remembering school content and studying because reading a textbook and 
 writting notes over and over eventually (well, pretty quickly) becomes tiring; and the next best use of time appears. I find memorization
 difficult (if not annoying), and to fix that, making an effective and entertaining (to a sensible point) platform for revision and learning
@@ -76,48 +76,79 @@ database, and pushed once the user moves onto the next question.
 
 
 File structures:
-- docs/
-	Nea-Student-project-Tracker.txt
-	Nea-Student-project-Tracker.docx
+❯ tree .
+.
+├── LICENSE
+├── README.md
+├── build.sh
+├── clean.sh
+├── database
+│   ├── account.db
+│   ├── account.db-shm
+│   ├── account.db-wal
+│   ├── quiz.db
+│   ├── quiz.db-shm
+│   └── quiz.db-wal
+├── docs
+│   ├── Nea-Student-Raport.docx
+│   ├── Nea-Student-Raport.txt
+│   ├── bettersqlite3.md
+│   ├── checklist.md
+│   ├── log.md
+│   └── tree.md
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── style.css
+│   ├── fonts
+│   │   ├── Ubuntu-Light.woff2
+│   │   ├── Ubuntu-Medium.woff2
+│   │   └── Ubuntu-Regular.woff2
+│   ├── js
+│   └── particles
+│       ├── particles.json
+│       └── particles_app.ts
+├── routes
+├── src
+│   ├── public
+│   │   ├── login.ts
+│   │   ├── play.ts
+│   │   └── signup.ts
+│   ├── routes
+│   │   ├── 404.ts
+│   │   ├── browse.ts
+│   │   ├── dev
+│   │   │   ├── dev-clear.ts
+│   │   │   └── dev.ts
+│   │   ├── get-session.ts
+│   │   ├── index.ts
+│   │   ├── play.ts
+│   │   ├── search-request.ts
+│   │   ├── submit-login.ts
+│   │   ├── submit-quiz-metadata.ts
+│   │   └── submit-signup.ts
+│   └── server.ts
+├── tsconfig.frontend.json
+├── tsconfig.json
+├── tsconfig.public.json
+└── views
+    ├── account.html
+    ├── browse.html
+    ├── create-content.html
+    ├── create-name.html
+    ├── dev-clear.html
+    ├── dev.html
+    ├── index.ejs
+    ├── index.html
+    ├── login-success.html
+    ├── login.html
+    ├── play.html
+    ├── signup-success.html
+    ├── signup.html
+    └── submit-quiz-metadata.html
 
-- public/
-	- css/
-		style.css
-
-	- database/
-		quiz.db
-		account.db
-
-	- fonts/
-		Ubuntu-Light.woff2
-		Ubuntu-Medium.woff2
-		Ubuntu-Regular.woff2
-
-	- js/
-		(All the compiled typescipt code (in src) goes here)
-
-	- particles/
-		(particles_app.js)
-		particles.json
-
-- src/
-	create.ts
-	form.ts
-	play.ts
-	server.ts
-	particles_app.ts
-
-- views/
-	account.html
-	browse.html
-	create.html
-	index.html
-	login.html
-	play.html
-	signup.html
-	signup-success.html
-	submit-quiz-metadata.html
-
+13 directories, 56 files
 
 
 HCI (Human-computer interaction) / Screen design:

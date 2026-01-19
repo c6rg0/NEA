@@ -80,6 +80,7 @@ to view the website.*\
 - [x] Make it possible to insert to database
 - [x] Make a signup system
 - [x] Make a login system
+- [x] Mitigate SQL injection vulns
 - [x] Hash new passwords
 
 - [x] Add session management
@@ -87,7 +88,6 @@ to view the website.*\
 - [x] Use fetch API to give users messages: Pass lenght, use of digits and symbols
 - [ ] ../: "Account already exists"
 
-- [ ] Mitigate SQL injection vulns
 - [ ] Redesign the quiz database (atm it's a mess)
 - [ ] Make a quiz broswing system
 - [ ] Make a quiz creation system

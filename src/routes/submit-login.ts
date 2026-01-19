@@ -24,12 +24,10 @@ router.post('/', async (req, res) => {
 	const user_input = req.body;
 	console.log("request:", user_input);
 	if (!user_input || !user_input.username) {
-		console.log("400: Username is required");
-		return res.status(400).send('Username is required');
+		return res.status(204).send('Username is required');
 	}
 	if (!user_input || !user_input.password) {
-		console.log("400: Password is required");
-		return res.status(400).send('Password is required');
+		return res.status(204).send('Password is required');
 	}
 
 	const result = account_db.prepare
@@ -37,7 +35,7 @@ router.post('/', async (req, res) => {
 	.get(user_input.username) as userPassword | undefined;
 	
 	if (!result || !result.password) {
-		return res.status(401).send('Invalid username or password.');
+		return res.status(401).send('Invalid username or password');
 	}
 
 	const parsed_pass = user_input.password;
@@ -51,12 +49,14 @@ router.post('/', async (req, res) => {
 	const check = await verifyPassword(parsed_pass, hashed_pass);
 
 	if (check) {
-		req.session.user = user_input.username ;
-		console.log("Login success!");
-		return res.redirect("/login-success");
+		req.session.user = user_input.username;
+		console.log("res.status(200).send(Authentication successfull);");
+		res.status(200).send("Authentication successfull");
+		return;
 	} else {
-		console.log("401: Incorrect");
-		return res.redirect("/login");
+		console.log("res.status(401).send(Unauthorized);");
+		res.status(401).send("Unauthorized");
+		return;
 	}
 });
 

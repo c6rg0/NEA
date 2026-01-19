@@ -1,25 +1,30 @@
-async function getStatus() {
-	const response = await fetch("http://localhost:8000/account-exists", {
-		method: 'GET',
-	});
-	const result = await response.json();
-	console.log(result);
-	if (result == "e"){
-		sigExists.innerHTML = "Account username already exists :(";
-	}
-	if (result == "s"){
-		sigExists.innerHTML = "Success!";
-	}
-}
-
 async function sigPost(user: string, pass: string) {
-	const sending = await fetch("http://localhost:8000/submit-signup", {
+	const response = await fetch("http://localhost:8000/submit-signup", {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({username: user, password: pass }),
 	});
+
+	let status: number = response.status;
+	console.log(status);
+
+	if (status == 204){
+		sigExists.innerHTML = "Username or/and password is required!";
+	}
+
+	if (status == 401){
+		sigExists.innerHTML = "Incorrect username or password!";
+	}
+	
+	if (status == 409){
+		sigExists.innerHTML = "Username already exists!";
+	}
+
+	if (status == 200){
+		sigExists.innerHTML = "";
+	}
 }
 
 const sigForm = document.
@@ -33,7 +38,6 @@ const sigNums = document.
 	getElementById('nums') as HTMLParagraphElement;
 const sigSymbol = document.
 	getElementById('symbol') as HTMLParagraphElement;
-
 
 sigForm.addEventListener("submit", (event) => {
         event.preventDefault(); 
@@ -84,4 +88,3 @@ sigForm.addEventListener("submit", (event) => {
 		sigSymbol.innerHTML = "Please include at least 1 symbol!";
 	}
 });
-

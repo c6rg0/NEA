@@ -24,24 +24,22 @@ router.post('/', async (req, res) => {
 	const user_input = req.body;
 	console.log("request:", user_input);
 	if (!user_input || !user_input.username) {
-		return console.log("400: Username is required");
+		return res.status(304).send("Username is missing");
 	}
 
 	if (!user_input || !user_input.password) {
-		return console.log("400: Password is required");
+		return res.status(304).send("Password is missing");
 	}
 	
 	const existing_user = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(user_input.username);
 	if (existing_user) {
-		console.log("409: Username already exists");
-		console.log();
-		return res.redirect("/signup");
+		res.status(409).send("Username already exists");
+		console.log("res.status(409).send(username already exists);");
 	}
 	else{
 		let passLength: number = user_input.password.length;
 		if ( passLength < 6) {
-			console.log("Password too short");
-			return res.redirect("/signup");
+			return res.status(406).send("Password is too short");
 		} else {
 			const parsed_pass = user_input.password;
 			
@@ -60,11 +58,11 @@ router.post('/', async (req, res) => {
 			try {
 				insert.run({ username: user_input.username, password: hashed_pass });
 			} catch (err) {
-				return console.log(err);
+				console.log(err);
+				return res.status(500).send(err);
 			}
-			console.log("New login inserted successfully!");
-			console.log();
-			return res.redirect('/signup-success');
+			console.log("res.status(201).send(Account successfully created);");
+			return res.status(201).send("Account successfully created");
 		}
 	}
 });
