@@ -27,7 +27,7 @@ router.use("/get-session", session);
 
 router.get("/", (req, res) => {
 	// res.sendFile(path.join(__dirname,"..", "views", "index.html"));
-	res.render('index', { name: 'Home' } );
+	res.render('index', { name: 'index' } );
 
 });
 

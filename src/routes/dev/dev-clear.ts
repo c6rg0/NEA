@@ -16,7 +16,7 @@ declare module "express-session" {
 
 router.get('/', async (req, res) => {
 	/* Validation should be required*/
-	res.sendFile(path.join(__dirname, "..", "..", "views", "dev-clear.html"));
+	res.render('dev-clear', { name: 'dev-clear' } );
 	quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	account_db.prepare("PRAGMA table_info(Meta)").all();
 	const drop_quizes = quiz_db.prepare('DELETE FROM Logins;');

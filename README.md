@@ -82,21 +82,19 @@ to view the website.*\
 - [x] Make a login system
 - [x] Mitigate SQL injection vulns
 - [x] Hash new passwords
-
 - [x] Add session management
 - [x] Split up the routes into seperate files
-- [x] Use fetch API to give users messages: Pass lenght, use of digits and symbols
-- [ ] ../: "Account already exists"
+
+- [x] Use fetch API to give users infod: Pass length, use of digits and symbols
+- [x] ../: "Account already exists"
+- [ ] Swap HTML for EJS, and make appropriate front end changes
 
 - [ ] Redesign the quiz database (atm it's a mess)
-- [ ] Make a quiz broswing system
-- [ ] Make a quiz creation system
+- [ ] Make a quiz broswing/searching system
+- [ ] Finish the quiz creation system
 
-- [ ] Make quizes in database playable
+- [ ] Make quizes in database playable (building on top of previously used fetch api)
+- [ ] Allow for complex quiz creation, make algorithms to determine 
+   whether a long written answer is right or wrong.
 - [ ] Make a score/leaderboard system
-- [ ] Make the website look better
-
-
-
-
 

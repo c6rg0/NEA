@@ -96,32 +96,30 @@ app.get("/create", (req, res) => {
 });
 
 app.get("/create/name", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'create-name.html'));
+	res.render('create-name', { name: 'create-name' } );
 });
 
 app.get("/create/content", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'create-content.html'));
+	res.render('create-content', { name: 'create-content' } );
 });
 
 app.get("/account", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'account.html'));
+	res.render('account', { name: 'account' } );
 });
 
 app.get("/signup", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'signup.html'));
+	res.render('signup', { name: 'signup' } );
 });
 
 app.get("/signup-success", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'signup-success.html'));
 	res.redirect("/login");
 });
 
 app.get("/login", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'login.html'));
+	res.render('login', { name: 'login' } );
 });
 
 app.get("/login-success", (req, res) => {
-	res.sendFile(path.join(__dirname, 'views', 'login-success.html'));
 	res.redirect("/");
 });
 

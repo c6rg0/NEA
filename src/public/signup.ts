@@ -23,7 +23,7 @@ async function sigPost(user: string, pass: string) {
 	}
 
 	if (status == 200){
-		sigExists.innerHTML = "";
+		window.location.assign("/login");
 	}
 }
 

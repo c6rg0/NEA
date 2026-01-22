@@ -14,7 +14,7 @@
 - [x] Split up the routes into seperate files
 
 - [x] Use fetch API to give users infod: Pass length, use of digits and symbols
-- [ ] ../: "Account already exists"
+- [x] ../: "Account already exists"
 - [ ] Swap HTML for EJS, and make appropriate front end changes
 
 - [ ] Redesign the quiz database (atm it's a mess)

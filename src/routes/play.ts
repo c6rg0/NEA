@@ -17,8 +17,7 @@ declare module "express-session" {
 }
 
 router.get("/", async (req, res) => {
-	res.sendFile(path.join(__dirname, "..", "views", 
-			       "play.html"));
+	res.render('play', { name: 'play' } );
 
 });
 

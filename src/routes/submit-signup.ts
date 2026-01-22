@@ -62,7 +62,8 @@ router.post('/', async (req, res) => {
 				return res.status(500).send(err);
 			}
 			console.log("res.status(201).send(Account successfully created);");
-			return res.status(201).send("Account successfully created");
+			res.redirect("/login");
+			return;
 		}
 	}
 });

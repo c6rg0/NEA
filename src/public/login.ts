@@ -8,7 +8,7 @@ async function logPost(user: string, pass: string) {
 
 	});
 
-	const status = await response.json();
+	let status: number = response.status;
 	console.log(status);
 
 	if (status == 401){
@@ -16,7 +16,7 @@ async function logPost(user: string, pass: string) {
 
 	}
 	if (status == 200){
-		logExists.innerHTML = "Success!";
+		window.location.assign("/");
 	}
 
 	else {
