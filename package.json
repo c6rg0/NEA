@@ -18,7 +18,7 @@
   "directories": {
     "src": "source code",
     "public": "files are are accessed by the server",
-    "views": "HTML files",
+    "views": "EJS files",
     "database": "sqlite3 databases",
     "doc": "docs"
   },

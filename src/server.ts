@@ -73,7 +73,9 @@ declare module "express-session" {
 }
 
 const sessionMiddleware = session({
-	secret: 'r278429@!£$dytcvyubn',
+	// date +%s%N | sha512sum
+	secret: '7f8b901b7b70580f29b1e64296c3ba20e0dc17a29bf50b9eba302e3688cb12b1f666569ae6b412a43d63af9ffa5400833fdac5e1c30abdd8e1a94c06a665dd6b',
+
 	resave: false,
 	saveUninitialized: false,
 });

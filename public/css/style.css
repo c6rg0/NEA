@@ -22,6 +22,77 @@ html, body {
 	overflow: hidden;
 }
 
+.exists {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: #cc241d;
+}
+
+.length {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: #cc241d;
+}
+.nums {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: #cc241d;
+}
+.symbol {
+	text-align: left;
+	font-size: 25px;
+	font-family: ubuntu-medium;
+	color: #cc241d;
+}
+
+a:link {
+	color: #3c3836;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #3c3836;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #7c6f64;
+	background-color: tranparent;
+	text-decoration: underline;
+}
+
+a:active {
+	color: #7c6f64;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+.start_button {
+	color: #ebdbb2;
+	font-size: 60px;
+	font-family: Ubuntu-Regular;
+}
+
+.button_container {
+	color: #ebdbb2;
+	font-size: 60px;
+	font-family: Ubuntu-Regular;
+}
+
+.login-status {
+	text-align: left;
+	vertical-align: text-top;
+	font-size: 35px;
+	font-family: ubuntu-medium;
+	color: #3c3836;
+	text-align: right;
+}
+
 h1 {
 	text-align: left;
 	font-size: 45px;
@@ -57,71 +128,4 @@ p {
 	font-family: ubuntu-medium;
 	color: #3c3836;
 }
-
-.exists {
-	text-align: left;
-	font-size: 25px;
-	font-family: ubuntu-medium;
-	color: #cc241d;
-}
-
-.length {
-	text-align: left;
-	font-size: 25px;
-	font-family: ubuntu-medium;
-	color: #cc241d;
-}
-.nums {
-	text-align: left;
-	font-size: 25px;
-	font-family: ubuntu-medium;
-	color: #cc241d;
-}
-.symbol {
-	text-align: left;
-	font-size: 25px;
-	font-family: ubuntu-medium;
-	color: #cc241d;
-}
-
-
-
-
-a:link {
-	color: #3c3836;
-	background-color: tranparent;
-	text-decoration: none;
-}
-
-a:visited {
-	color: #3c3836;
-	background-color: tranparent;
-	text-decoration: none;
-}
-
-a:hover {
-	color: #7c6f64;
-	background-color: tranparent;
-	text-decoration: underline;
-}
-
-a:active {
-	color: #7c6f64;
-	background-color: tranparent;
-	text-decoration: none;
-}
-
-.start_button {
-	color: #ebdbb2
-	font-size: 60px;
-	font-family: Ubuntu-Regular;
-}
-
-.button_container {
-	color: #ebdbb2
-	font-size: 60px;
-	font-family: Ubuntu-Regular;
-}
-
-
 

@@ -10,7 +10,6 @@ import searchRequest from "./search-request";
 import browse from "./browse";
 import play from "./play";
 import session from "./get-session";
-// import missing from "./404";
 
 const router = express.Router();
 
@@ -23,12 +22,15 @@ router.use("/search-request", searchRequest);
 router.use("/browse", browse);
 router.use("/play", play);
 router.use("/get-session", session);
-// router.use("*", missing);
 
 router.get("/", (req, res) => {
-	// res.sendFile(path.join(__dirname,"..", "views", "index.html"));
-	res.render('index', { name: 'index' } );
-
+	if (!req.session.user){
+		res.render('index', { login_status: "Not logged in" } );
+	}
+	if (req.session.user){
+		let login_status = req.session.user;
+		res.render('index', { login_status: login_status } );
+	}
 });
 
 

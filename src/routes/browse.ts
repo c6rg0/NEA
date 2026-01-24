@@ -14,8 +14,10 @@ declare module "express-session" {
 }
 
 router.get("/", async (req, res) => {
-	res.render('browse', { name: 'browse' } );
-
+	quiz_db.prepare("PRAGMA table_info(Meta)").all();
+	let search  = quiz_db.prepare(`SELECT * FROM Table(Meta) name ORDER BY Asc;`);
+	let search_result = search.run();
+	res.render('browse', { results: 'search_result' } );
 });
 
 export default router;

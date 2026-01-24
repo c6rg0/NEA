@@ -87,7 +87,7 @@ to view the website.*\
 
 - [x] Use fetch API to give users infod: Pass length, use of digits and symbols
 - [x] ../: "Account already exists"
-- [ ] Swap HTML for EJS, and make appropriate front end changes
+- [x] Swap HTML for EJS, and make appropriate front end changes
 
 - [ ] Redesign the quiz database (atm it's a mess)
 - [ ] Make a quiz broswing/searching system
