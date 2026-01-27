@@ -13,12 +13,16 @@ declare module "express-session" {
   }
 }
 
-router.get("/", async (req, res) => {
-	quiz_db.prepare("PRAGMA table_info(Meta)").all();
-	const search  = quiz_db.prepare(`SELECT id, name FROM Meta LIMIT 10;`);
-	const search_result = search.run();
+interface fetch {
+	id: string;
+}
 
-	res.render('browse', { results: search_result } );
+router.get("/:id", async (req, res) => {
+	let id = req.params.id;
+	quiz_db.prepare("PRAGMA table_info(Meta)").all();
+	const quiz_fetch  = quiz_db.prepare(`SELECT * FROM questions;`).get(id) as fetch | undefined;
+	res.render('browse', { results: quiz_fetch } );
+
 });
 
 export default router;
