@@ -4,7 +4,8 @@ import path from "path";
 
 import submitSignup from "./submit-signup";
 import submitLogin from "./submit-login";
-import submitQuizMetadata from "./submit-quiz-metadata";
+import submitQuizTitle from "./submit-title";
+import submitQuizContent from "./submit-content";
 import devMenu from "./dev/dev";
 import dropDatabase from "./dev/dev-clear";
 import searchRequest from "./search-request";
@@ -17,7 +18,8 @@ const router = express.Router();
 
 router.use("/submit-signup", submitSignup);
 router.use("/submit-login", submitLogin);
-router.use("/submit-quiz-metadata", submitQuizMetadata);
+router.use("/submit-title", submitQuizTitle);
+router.use("/submit-content", submitQuizContent);
 router.use("/dev", devMenu);
 router.use("/dev/clear", dropDatabase);
 router.use("/search-request", searchRequest);

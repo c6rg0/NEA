@@ -1,7 +1,6 @@
-//submit-quit-metadata.ts
+//submit-quit-content.ts
 import express from "express";
 import path from "path";
-import bcrypt from 'bcrypt';
 
 const router = express.Router();
 

@@ -94,23 +94,23 @@ app.use((req, res, next) => {
 app.use("/", router);
 
 app.get("/create", (req, res) => {
-	res.redirect('/create/name');
+	res.redirect('/create-title');
 });
 
-app.get("/create/name", (req, res) => {
-	res.render('create-name', { name: 'create-name' } );
+app.get("/create-title", (req, res) => {
+	res.render('create-title');
 });
 
-app.get("/create/content", (req, res) => {
-	res.render('create-content', { name: 'create-content' } );
+app.get("/create-content", (req, res) => {
+	res.render('create-content');
 });
 
 app.get("/account", (req, res) => {
-	res.render('account', { name: 'account' } );
+	res.render('account');
 });
 
 app.get("/signup", (req, res) => {
-	res.render('signup', { name: 'signup' } );
+	res.render('signup');
 });
 
 app.get("/signup-success", (req, res) => {
@@ -118,7 +118,7 @@ app.get("/signup-success", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-	res.render('login', { name: 'login' } );
+	res.render('login' );
 });
 
 app.get("/login-success", (req, res) => {

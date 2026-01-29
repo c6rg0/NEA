@@ -11,16 +11,15 @@ async function logPost(user: string, pass: string) {
 	let status: number = response.status;
 	console.log(status);
 
-	if (status == 401){
+	if (status === 401){
 		logExists.innerHTML = "Incorrect username or password!";
-
-	}
-	if (status == 200){
+		return;
+	} if (status === 200){
 		window.location.assign("/");
-	}
-
-	else {
+		return;
+	} else {
 		logExists.innerHTML = "501";
+		return;
 	}
 
 }
@@ -82,9 +81,11 @@ logForm.addEventListener("submit", (event) => {
 
 	else if(!num){
 		logNums.innerHTML = "Please include at least 1 number!";
+		return;
 	}
 	else if (!symbol){
 		logSymbol.innerHTML = "Please include at least 1 symbol!";
+		return;
 	}
 });
 
