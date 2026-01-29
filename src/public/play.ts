@@ -20,13 +20,13 @@ startButton!.appendChild(startButtonChild);
 
 class quizContent {
 	// q = questions, o = options, a = answers
+	l: number = 4;
 	q: Array<string> = ["Click 1", "Click 2", "Click 3!"];
 	o: Array<string> = ["One", "Two", "Three", "Four"];
 	a: Array<string> = ["One", "Two", "Three", "Four"];
 }
 
 const qz = new quizContent();
-
 
 // Pre-quiz screen 
 
@@ -62,16 +62,32 @@ function verification (round: number, score: number) {
 function object_creation (round: number, score: number) {
 	const buttonContainer = document.getElementById("button_container");
 	
-	/* Display quiz_q[x]*/
-	const newH2 = document.createElement("h3");
-	const q = document.createTextNode(qz.q[round - 1]);
-	newH2.appendChild(q);
-	newH2.id = "question";
-	document.body.insertBefore(newH2, buttonContainer);
+	/* Display qz.q[i]*/
+	const newH3 = document.createElement("h3");
+	const question = document.createTextNode(qz.q[round - 1]);
+	newH3.appendChild(question);
+	newH3.id = "question";
+	document.body.insertBefore(newH3, buttonContainer);
 
-	/* Display quiz_a[x]*/
-	/* Need to add the onclick element/property to the buttons */
+	/* Display qz.a[i]*/
+	let buttons = new Array();
+	let buttons_test = new Array();
+	let buttons_node = new Array();
 
+	for (let i = 0; i < qz.l; i++) { 
+		buttons[i] = document.createElement("BUTTON");
+		buttons_test[i] = (qz.o[i]);
+		buttons_node[i] = document.
+			createTextNode(buttons_test[i]);
+		
+		buttons[i].appendChild(buttons_node[i]);
+		buttons[i].id = ("choice_"+[i]);
+		buttonContainer!.appendChild(buttons[i]);
+	}
+
+	console.log(qz.a[round - 1]);
+
+	/*
 	const a = document.createElement("BUTTON");
 	const a_test = (qz.o[0]);
 	const a_node = document.createTextNode(a_test);
@@ -101,21 +117,26 @@ function object_creation (round: number, score: number) {
 	buttonContainer!.appendChild(d);
 
 	waiting_for_ans(a, b , c, d, a_test, b_test, c_test, d_test, round, score);
-		
+
+       */
+
+	waiting_for_ans(buttons, buttons_test, round, score);
 }
 
-		/* Testing for the answer*/
+		/* Testing for the answer
 function waiting_for_ans(a: HTMLElement, b: HTMLElement, c: HTMLElement, d: HTMLElement, a_test: string, b_test: string, c_test: string, d_test: string, round: number, score: number) {
+*/
+
+function waiting_for_ans(buttons: Array<HTMLElement>, buttons_test: Array<string>, round: number, score: number) {
 
 	function listen() {
 		async function handleClick(choice: string, round: number, score: number) {
 			evaluate(choice, round, score);
 		}
 
-        	a.addEventListener('click', () => handleClick(a_test, round, score));
-        	b.addEventListener('click', () => handleClick(b_test, round, score));
-        	c.addEventListener('click', () => handleClick(c_test, round, score));
-        	d.addEventListener('click', () => handleClick(d_test, round, score));
+		for (let i = 0; i < qz.l; i++) { 
+        	buttons[i].addEventListener('click', () => handleClick(buttons_test[i], round, score));
+		}
 
 	}
 
@@ -140,10 +161,9 @@ function evaluate(choice: string, round: number, score: number) {
 	
 function purge_screen(round: number, score: number) {
 	document.getElementById("question")!.remove();
-	document.getElementById("choice_a")!.remove();
-	document.getElementById("choice_b")!.remove();
-	document.getElementById("choice_c")!.remove();
-	document.getElementById("choice_d")!.remove();
+	for (let i = 0; i < qz.l; i++) { 
+		document.getElementById("choice_"+[i])!.remove();
+	}
 
 	// Restarting the loop of functions
 	verification(round, score);
@@ -180,13 +200,4 @@ function end_screen(round: number, score: number){
  * 		Removing all the existing objects
  * 		Adding a quiz screen (with scores)
  */
-
-
-
-
-
-
-
-
-
 

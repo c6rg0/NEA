@@ -35,5 +35,15 @@
 			<p><%= results %></p>
 		</div>
 
+		<div class="quiz-list">
+			<% browse.forEach(quiz => { %>
+			<div class="quiz-card">
+				<h3><%= quiz.title %></h3>
+				<p><%= quiz.description %></p>
+				<a href="/quiz/<%= quiz.id %>">Start Quiz</a>
+			</div>
+			<% }); %>
+		</div>
+
 </body>
 </html> 

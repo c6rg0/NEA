@@ -21,7 +21,7 @@ router.get("/:id", async (req, res) => {
 	let id = req.params.id;
 	quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	const quiz_fetch  = quiz_db.prepare(`SELECT * FROM questions;`).get(id) as fetch | undefined;
-	res.render('browse', { results: quiz_fetch } );
+	res.render('quiz', { results: quiz_fetch } );
 
 });
 
