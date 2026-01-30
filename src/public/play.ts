@@ -1,3 +1,47 @@
+async function getQuiz() {
+	try {
+		const response = await fetch("http://localhost:8000/get-quiz", {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({}),
+		});
+
+		let status: number = response.status;
+		console.log(status);
+
+		if (status === 204){
+			getErr.innerHTML = "Please login first and retry after you're logged in!";
+			return;
+		}
+
+		if (status === 401){
+			// User error
+			getErr.innerHTML =  "";
+			return;
+		}
+
+		if (status === 409){
+			// Clash with existing data
+			getErr.innerHTML = "";
+			return;
+		}
+
+		if (status === 200){
+			// window.location.assign();
+			return;
+		}
+
+	} catch(error) {
+		console.log("Error"+error);
+		getErr.innerHTML = ("!!Network error!!");
+		return;
+	}
+}
+
+let getErr: HTMLElement;
+
 class quizMeta {
 	name: string = "Python quiz";
 	author: string = "Gabriel";
