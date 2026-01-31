@@ -31,8 +31,12 @@
 		</form>
 
 		<div class="content">
-			<p><a href="/play">Python Quiz</a></h3>
-			<p><%= results %></p>
+			<p><a href="/quiz/0">Python Quiz</a></p>
+		<% results.forEach(item=> { %>
+			<p><a href="/quiz/<%= item.id %>">
+				<%= item.name %>
+			</a></p>
+			<% }); %>
 		</div>
 
 </body>

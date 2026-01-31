@@ -25,7 +25,7 @@ router.use("/dev/clear", dropDatabase);
 router.use("/search-request", searchRequest);
 router.use("/browse", browse);
 router.use("/quiz/:id", quiz);
-router.use("/play", play);
+router.use("/quiz/0", play);
 router.use("/get-session", session);
 
 router.get("/", (req, res) => {

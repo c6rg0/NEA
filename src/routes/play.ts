@@ -16,6 +16,9 @@ declare module "express-session" {
   }
 }
 
+const app = express();
+
+// [/play/0]: quiz testing route
 router.get("/", async (req, res) => {
 	res.render('play', { name: 'play' } );
 
