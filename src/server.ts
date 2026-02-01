@@ -1,7 +1,15 @@
 import express from "express";
-import { Response, NextFunction } from "express";
+// import { Response, NextFunction } from "express";
 const app = express();
 import path from "path";
+import fs from "fs";
+
+// HTTPS setup
+import https from "https";
+let key = fs.readFileSync(__dirname + "/certs/localhost.key");
+let cert = fs.readFileSync(__dirname + "/certs/localhost.crt");
+let credentials = { key: key, cert: cert }
+
 
 app.set('view engine', 'ejs');
 
@@ -143,10 +151,11 @@ app.get("/logout", (req, res) => {
 	req.session.user = { username: "" };
 });
 
-const port = 8000;
-app.listen(port, () => {
+const port = 443;
+let server = https.createServer(credentials);
+server.listen(port, () => {
 	try {
-		console.log("Server's started at http://localhost:8000");
+		console.log("Server's started at https://localhost:443");
 	} catch (err) {
 		console.log(err);
 	}
