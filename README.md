@@ -1,4 +1,6 @@
-# Technologies used:
+# Leetregex - Website for learning and improving regex skills
+
+## Technologies used:
 - Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage
   the compilation of the project, as well as to automate the removal of existing compiled 
   code unrelated to the functionality),
@@ -10,7 +12,7 @@
 
 > Any other things I forgot to mention are stated in package.json.
 
-# Requirements:
+## Requirements:
 - A `UNIX` (MacOS for example) OS or `Linux` distro - If you're using windows\
 you'll have to install `wsl2`: the Windows Subsystem for Linux so that everything\
 works (explanation below).
@@ -22,7 +24,7 @@ I use NixOS on my laptop, a distrubution of linux. Linux being inspired by UNIX\
 has forward slashes ( / ), however windows inconveniently uses back slashes ( \ ).\
 File paths won't work and the server will simply crash.
 
-# How to run the project locally:
+## How to run the project locally:
 *NOTE: "$" is used to represent terminal commands, don't include it in the terminal.*
 
 1. Open up the terminal:\
@@ -70,12 +72,12 @@ to view the website.*\
 > Use `$ npm ci`,
 > it does a clean install, and disregards existsing node modules in the project.
 
-# Checklist:
+## Checklist:
 - [x] Find a way to run a website
 - [x] Create the markdown
-- [x] Create a simple quiz game
-- [x] Create the sql tables
-- [x] Switch to typescript
+- [x] Create a simple quiz to learn JavaScript
+- [x] Create the SQL tables
+- [x] Switch to TypeScript
 
 - [x] Make it possible to insert to database
 - [x] Make a signup system
@@ -85,16 +87,20 @@ to view the website.*\
 - [x] Add session management
 - [x] Split up the routes into seperate files
 
-- [x] Use fetch API to give users infod: Pass length, use of digits and symbols
+- [x] Use fetch API to give users info on the frontend
 - [x] ../: "Account already exists"
 - [x] Swap HTML for EJS, and make appropriate front end changes
 
-- [ ] Redesign the quiz database (atm it's a mess)
-- [ ] Make a quiz broswing/searching system
+- [x] Redesign the database (until further notice)
+- [x] Make a problem broswing system
+- [ ] Make a problem creation system
+- [ ] Make a problem searching system
 - [ ] Finish the quiz creation system
 
-- [ ] Make quizes in database playable (building on top of previously used fetch api)
-- [ ] Allow for complex quiz creation, make algorithms to determine 
-   whether a long written answer is right or wrong.
-- [ ] Make a score/leaderboard system
+- [ ] Use fetch api to fill in the gaps
+- [ ] Make an algorithm to determine regex problem difficulty
+- [ ] Make an elo/pp system to determine user skill
+- [ ] Add leaderboards and other front end features
+- [ ] Finish off the styling
+
 
