@@ -5,11 +5,9 @@ import path from "path";
 const router = express.Router();
 
 import Database from 'better-sqlite3';
-const quiz_db = Database('database/quiz.db', { verbose: console.log });
-const account_db = Database('database/account.db', { verbose: console.log });
+const regex_problems = Database('./database/regex_problems.db', { verbose: console.log });
 
 router.post('/submit-quiz-metadata', (req, res) => {
-	quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	const user_input = req.body;
 	console.log("request:", user_input);
 	if (!user_input || !user_input.name) {
@@ -18,7 +16,11 @@ router.post('/submit-quiz-metadata', (req, res) => {
 	}
 	else{
 		// SQL logic below:
-		const insert = quiz_db.prepare('INSERT INTO Meta (name) VALUES(@name);');
+
+		// name and @name are palceholders, use src/server.ts for reference,
+		// in this case you'll be inputing the description, examples and answer
+		
+		const insert = regex_problems.prepare('INSERT INTO Problems (name) VALUES(@name);');
 		// Using (@name), the statement worked, 
 		// the value was [null] until I changed the html lol
 		insert.run({ name: user_input.name});

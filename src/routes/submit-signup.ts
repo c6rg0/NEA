@@ -1,13 +1,12 @@
 //submit-signup.ts
 import express from "express";
-import path from "path";
+// import path from "path";
 import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
 import Database from 'better-sqlite3';
-const quiz_db = Database('./database/quiz.db', { verbose: console.log });
-const account_db = Database('./database/account.db', { verbose: console.log });
+const regex_problems = Database('./database/regex_problems.db', { verbose: console.log });
 
 declare module 'express-session' {
   interface SessionData {
@@ -20,7 +19,6 @@ interface userPassword {
 }
 
 router.post('/', async (req, res) => {
-	account_db.prepare("PRAGMA table_info(Meta)").all();
 	const user_input = req.body;
 	console.log("request:", user_input);
 	if (!user_input || !user_input.username) {
@@ -31,7 +29,7 @@ router.post('/', async (req, res) => {
 		return res.status(304).send("Password is missing");
 	}
 	
-	const existing_user = account_db.prepare(`SELECT username FROM Logins WHERE username = ?`).get(user_input.username);
+	const existing_user = regex_problems.prepare(`SELECT username FROM Users WHERE username = ?`).get(user_input.username);
 	if (existing_user) {
 		res.status(409).send("Username already exists");
 		console.log("res.status(409).send(username already exists);");
@@ -52,8 +50,8 @@ router.post('/', async (req, res) => {
 			const hashed_pass = await hashPassword(parsed_pass);
 			console.log(hashed_pass);
 
-			const insert = account_db.prepare(`
-				INSERT INTO Logins (username, password) VALUES
+			const insert = regex_problems.prepare(`
+				INSERT INTO Users (username, password) VALUES
 					(@username , @password);`);
 			try {
 				insert.run({ username: user_input.username, password: hashed_pass });

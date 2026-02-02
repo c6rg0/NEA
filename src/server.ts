@@ -1,16 +1,17 @@
 import express from "express";
-import { Response, NextFunction } from "express";
+
+// If the below import doesn't cause errors after being 
+// commented out, delete it:
+// import { Response, NextFunction } from "express"; 
+
 const app = express();
 import path from "path";
 
 app.set('view engine', 'ejs');
 
 import Database from "better-sqlite3";
-const quiz_db = new Database("database/quiz.db", { verbose: console.log });
-const account_db = new Database("database/account.db", { verbose: console.log });
-
-quiz_db.pragma("journal_mode = WAL");
-account_db.pragma("journal_mode = WAL");
+const regex_problems = new Database("database/regex_problems.db", { verbose: console.log });
+regex_problems.pragma("journal_mode = WAL");
 
 import bodyParser from 'body-parser';
 app.use(express.json());
@@ -19,49 +20,40 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Master route import:
 import router from "./routes/index";
 
-quiz_db.exec(`
-	CREATE TABLE IF NOT EXISTS Meta(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT NOT NULL,
-		creator TEXT NOT NULL
+regex_problems.exec(`
+	CREATE TABLE IF NOT EXISTS Problems(
+		problem_id INTEGER PRIMARY KEY AUTOINCREMENT,
+		title TEXT,
+		creator TEXT,
+		diff INTEGER DEFAULT 0, 
+		times_attempted INTEGER DEFAULT 0,
+		times_solved INTEGER DEFAULT 0,
+		time_created INTEGER DEFAULT (strftime('%s', 'now')),
+		instruction TEXT,
+		example TEXT,
+		answer TEXT
 	);
 
-	CREATE TABLE IF NOT EXISTS Settings(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		name TEXT UNIQUE NOT NULL,
-		value TEXT NOT NULL
+	CREATE TABLE IF NOT EXISTS Attempts(
+		attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
+		user_id INTEGER NOT NULL,
+		problem_id INTEGER NOT NULL,
+		solved BOOLEAN NOT NULL,
+		time_taken INTEGER,
+		time_submitted INTEGER,
+		FOREIGN KEY (user_id) REFERENCES Users(user_id),
+		FOREIGN KEY (problem_id) REFERENCES Problem(problem_id) ON DELETE CASCADE
 	);
 
-	CREATE TABLE IF NOT EXISTS Questions(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_text TEXT NOT NULL,
-		category TEXT NOT NULL
-	);
-
-	CREATE TABLE IF NOT EXISTS Options(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_id INTEGER NOT NULL,
-		option_text TEXT NOT NULL,
-		FOREIGN KEY (question_id) REFERENCES Questions(id)
-	);
-
-	CREATE TABLE IF NOT EXISTS Answers(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		question_id INTEGER NOT NULL,
-		option_id INTEGER NOT NULL,
-		FOREIGN KEY (question_id) REFERENCES Questions(id),
-		FOREIGN KEY (option_id) REFERENCES Options(id)
-		
-	);
-`);
-
-account_db.exec(`
-	CREATE TABLE IF NOT EXISTS Logins(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
+	CREATE TABLE IF NOT EXISTS Users(
+		user_id INTEGER PRIMARY KEY AUTOINCREMENT,
 		[username] TEXT UNIQUE NOT NULL,
 		[password] TEXT NOT NULL
 	);
+
 `);
+
+// CREATE INDEX IF NOT EXISTS idx_link_problem ON Link(problem_id);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

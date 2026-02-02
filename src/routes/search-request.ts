@@ -5,8 +5,7 @@ import path from "path";
 const router = express.Router();
 
 import Database from "better-sqlite3";
-const quiz_db = Database("./database/quiz.db", { verbose: console.log });
-const account_db = Database("./database/account.db", { verbose: console.log });
+const regex_problems = Database("./database/regex_problems.db", { verbose: console.log });
 
 declare module "express-session" {
   interface SessionData {
@@ -15,11 +14,10 @@ declare module "express-session" {
 }
 
 router.post("/", async (req, res) => {
-	quiz_db.prepare("PRAGMA table_info(Meta)").all();
 	const user_search = req.body;
 	console.log("Search:", user_search);
 
-	const select_search = quiz_db.prepare(`SELECT name FROM Table(Meta);`).get(user_search.name);
+	const select_search = regex_problems.prepare(`SELECT title FROM Problems;`).get(user_search.name);
 
 	if (select_search) {
 		console.log("Results shown");
