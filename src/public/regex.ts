@@ -1,6 +1,6 @@
-async function getQuiz() {
+async function getProblem() {
 	try {
-		const response = await fetch("http://localhost:8000/get-quiz", {
+		const response = await fetch("http://localhost:8000/get-problem", {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -42,38 +42,31 @@ async function getQuiz() {
 
 let getErr: HTMLElement;
 
-class quizMeta {
-	name: string = "Python quiz";
-	author: string = "Gabriel";
-	button_text: string = "Play";
-}
+const fetchedQ = "";
+const fetchedA = "";
 
-const qm = new quizMeta();
 
-const gameTitle = document.getElementById("game_title");
-const gameTitleChild = document.createTextNode(qm.name);
+// Fetched info goes into the hashmap
+let problem: Map<String, String> = new Map();
+problem.set("title", "");
+problem.set("creator", "me");
+problem.set("question", fetchedQ);
+problem.set("answer", fetchedA);
+
+// These elements should be class objects
+const gameTitle = document.getElementById("title");
+const gameTitleChild = document.createTextNode();
 gameTitle!.appendChild(gameTitleChild);
 
-const gameCreator = document.getElementById("game_creator");
-const gameCreatorChild = document.createTextNode(qm.author);
+const gameCreator = document.getElementById("creator");
+const gameCreatorChild = document.createTextNode();
 gameCreator!.appendChild(gameCreatorChild);
 
 const startButton = document.getElementById("start_button");
-const startButtonChild = document.createTextNode(qm.button_text);
+const startButtonChild = document.createTextNode("Start!");
 startButton!.appendChild(startButtonChild);
 
-class quizContent {
-	// q = questions, o = options, a = answers
-	l: number = 4;
-	q: Array<string> = ["Click 1", "Click 2", "Click 3!"];
-	o: Array<string> = ["One", "Two", "Three", "Four"];
-	a: Array<string> = ["One", "Two", "Three", "Four"];
-}
-
-const qz = new quizContent();
-
 // Pre-quiz screen 
-
 function start_quiz() {
 	document.getElementById("game_title")!.remove(); 
 	// The exclamation mark removes the error stating that -
@@ -85,15 +78,16 @@ function start_quiz() {
 	verification(round, score);
 }
 
-// Field verification:
 // To check if there is any more questions left, 
 // if not, the end screen will be triggered.
+// This will be used for looping around if the
+// user answers incorrectly.
 
 function verification (round: number, score: number) {
 	round ++;
 	// Used for testing:
 	// console.log(round);
-	if ((qz.q[round - 1]) == null){
+	if (){
 		console.log("The game has finished");
 		end_screen(round, score);
 	}
@@ -102,11 +96,18 @@ function verification (round: number, score: number) {
 	}
 }
 
-// Quiz 
+// (Former Quiz (?)) 
 function object_creation (round: number, score: number) {
 	const buttonContainer = document.getElementById("button_container");
 	
 	/* Display qz.q[i]*/
+	// Should be using oop for this,
+	
+	// To display:
+	// - Question/problem to solve
+	// - One example
+	// - Test cases that have to be passed
+	
 	const newH3 = document.createElement("h3");
 	const question = document.createTextNode(qz.q[round - 1]);
 	newH3.appendChild(question);
@@ -114,10 +115,13 @@ function object_creation (round: number, score: number) {
 	document.body.insertBefore(newH3, buttonContainer);
 
 	/* Display qz.a[i]*/
+	// No buttons will be involved, besides submitting answer
+
 	let buttons = new Array();
 	let buttons_test = new Array();
 	let buttons_node = new Array();
 
+	// This here is unecessary
 	for (let i = 0; i < qz.l; i++) { 
 		buttons[i] = document.createElement("BUTTON");
 		buttons_test[i] = (qz.o[i]);
@@ -131,46 +135,10 @@ function object_creation (round: number, score: number) {
 
 	console.log(qz.a[round - 1]);
 
-	/*
-	const a = document.createElement("BUTTON");
-	const a_test = (qz.o[0]);
-	const a_node = document.createTextNode(a_test);
-	a.appendChild(a_node);
-	a.id = 'choice_a';
-	buttonContainer!.appendChild(a);
-	
-	const b = document.createElement("BUTTON");
-	const b_test = (qz.o[1]);
-	const b_node = document.createTextNode(b_test);
-	b.appendChild(b_node);
-	b.id = 'choice_b';
-	buttonContainer!.appendChild(b);
-
-	const c = document.createElement("BUTTON");
-	const c_test = (qz.o[2]);
-	const c_node = document.createTextNode(c_test);
-	c.appendChild(c_node);
-	c.id = 'choice_c';
-	buttonContainer!.appendChild(c);
-
-	const d = document.createElement("BUTTON");
-	const d_test = (qz.o[3]);
-	const d_node = document.createTextNode(d_test);
-	d.appendChild(d_node);
-	d.id = 'choice_d';
-	buttonContainer!.appendChild(d);
-
-	waiting_for_ans(a, b , c, d, a_test, b_test, c_test, d_test, round, score);
-
-       */
-
 	waiting_for_ans(buttons, buttons_test, round, score);
 }
 
-		/* Testing for the answer
-function waiting_for_ans(a: HTMLElement, b: HTMLElement, c: HTMLElement, d: HTMLElement, a_test: string, b_test: string, c_test: string, d_test: string, round: number, score: number) {
-*/
-
+// This should be good to keep, just needs simplified i/o
 function waiting_for_ans(buttons: Array<HTMLElement>, buttons_test: Array<string>, round: number, score: number) {
 
 	function listen() {
@@ -187,7 +155,7 @@ function waiting_for_ans(buttons: Array<HTMLElement>, buttons_test: Array<string
 	listen();
 }
 
-// Test the answer
+// Test the answer: 3 times using the testcass.
 function evaluate(choice: string, round: number, score: number) {
 	let answer: string  = (qz.a[round - 1]);
 	if (choice == answer) {
@@ -209,7 +177,6 @@ function purge_screen(round: number, score: number) {
 		document.getElementById("choice_"+[i])!.remove();
 	}
 
-	// Restarting the loop of functions
 	verification(round, score);
 }
 
@@ -221,27 +188,15 @@ function end_screen(round: number, score: number){
 	end_banner.appendChild(end_banner_node);
 	end_banner.id = "endBanner";
 	endScreenContainer!.appendChild(end_banner);
-	
-	// I haven't made a score tracker yet
 	const end_score = document.createElement('h4');
+
+	// This here will be a lot more complex: 
+	// The score will be submitted, server evaluates using algorithm,
+	// the score gets sent back to client.
 	const end_score_node = document.createTextNode("Your score is " + score + "/" + (round - 1) + "!");
+
 	end_score.appendChild(end_score_node);
 	end_score.id = "endScore";
 	endScreenContainer!.appendChild(end_score);
 }
-
-/* Structure:
- *	Displaying a "Play" screen (before the quiz),
- *	Removing the existing objects,
- *	Adding the buttons,
- * 	Adding text for the quiz,
- * 	Waiting for the answer,
- * 	Checking for incorrect/correct answer,
- * 	Keeping track of the score
- * 	Displaying so,
- * 	Next question (looping),
- * 	When the quiz is done:
- * 		Removing all the existing objects
- * 		Adding a quiz screen (with scores)
- */
 

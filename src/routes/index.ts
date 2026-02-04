@@ -9,7 +9,7 @@ import submitQuizContent from "./submit-content";
 import searchRequest from "./search-request";
 import browse from "./browse";
 import quiz from "./quiz";
-import play from "./play";
+import solve from "./solve";
 import session from "./get-session";
 
 const router = express.Router();
@@ -20,8 +20,8 @@ router.use("/submit-title", submitQuizTitle);
 router.use("/submit-content", submitQuizContent);
 router.use("/search-request", searchRequest);
 router.use("/browse", browse);
-router.use("/quiz/:id", quiz);
-router.use("/quiz/0", play);
+router.use("/solve/:id", quiz);
+router.use("/solve/0", solve);
 router.use("/get-session", session);
 
 router.get("/", (req, res) => {
