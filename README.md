@@ -75,9 +75,8 @@ to view the website.*\
 ## To do list:
 - [x] Redesign the database (until further notice)
 - [x] Make a broswing system
-- [ ] Make a problem creation system
+- [x] Make a problem creation system
 - [ ] Make a problem searching system
-- [ ] Finish the quiz creation system
 
 - [ ] Use fetch api to fill in the gaps
 - [ ] Make an algorithm to determine regex problem difficulty

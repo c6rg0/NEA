@@ -15,11 +15,15 @@
 
 		<div class="content">
 			<h1>Regex practice site</h1>
-			<p><a href="/browse">Play</a></h2>
+			<p><% if(login==false){ %>
+				<a href="/login"><%= login_status %>
+			<% } %> </p>
+			<p><% if(login==true){ %>
+				<a href="/user/<%= login_status %>"><%= login_status %>
+			<% } %> </p>
+			<p><a href="/browse">Browse</a></h2>
 			<p><a href="/create" >Create</a></h3>
 			<p><a href="/account" >Login</a></h4>
-			<p><a href="https://github.com/c6rg0/NEA">Github</a></h5>
-			<p><b href="/login"><%= login_status %></p>
 		</div>
 
 </body>
