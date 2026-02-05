@@ -1,3 +1,13 @@
+/* Plan:
+ * Input: Regex problem content (TABLE(Problems)), User session data (?)
+ * 	Type of data: Problem (intstructions), Example, Answer
+ *
+ * Output: 
+
+
+
+
+
 /*
 
 async function getProblem() {

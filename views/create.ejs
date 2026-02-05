@@ -15,12 +15,28 @@
 
 	<script src="/particles/particles_app.js"></script>
 
-	<h1><a href="/">Simple quiz site</a> | Quiz creation</h1>
+	<h1><a href="/">Regex practice site</a> | Problem creation</h1>
 
-	<form id="title_form">
+	<form id="problem_form">
 		<p>
-			<label for="title">Quiz title:</label>
+			<label for="title">Problem title:</label>
 			<input name="title" id="title"/>
+		</p>
+		<p>
+			<label for="instr">Instruction:</label>
+			<input name="instr" id="instr"/>
+		</p>
+		<p>
+			<label for="exmpl">Example:</label>
+			<input name="exmpl" id="exmpl"/>
+		</p>
+		<p>
+			<label for="answ">Answer:</label>
+			<input name="answ" id="answ"/>
+		</p>
+		<p>
+			<label for="test">Test case:</label>
+			<input name="test" id="test"/>
 		</p>
 
 		<div class="button_container">
@@ -30,7 +46,7 @@
 	</form>
 	
 	<div id="result"></div>
-	<p id="exists" style="color: red"></p>
+	<p id="errP" style="color: red"></p>
 	
 	<script src="js/create.js"></script>
 

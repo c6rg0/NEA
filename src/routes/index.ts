@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.use("/submit-signup", submitSignup);
 router.use("/submit-login", submitLogin);
-router.use("/create", createProblem);
+router.use("/create-problem", createProblem);
 router.use("/search-request", searchRequest);
 router.use("/browse", browse);
 router.use("/solve/:id", quiz);

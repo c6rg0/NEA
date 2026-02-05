@@ -16,8 +16,8 @@
   "type": "typescript",
   "main": "server.js",
   "directories": {
-    "src": "source code",
-    "public": "files are are accessed by the server",
+    "src": "typescript source code",
+    "public": "js and css files",
     "views": "EJS files",
     "database": "sqlite3 databases",
     "doc": "docs"
@@ -28,14 +28,12 @@
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
-    "@types/socket.io": "^3.0.1",
     "bcrypt": "^6.0.0",
     "better-sqlite3": "^12.4.1",
     "body-parser": "^2.2.0",
     "ejs": "^3.1.10",
     "express": "^5.2.1",
     "express-session": "^1.18.2",
-    "https": "^1.0.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {

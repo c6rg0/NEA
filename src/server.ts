@@ -23,15 +23,17 @@ import router from "./routes/index";
 regex_problems.exec(`
 	CREATE TABLE IF NOT EXISTS Problems(
 		problem_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		title TEXT,
-		creator TEXT,
+		title TEXT NOT NULL,
+		creator TEXT NOT NULL,
+		instruction TEXT NOT NULL,
+		example TEXT NOT NULL,
+		answer TEXT NOT NULL,
+		test TEXT NOT NULL,
 		diff INTEGER DEFAULT 0, 
 		times_attempted INTEGER DEFAULT 0,
 		times_solved INTEGER DEFAULT 0,
-		time_created INTEGER DEFAULT (strftime('%s', 'now')),
-		instruction TEXT,
-		example TEXT,
-		answer TEXT
+		time_created INTEGER DEFAULT (strftime('%s', 'now'))
+
 	);
 
 	CREATE TABLE IF NOT EXISTS Attempts(
@@ -84,6 +86,14 @@ app.use((req, res, next) => {
 
 
 app.use("/", router);
+
+app.get("/create", (req, res) => {
+	res.render('create');
+});
+
+app.get("/create-success", (req, res) => {
+	res.render('create-success');
+});
 
 app.get("/account", (req, res) => {
 	res.render('account');

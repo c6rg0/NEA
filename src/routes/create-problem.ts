@@ -21,12 +21,10 @@ router.post('/', (req, res) => {
 			return res.status(204).send("Title is required");
 		} else {
 			console.log("session_user: ", req.session.user);
+			
 			// SQL logic:
-			const insert_title = regex_problems.prepare('INSERT INTO Problems (title, creator) VALUES(@title, @creator);');
-			insert_title.run({ title: user_input.title, creator: req.session.user});
-
-			const insert_problem = regex_problems.prepare('INSERT INTO Problems (instruction, example, answer) VALUES(@instruction, @example, @answer);');
-			insert_problem.run({ instruction: user_input.instruction, example: user_input.example });
+			const insert_problem = regex_problems.prepare('INSERT INTO Problems (title, creator, instruction, example, answer, test) VALUES(@title, @creator, @instruction, @example, @answer, @test);');
+			insert_problem.run({ title: user_input.title, creator: req.session.user, instruction: user_input.instruction, example: user_input.example, answer: user_input.answer, test: user_input.test });
 			
 			console.log("Data inserted successfully");
 			console.log();
