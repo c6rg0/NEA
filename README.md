@@ -72,27 +72,9 @@ to view the website.*\
 > Use `$ npm ci`,
 > it does a clean install, and disregards existsing node modules in the project.
 
-## Checklist:
-- [x] Find a way to run a website
-- [x] Create the markdown
-- [x] Create a simple quiz to learn JavaScript
-- [x] Create the SQL tables
-- [x] Switch to TypeScript
-
-- [x] Make it possible to insert to database
-- [x] Make a signup system
-- [x] Make a login system
-- [x] Mitigate SQL injection vulns
-- [x] Hash new passwords
-- [x] Add session management
-- [x] Split up the routes into seperate files
-
-- [x] Use fetch API to give users info on the frontend
-- [x] ../: "Account already exists"
-- [x] Swap HTML for EJS, and make appropriate front end changes
-
+## To do list:
 - [x] Redesign the database (until further notice)
-- [x] Make a problem broswing system
+- [x] Make a broswing system
 - [ ] Make a problem creation system
 - [ ] Make a problem searching system
 - [ ] Finish the quiz creation system

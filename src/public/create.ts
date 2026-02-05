@@ -1,10 +1,11 @@
 async function titlePost(input_title: string) {
 	try {
-		const response = await fetch("http://localhost:8000/submit-title", {
+		const response = await fetch("http://localhost:8000/submit-problem", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			// this will need everything, not just title
 			body: JSON.stringify({title: input_title}),
 		});
 

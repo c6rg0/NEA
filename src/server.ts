@@ -85,18 +85,6 @@ app.use((req, res, next) => {
 
 app.use("/", router);
 
-app.get("/create", (req, res) => {
-	res.redirect('/create-title');
-});
-
-app.get("/create-title", (req, res) => {
-	res.render('create-title');
-});
-
-app.get("/create-content", (req, res) => {
-	res.render('create-content');
-});
-
 app.get("/account", (req, res) => {
 	res.render('account');
 });

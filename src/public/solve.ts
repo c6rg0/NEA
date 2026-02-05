@@ -1,3 +1,5 @@
+/*
+
 async function getProblem() {
 	try {
 		const response = await fetch("http://localhost:8000/get-problem", {
@@ -53,7 +55,8 @@ problem.set("creator", "me");
 problem.set("question", fetchedQ);
 problem.set("answer", fetchedA);
 
-// These elements should be class objects
+// This all could realistically be replaced with ejs
+/*
 const gameTitle = document.getElementById("title");
 const gameTitleChild = document.createTextNode();
 gameTitle!.appendChild(gameTitleChild);
@@ -65,7 +68,9 @@ gameCreator!.appendChild(gameCreatorChild);
 const startButton = document.getElementById("start_button");
 const startButtonChild = document.createTextNode("Start!");
 startButton!.appendChild(startButtonChild);
+*/
 
+/*
 // Pre-quiz screen 
 function start_quiz() {
 	document.getElementById("game_title")!.remove(); 
@@ -108,46 +113,26 @@ function object_creation (round: number, score: number) {
 	// - One example
 	// - Test cases that have to be passed
 	
+	/*
 	const newH3 = document.createElement("h3");
-	const question = document.createTextNode(qz.q[round - 1]);
+	// const question = document.createTextNode(qz.q[round - 1]);
 	newH3.appendChild(question);
 	newH3.id = "question";
 	document.body.insertBefore(newH3, buttonContainer);
 
-	/* Display qz.a[i]*/
-	// No buttons will be involved, besides submitting answer
-
-	let buttons = new Array();
-	let buttons_test = new Array();
-	let buttons_node = new Array();
-
-	// This here is unecessary
-	for (let i = 0; i < qz.l; i++) { 
-		buttons[i] = document.createElement("BUTTON");
-		buttons_test[i] = (qz.o[i]);
-		buttons_node[i] = document.
-			createTextNode(buttons_test[i]);
-		
-		buttons[i].appendChild(buttons_node[i]);
-		buttons[i].id = ("choice_"+[i]);
-		buttonContainer!.appendChild(buttons[i]);
-	}
-
-	console.log(qz.a[round - 1]);
-
-	waiting_for_ans(buttons, buttons_test, round, score);
+	waiting_for_ans();
 }
 
 // This should be good to keep, just needs simplified i/o
-function waiting_for_ans(buttons: Array<HTMLElement>, buttons_test: Array<string>, round: number, score: number) {
+function waiting_for_ans() {
 
 	function listen() {
-		async function handleClick(choice: string, round: number, score: number) {
-			evaluate(choice, round, score);
+		async function handleClick(choice: string) {
+			evaluate(choice);
 		}
 
 		for (let i = 0; i < qz.l; i++) { 
-        	buttons[i].addEventListener('click', () => handleClick(buttons_test[i], round, score));
+        	button.addEventListener('click', () => handleClick(buttons_test[i], round, score));
 		}
 
 	}
@@ -173,10 +158,6 @@ function evaluate(choice: string, round: number, score: number) {
 	
 function purge_screen(round: number, score: number) {
 	document.getElementById("question")!.remove();
-	for (let i = 0; i < qz.l; i++) { 
-		document.getElementById("choice_"+[i])!.remove();
-	}
-
 	verification(round, score);
 }
 
@@ -199,4 +180,4 @@ function end_screen(round: number, score: number){
 	end_score.id = "endScore";
 	endScreenContainer!.appendChild(end_score);
 }
-
+*/
