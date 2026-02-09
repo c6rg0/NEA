@@ -7,7 +7,6 @@ import createProblem from "./create-problem";
 import searchRequest from "./search-request";
 import browse from "./browse";
 import problem from "./problem";
-import solve from "./solve";
 import session from "./get-session";
 
 const router = express.Router();
@@ -17,8 +16,7 @@ router.use("/submit-login", submitLogin);
 router.use("/create-problem", createProblem);
 router.use("/search-request", searchRequest);
 router.use("/browse", browse);
-router.use("/problem/:id", problem);
-router.use("/solve/0", solve);
+router.use("/problem/", problem);
 router.use("/get-session", session);
 
 router.get("/", (req, res) => {

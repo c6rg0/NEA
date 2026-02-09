@@ -3,12 +3,7 @@
  * 	Type of data: Problem (intstructions), Example, Answer
  *
  * Output: 
-
-
-
-
-
-/*
+*/
 
 async function getProblem() {
 	try {
@@ -52,11 +47,13 @@ async function getProblem() {
 	}
 }
 
+let url: string = window.location.href;
+console.log(url);
+
 let getErr: HTMLElement;
 
 const fetchedQ = "";
 const fetchedA = "";
-
 
 // Fetched info goes into the hashmap
 let problem: Map<String, String> = new Map();
@@ -65,22 +62,6 @@ problem.set("creator", "me");
 problem.set("question", fetchedQ);
 problem.set("answer", fetchedA);
 
-// This all could realistically be replaced with ejs
-/*
-const gameTitle = document.getElementById("title");
-const gameTitleChild = document.createTextNode();
-gameTitle!.appendChild(gameTitleChild);
-
-const gameCreator = document.getElementById("creator");
-const gameCreatorChild = document.createTextNode();
-gameCreator!.appendChild(gameCreatorChild);
-
-const startButton = document.getElementById("start_button");
-const startButtonChild = document.createTextNode("Start!");
-startButton!.appendChild(startButtonChild);
-*/
-
-/*
 // Pre-quiz screen 
 function start_quiz() {
 	document.getElementById("game_title")!.remove(); 
@@ -88,7 +69,7 @@ function start_quiz() {
 	// ('game_title' is 'possibly null').
 	document.getElementById("game_creator")!.remove();
 	document.getElementById("start_button")!.remove();
-	let round = 0;
+let round = 0;
 	let score = 0;
 	verification(round, score);
 }
@@ -102,13 +83,13 @@ function verification (round: number, score: number) {
 	round ++;
 	// Used for testing:
 	// console.log(round);
-	if (){
+	// if {
 		console.log("The game has finished");
 		end_screen(round, score);
-	}
-	else{
-		object_creation(round, score);
-	}
+	// }
+	// else{
+	//	object_creation(round, score);
+	// }
 }
 
 // (Former Quiz (?)) 
@@ -123,13 +104,6 @@ function object_creation (round: number, score: number) {
 	// - One example
 	// - Test cases that have to be passed
 	
-	/*
-	const newH3 = document.createElement("h3");
-	// const question = document.createTextNode(qz.q[round - 1]);
-	newH3.appendChild(question);
-	newH3.id = "question";
-	document.body.insertBefore(newH3, buttonContainer);
-
 	waiting_for_ans();
 }
 
@@ -151,24 +125,21 @@ function waiting_for_ans() {
 }
 
 // Test the answer: 3 times using the testcass.
-function evaluate(choice: string, round: number, score: number) {
-	let answer: string  = (qz.a[round - 1]);
+function evaluate(choice: string) {
+	let answer: string  = "";
 	if (choice == answer) {
-		score++;
 		console.log('Correct');
-		console.log(score + '/' + round);
-		purge_screen(round, score);
+		purge_screen();
 	}
 	else {
 		console.log("Wrong");
-		console.log(score + '/' + round);
-		purge_screen(round, score)
+		purge_screen()
 	}
 }
 	
-function purge_screen(round: number, score: number) {
+function purge_screen() {
 	document.getElementById("question")!.remove();
-	verification(round, score);
+	verification();
 }
 
 function end_screen(round: number, score: number){
@@ -190,4 +161,4 @@ function end_screen(round: number, score: number){
 	end_score.id = "endScore";
 	endScreenContainer!.appendChild(end_score);
 }
-*/
+
