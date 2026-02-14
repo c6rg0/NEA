@@ -7,6 +7,7 @@ import createProblem from "./create-problem";
 import searchRequest from "./search-request";
 import browse from "./browse";
 import problem from "./problem";
+import getProblem from "./get-problem";
 import session from "./get-session";
 
 const router = express.Router();
@@ -17,7 +18,9 @@ router.use("/create-problem", createProblem);
 router.use("/search-request", searchRequest);
 router.use("/browse", browse);
 router.use("/problem/", problem);
+router.use("/get-problem", getProblem);
 router.use("/get-session", session);
+
 
 router.get("/", (req, res) => {
 	if (!req.session.user){

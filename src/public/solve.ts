@@ -5,39 +5,36 @@
  * Output: 
 */
 
-async function getProblem() {
+async function getProblem(url_id: unknown) {
 	try {
-		const response = await fetch("http://localhost:8000/get-problem", {
+		const getUrl = "http://localhost:8000/get-problem/" + url_id;
+		const response: any = await fetch(getUrl, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({}),
 		});
 
 		let status: number = response.status;
 		console.log(status);
 
 		if (status === 204){
-			getErr.innerHTML = "Please login first and retry after you're logged in!";
-			return;
+			// problem_id not found (either got removed or out of bounds)
+			window.location.assign("http://localhost:8000/browse")
+			// Idealy a dedicated page should be in place ^^^^^^ 
 		}
 
-		if (status === 401){
-			// User error
-			getErr.innerHTML =  "";
-			return;
-		}
-
-		if (status === 409){
-			// Clash with existing data
-			getErr.innerHTML = "";
-			return;
+		if (status === 406){
+			// no problem_id supplied
+			window.location.assign("http://localhost:8000/browse")
 		}
 
 		if (status === 200){
-			// window.location.assign();
-			return;
+			// acceptable response
+			console.log("Server responded... (response beneath)");
+			const data = await response.json(); // you have to parse the response
+			console.log(data);
+			return data;
 		}
 
 	} catch(error) {
@@ -47,23 +44,30 @@ async function getProblem() {
 	}
 }
 
-let url: string = window.location.href;
-console.log(url);
+const full_url = window.location.href;
+const re_for_id = /\d+$/;
+const url_id = re_for_id.exec(full_url);
+console.log(url_id);
+const getErr = document.
+	getElementById('title') as HTMLParagraphElement;
 
-let getErr: HTMLElement;
-
-const fetchedQ = "";
-const fetchedA = "";
+const data: any = getProblem(url_id); // this has poor type safety;
+				      // to be fixed with an interface
 
 // Fetched info goes into the hashmap
 let problem: Map<String, String> = new Map();
 problem.set("title", "");
 problem.set("creator", "me");
-problem.set("question", fetchedQ);
-problem.set("answer", fetchedA);
+problem.set("question", "");
+problem.set("answer", "");
 
-// Pre-quiz screen 
-function start_quiz() {
+/*
+
+// Fetch info using fetch api (w function getProblem)
+
+
+// Pre-solving screen - setup elements (title, creator, instructions, examples, testcases etc) 
+function start_solving() {
 	document.getElementById("game_title")!.remove(); 
 	// The exclamation mark removes the error stating that -
 	// ('game_title' is 'possibly null').
@@ -96,7 +100,7 @@ function verification (round: number, score: number) {
 function object_creation (round: number, score: number) {
 	const buttonContainer = document.getElementById("button_container");
 	
-	/* Display qz.q[i]*/
+	// Display qz.q[i]
 	// Should be using oop for this,
 	
 	// To display:
@@ -162,3 +166,4 @@ function end_screen(round: number, score: number){
 	endScreenContainer!.appendChild(end_score);
 }
 
+EOF */

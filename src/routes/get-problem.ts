@@ -17,7 +17,18 @@ interface fetch {
 }
 
 router.get("/:id", async(req, res) => {
-	res.render("problem");
+	const id  = req.params.id;
+	console.log(req.params.id);
+
+	try{
+		const response  = regex_problems.prepare(`SELECT * FROM Problems WHERE problem_id = ?;`).get(id) as fetch | undefined;
+
+		return res.send({response: response});
+
+	} catch(error){
+		return res.status(500).send(error + ": unkown error");
+	}
+	
 });
 
 export default router;
