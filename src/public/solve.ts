@@ -1,10 +1,3 @@
-/* Plan:
- * Input: Regex problem content (TABLE(Problems)), User session data (?)
- * 	Type of data: Problem (intstructions), Example, Answer
- *
- * Output: 
-*/
-
 async function getProblem(url_id: unknown) {
 	try {
 		const getUrl = "http://localhost:8000/get-problem/" + url_id;
@@ -16,7 +9,6 @@ async function getProblem(url_id: unknown) {
 		});
 
 		let status: number = response.status;
-		console.log(status);
 
 		if (status === 204){
 			// problem_id not found (either got removed or out of bounds)
@@ -24,111 +16,104 @@ async function getProblem(url_id: unknown) {
 			// Idealy a dedicated page should be in place ^^^^^^ 
 		}
 
-		if (status === 406){
-			// no problem_id supplied
-			window.location.assign("http://localhost:8000/browse")
-		}
-
 		if (status === 200){
 			// acceptable response
-			console.log("Server responded... (response beneath)");
-			const data = await response.json(); // you have to parse the response
-			console.log(data);
-			return data;
+			console.log("Server responded correctly (?) ...");
+			const problem_data = await response.json(); // you have to parse the response
+			setup_screen(problem_data);
+		}
+
+		if (status === 400){
+			// unacceptable user problem
+			console.log("Server responded incorrectly; status =" + status);
+		}
+
+		if (status === 500){
+			// unacceptable server problem
+			console.log("Server responded incorrectly; status =" + status);
 		}
 
 	} catch(error) {
 		console.log("Error"+error);
+
+		const getErr = document.
+			getElementById('title') as HTMLParagraphElement;
+
 		getErr.innerHTML = ("!!Network error!!");
 		return;
 	}
 }
 
+// Fetch the problem_id represented by the end of the url
+// using regex, then shipping it with fetch api to get
+// problem data
+
 const full_url = window.location.href;
 const re_for_id = /\d+$/;
 const url_id = re_for_id.exec(full_url);
-console.log(url_id);
-const getErr = document.
-	getElementById('title') as HTMLParagraphElement;
 
-const data: any = getProblem(url_id); // this has poor type safety;
-				      // to be fixed with an interface
+getProblem(url_id);
 
-// Fetched info goes into the hashmap
-let problem: Map<String, String> = new Map();
-problem.set("title", "");
-problem.set("creator", "me");
-problem.set("question", "");
-problem.set("answer", "");
+interface problem_types{
+	// problem_id: number,
+	title: string,
+	// creator: string,
+	// instruction: string,
+	
+	example: string,
+	test: string,
 
-/*
+	// diff: number,
+	// times_attempted: number,
+	// times_solved: number,
+	// time_created: number,
+}
 
-// Fetch info using fetch api (w function getProblem)
+function setup_screen(problem_data: unknown){
+	console.log((problem_data as problem_types).title);
 
-
-// Pre-solving screen - setup elements (title, creator, instructions, examples, testcases etc) 
-function start_solving() {
+	// The below elements should be created using ejs.
+	// FETCH API is only for data that should be 
+	// evaluated or submitted, not displayed.
+	//
+	// For example:
+	// the test case(s) and answer(s) that are produced 
+	// from the cases will be used in this file, but 
+	// anything less than that is the templates job.
+	
 	document.getElementById("game_title")!.remove(); 
-	// The exclamation mark removes the error stating that -
-	// ('game_title' is 'possibly null').
 	document.getElementById("game_creator")!.remove();
 	document.getElementById("start_button")!.remove();
-let round = 0;
-	let score = 0;
-	verification(round, score);
-}
 
-// To check if there is any more questions left, 
-// if not, the end screen will be triggered.
-// This will be used for looping around if the
-// user answers incorrectly.
-
-function verification (round: number, score: number) {
-	round ++;
-	// Used for testing:
-	// console.log(round);
-	// if {
-		console.log("The game has finished");
-		end_screen(round, score);
-	// }
-	// else{
-	//	object_creation(round, score);
-	// }
-}
-
-// (Former Quiz (?)) 
-function object_creation (round: number, score: number) {
 	const buttonContainer = document.getElementById("button_container");
-	
-	// Display qz.q[i]
-	// Should be using oop for this,
-	
-	// To display:
-	// - Question/problem to solve
-	// - One example
-	// - Test cases that have to be passed
-	
-	waiting_for_ans();
+
+	let button = document.createElement("BUTTON");
+	let button_node = document.
+		createTextNode("Sumbit");
+
+	button.appendChild(button_node);
+	button.id = ("submit_button");
+	buttonContainer!.appendChild(button);
+
+	waiting_for_ans(button);
 }
 
-// This should be good to keep, just needs simplified i/o
-function waiting_for_ans() {
+function waiting_for_ans(button: HTMLElement) {
 
 	function listen() {
-		async function handleClick(choice: string) {
-			evaluate(choice);
+		async function handleClick(solution: string) {
+			evaluate(solution);
 		}
 
-		for (let i = 0; i < qz.l; i++) { 
-        	button.addEventListener('click', () => handleClick(buttons_test[i], round, score));
-		}
+		let solution: string = "read html text element -> put it in solution here";
+		button.addEventListener('click', () => handleClick(solution));
 
 	}
 
 	listen();
 }
 
-// Test the answer: 3 times using the testcass.
+
 function evaluate(choice: string) {
 	let answer: string  = "";
 	if (choice == answer) {
@@ -140,12 +125,14 @@ function evaluate(choice: string) {
 		purge_screen()
 	}
 }
-	
+
 function purge_screen() {
+	
 	document.getElementById("question")!.remove();
 	verification();
 }
 
+/*
 function end_screen(round: number, score: number){
 	const endScreenContainer = document.getElementById('end_screen_container');
 
