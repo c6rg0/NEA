@@ -10,10 +10,10 @@ async function getProblem(url_id: unknown) {
 
 		let status: number = response.status;
 
-		if (status === 204){
+		if (status === 404){
 			// problem_id not found (either got removed or out of bounds)
 			window.location.assign("http://localhost:8000/browse")
-			// Idealy a dedicated page should be in place ^^^^^^ 
+			return;
 		}
 
 		if (status === 200){
@@ -44,24 +44,22 @@ async function getProblem(url_id: unknown) {
 	}
 }
 
-// Fetch the problem_id represented by the end of the url
-// using regex, then shipping it with fetch api to get
-// problem data
+// Getting the problem_id from the url, and fetching 
 
 const full_url = window.location.href;
 const re_for_id = /\d+$/;
 const url_id = re_for_id.exec(full_url);
-
 getProblem(url_id);
 
 interface problem_types{
 	// problem_id: number,
-	title: string,
+	// title: string,
 	// creator: string,
 	// instruction: string,
-	
-	example: string,
-	test: string,
+
+	example1: string,
+	example2: string,
+	example3: string,
 
 	// diff: number,
 	// times_attempted: number,
@@ -70,14 +68,14 @@ interface problem_types{
 }
 
 function setup_screen(problem_data: unknown){
-	console.log((problem_data as problem_types).title);
+	// console.log((problem_data as problem_types).title);
 
-	// The below elements should be created using ejs.
+	// The below elements should be displayed using ejs.
 	// FETCH API is only for data that should be 
 	// evaluated or submitted, not displayed.
 	//
 	// For example:
-	// the test case(s) and answer(s) that are produced 
+	// the test cases and answer that are produced 
 	// from the cases will be used in this file, but 
 	// anything less than that is the templates job.
 	

@@ -28,7 +28,6 @@ regex_problems.exec(`
 		instruction TEXT NOT NULL,
 		example TEXT NOT NULL,
 		answer TEXT NOT NULL,
-		test TEXT NOT NULL,
 		diff INTEGER DEFAULT 0, 
 		times_attempted INTEGER DEFAULT 0,
 		times_solved INTEGER DEFAULT 0,
