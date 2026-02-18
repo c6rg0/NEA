@@ -53,7 +53,7 @@ problemForm.addEventListener("submit", (event) => {
 	const input_example  = (document.getElementById("exmpl") as HTMLInputElement).value;
 	// Conversion from string to RegExp
 	const input_answer = (document.getElementById("answ") as HTMLInputElement).value;
-	const conv_answer = new RegExp(input_answer, "g");
+	const conv_answer = new RegExp(input_answer);
 
 	if (input_title.trim() === "" || input_instr.trim() === "" || input_answer.trim() === "" || input_example.trim() === "") {
         	errormsg.innerHTML = 

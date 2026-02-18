@@ -127,7 +127,8 @@ function evaluate(choice: string) {
 function purge_screen() {
 	
 	document.getElementById("question")!.remove();
-	verification();
+	return;
+	// verification();
 }
 
 /*
