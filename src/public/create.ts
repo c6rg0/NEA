@@ -80,11 +80,12 @@ function regexTest(input_title: string, input_instr: string, input_answer: strin
 function regexConfirm(input_title: string, input_instr: string, input_answer: string, conv_answer: RegExp, input_example: string){
 
 	// Delete visual elements
-	document.getElementById("problem_form")!.remove();
-	document.getElementById("title")!.remove();
-	document.getElementById("instr")!.remove();
-	document.getElementById("exmpl")!.remove();
-	document.getElementById("answ")!.remove();
+	try{
+		document.getElementById("problem_form")!.remove();
+		document.getElementById("cheatsheet")!.remove();
+	} catch (err) {
+		console.log("Oopsie, something has gone wrong --> " + err)
+	}
 
 	// Have the user confirm whether the data and solution match,
 	// If not revert screen.
@@ -92,20 +93,28 @@ function regexConfirm(input_title: string, input_instr: string, input_answer: st
 	let array = conv_answer.exec(input_example);
 
 	if (array === null){
-		return;
+		window.location.assign("http://localhost:8000/create");
+		return errormsg.innerHTML = ("Regex expression didn't match anything, please try again!");
+
 	} else {
-		console.log("Is" + array + "the data out of" + input_example + "that you want to use?");	
+		console.log("Is [" + array + "] the data out of [" + input_example + "] that you want to use?");	
 	}
 
+	const confirmMsg = document.getElementById("confirm_msg");
+	const confirmMsgChild = document.createTextNode("Is [" + array + "] the data out of [" + input_example + "] that you want to use?");
+	confirmMsg!.appendChild(confirmMsgChild);
+	
 	const buttonContainer = document.getElementById("button_container");
-
 	let button = document.createElement("BUTTON");
 	let button_node = document.
 		createTextNode("Sumbit");
-
 	button.appendChild(button_node);
 	button.id = ("submit_button");
 	buttonContainer!.appendChild(button);
 
-	problemPost(input_title, input_instr, input_answer, input_example);
+	button.onclick = function() {
+		return problemPost(input_title, input_instr, input_answer, input_example);
+
+	}
+	
 }

@@ -21,7 +21,7 @@ router.get("/:id", async(req, res) => {
 	console.log(req.params.id);
 
 	try{
-		const response  = regex_problems.prepare(`SELECT example1, example2, example3 FROM Problems WHERE problem_id = ?;`).get(id) as fetch | undefined;
+		const response  = regex_problems.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(id) as fetch | undefined;
 
 		return res.send({response: response});
 
