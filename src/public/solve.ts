@@ -1,3 +1,8 @@
+interface types {
+	example: string,
+	answer: string,
+}
+
 async function getProblem(url_id: unknown) {
 	try {
 		const getUrl = "http://localhost:8000/get-problem/" + url_id;
@@ -20,7 +25,7 @@ async function getProblem(url_id: unknown) {
 			// acceptable response
 			console.log("Server responded correctly (?) ...");
 			const problem_data = await response.json(); // you have to parse the response
-			setup_screen(problem_data);
+			return problem_data;
 		}
 
 		if (status === 400){
@@ -44,94 +49,34 @@ async function getProblem(url_id: unknown) {
 	}
 }
 
-// Getting the problem_id from the url, and fetching 
-
 const full_url = window.location.href;
+// Select last digit patern in a string
 const re_for_id = /\d+$/;
 const url_id = re_for_id.exec(full_url);
-getProblem(url_id);
+const problem_data: unknown = getProblem(url_id);
 
-interface problem_types{
-	// problem_id: number,
-	// title: string,
-	// creator: string,
-	// instruction: string,
+const solutionForm = document.
+	getElementById("solution_form") as HTMLFormElement;
 
-	example1: string,
-	example2: string,
-	example3: string,
+solutionForm.addEventListener("submit", (event) => {
+	event.preventDefault();
 
-	// diff: number,
-	// times_attempted: number,
-	// times_solved: number,
-	// time_created: number,
-}
+        const user_solution = (document.getElementById("solution") as HTMLInputElement).value;
 
-function setup_screen(problem_data: unknown){
-	// console.log((problem_data as problem_types).title);
+	document.getElementById("creator")!.remove();
+	document.getElementById("instruction")!.remove();
+	document.getElementById("solution_form")!.remove();
 
-	// The below elements should be displayed using ejs.
-	// FETCH API is only for data that should be 
-	// evaluated or submitted, not displayed.
-	//
-	// For example:
-	// the test cases and answer that are produced 
-	// from the cases will be used in this file, but 
-	// anything less than that is the templates job.
-	
-	document.getElementById("game_title")!.remove(); 
-	document.getElementById("game_creator")!.remove();
-	document.getElementById("start_button")!.remove();
-
-	const buttonContainer = document.getElementById("button_container");
-
-	let button = document.createElement("BUTTON");
-	let button_node = document.
-		createTextNode("Sumbit");
-
-	button.appendChild(button_node);
-	button.id = ("submit_button");
-	buttonContainer!.appendChild(button);
-
-	waiting_for_ans(button);
-}
-
-function waiting_for_ans(button: HTMLElement) {
-
-	function listen() {
-		async function handleClick(solution: string) {
-			evaluate(solution);
-		}
-
-		let solution: string = "read html text element -> put it in solution here";
-		button.addEventListener('click', () => handleClick(solution));
-
-	}
-
-	listen();
-}
+	evaluate(user_solution, problem_data);
+});
 
 
-function evaluate(choice: string) {
-	let answer: string  = "";
-	if (choice == answer) {
-		console.log('Correct');
-		purge_screen();
-	}
-	else {
-		console.log("Wrong");
-		purge_screen()
-	}
-}
-
-function purge_screen() {
-	
-	document.getElementById("question")!.remove();
+function evaluate(user_solution: string, problem_data: unknown) {
+	console.log(user_solution);
+	console.log((problem_data as types).answer);
 	return;
-	// verification();
 }
 
-/*
 function end_screen(round: number, score: number){
 	const endScreenContainer = document.getElementById('end_screen_container');
 
@@ -152,4 +97,3 @@ function end_screen(round: number, score: number){
 	endScreenContainer!.appendChild(end_score);
 }
 
-EOF */

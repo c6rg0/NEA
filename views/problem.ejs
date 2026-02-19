@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="UTF-8">
-	<title>Solving...</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="shortcut icon" href="#">
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<title>Solving...</title>
+		<link rel="stylesheet" href="/css/style.css">
+		<link rel="shortcut icon" href="#">
+	</head>
 
-<body>
+	<body>
 
-	<div id="particles-js"></div>
+		<div id="particles-js"></div>
 
-	<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
-	<script src="/particles/particles_app.js"></script> 
+		<script src="/particles/particles_app.js"></script> 
 
-	<h1 id="title"><%= response.title %></h1>
-	<p id="creator"><%= response.creator %></p>
-	<button id="start_button" onclick="setup_screen()"></button>
+		<p><a href="/">click here to go back</a></p>
 
-	<div id="button_container" class="button_container"></div>
-	<div id="end_screen_container"></div>
+		<h1 id="title"><%= response.title %></h1>
+		<p id="creator"> Created by: <%= response.creator %></p>
+		<p id="instruction"> Instruction: <%= response.instruction %></p>
 
-	<script src="../js/solve.js"></script>
-</body>
+		<form id="solution_form">
+			<p>
+			<label for="solution">your answer goes here</label>
+			<input name="solution" id="solution"/>
+			</p>
+
+			<div class="button_container">
+				<button type="submit">Lets test that out!</button>
+			</div>
+		</form>
+
+
+		<div id="button_container" class="button_container"></div>
+		<div id="end_screen_container"></div>
+
+		<script src="../js/solve.js"></script>
+	</body>
 
 </html> 
