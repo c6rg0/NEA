@@ -12,18 +12,21 @@ declare module "express-session" {
   }
 }
 
-interface fetch {
-	id: string;
+interface types {
+	example: string,
+	answer: string,
 }
+
 
 router.get("/:id", async(req, res) => {
 	const id  = req.params.id;
 	console.log(req.params.id);
 
 	try{
-		const response  = regex_problems.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(id) as fetch | undefined;
+		const response  = regex_problems.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(id);
+		console.log("answer = " + (response as types).answer);
 
-		return res.send({response: response});
+		return res.json(response);
 
 	} catch(error){
 		return res.status(500).send(error + ": unkown error");

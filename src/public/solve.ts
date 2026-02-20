@@ -24,7 +24,8 @@ async function getProblem(url_id: unknown) {
 		if (status === 200){
 			// acceptable response
 			console.log("Server responded correctly (?) ...");
-			const problem_data = await response.json(); // you have to parse the response
+			const problem_data = await response.json() as types; 
+			console.log(problem_data);
 			return problem_data;
 		}
 
@@ -49,33 +50,36 @@ async function getProblem(url_id: unknown) {
 	}
 }
 
-const full_url = window.location.href;
-// Select last digit patern in a string
-const re_for_id = /\d+$/;
-const url_id = re_for_id.exec(full_url);
-const problem_data: unknown = getProblem(url_id);
+(async () => {
+	const full_url = window.location.href;
+	// Select last digit patern in a string
+	const re_for_id = /\d+$/;
+	const url_id = re_for_id.exec(full_url);
+	const problem_data = await getProblem(url_id);
 
-const solutionForm = document.
-	getElementById("solution_form") as HTMLFormElement;
+	const solutionForm = document.
+		getElementById("solution_form") as HTMLFormElement;
 
-solutionForm.addEventListener("submit", (event) => {
-	event.preventDefault();
+	if (problem_data){
+		solutionForm.addEventListener("submit", (event) => {
+			event.preventDefault();
 
-        const user_solution = (document.getElementById("solution") as HTMLInputElement).value;
+			const user_solution = (document.getElementById("solution") as HTMLInputElement).value;
 
-	document.getElementById("creator")!.remove();
-	document.getElementById("instruction")!.remove();
-	document.getElementById("solution_form")!.remove();
+			document.getElementById("creator")!.remove();
+			document.getElementById("instruction")!.remove();
+			document.getElementById("solution_form")!.remove();
 
-	evaluate(user_solution, problem_data);
-});
+			evaluate(user_solution, problem_data);
+		});
+	}
+})();
 
-
-function evaluate(user_solution: string, problem_data: unknown) {
+function evaluate(user_solution: string, problem_data: any){
 	console.log(user_solution);
-	console.log((problem_data as types).answer);
-	return;
+	console.log(problem_data.answer);
 }
+
 
 function end_screen(round: number, score: number){
 	const endScreenContainer = document.getElementById('end_screen_container');
