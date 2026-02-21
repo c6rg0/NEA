@@ -23,7 +23,6 @@ async function getProblem(url_id: unknown) {
 
 		if (status === 200){
 			// acceptable response
-			console.log("Server responded correctly (?) ...");
 			const problem_data = await response.json() as types; 
 			console.log(problem_data);
 			return problem_data;
@@ -72,41 +71,61 @@ async function getProblem(url_id: unknown) {
 
 			if (user_solution === problem_data.answer) {
 				const correct: boolean = true;
-				end_screen(correct, problem_data);
+				end_screen(correct, problem_data, user_solution);
 			} else {
 				const correct: boolean = false;
-				end_screen(correct, problem_data);
+				end_screen(correct, problem_data, user_solution);
 			}
 		});
 	}
 })();
 
-function end_screen(correct: boolean, problem_data: any){
+function end_screen(correct: boolean, problem_data: any, user_solution: any){
 	document.getElementById("creator")!.remove();
 	document.getElementById("instruction")!.remove();
 	document.getElementById("solution_form")!.remove();
 
+	const rightOrWrong = document.
+		getElementById("right_or_wrong");
+	let rwChild: any;
+
+	if (correct === true){
+		rwChild = document.createTextNode("Your answer is correct, yay!");
+
+	} if (correct === false){
+		rwChild = document.createTextNode("Your answer is wrong.");
+	}
+
+	rightOrWrong!.appendChild(rwChild);
+
+	const dbExample = document.
+		getElementById("example_data");
+	const deChild = document.
+		createTextNode("Test case: " + problem_data.example);
+	dbExample!.appendChild(deChild);
+
+	const dbSolution = document.
+		getElementById("db_solution");
+	const dbRegex = new RegExp(problem_data.answer);
+	const dbRegexedData: any = dbRegex.
+		exec(problem_data.example);
+	const dsChild = document.
+		createTextNode("DB answer: " + dbRegexedData);
+	dbSolution!.appendChild(dsChild);
+	
+	const userAttempt = document.
+		getElementById("user_attempt");
+	const uaRegex = new RegExp(user_solution);
+	const uaRegexedData: any = uaRegex.
+		exec(problem_data.example);
+	const uaChild = document.
+		createTextNode("Your answer: " + uaRegexedData);
+	userAttempt!.appendChild(uaChild);
+
+	// Collect data regarding attempts, or whether
+	// a completion took place.
+	// Needs a new (potentially multiple) route(s).
+	
+	return;
 }
-
-/*
-   function end_screen(round: number, score: number){
-   const endScreenContainer = document.getElementById('end_screen_container');
-
-   const end_banner = document.createElement('h3');
-   const end_banner_node = document.createTextNode("Congratulations!");
-   end_banner.appendChild(end_banner_node);
-   end_banner.id = "endBanner";
-   endScreenContainer!.appendChild(end_banner);
-   const end_score = document.createElement('h4');
-
-// This here will be a lot more complex: 
-// The score will be submitted, server evaluates using algorithm,
-// the score gets sent back to client.
-const end_score_node = document.createTextNode("Your score is " + score + "/" + (round - 1) + "!");
-
-end_score.appendChild(end_score_node);
-end_score.id = "endScore";
-endScreenContainer!.appendChild(end_score);
-}
-*/
 
