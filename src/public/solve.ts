@@ -66,38 +66,47 @@ async function getProblem(url_id: unknown) {
 
 			const user_solution = (document.getElementById("solution") as HTMLInputElement).value;
 
-			document.getElementById("creator")!.remove();
-			document.getElementById("instruction")!.remove();
-			document.getElementById("solution_form")!.remove();
+			// Remove once tested
+			console.log(user_solution);
+			console.log(problem_data.answer);
 
-			evaluate(user_solution, problem_data);
+			if (user_solution === problem_data.answer) {
+				const correct: boolean = true;
+				end_screen(correct, problem_data);
+			} else {
+				const correct: boolean = false;
+				end_screen(correct, problem_data);
+			}
 		});
 	}
 })();
 
-function evaluate(user_solution: string, problem_data: any){
-	console.log(user_solution);
-	console.log(problem_data.answer);
+function end_screen(correct: boolean, problem_data: any){
+	document.getElementById("creator")!.remove();
+	document.getElementById("instruction")!.remove();
+	document.getElementById("solution_form")!.remove();
+
 }
 
+/*
+   function end_screen(round: number, score: number){
+   const endScreenContainer = document.getElementById('end_screen_container');
 
-function end_screen(round: number, score: number){
-	const endScreenContainer = document.getElementById('end_screen_container');
+   const end_banner = document.createElement('h3');
+   const end_banner_node = document.createTextNode("Congratulations!");
+   end_banner.appendChild(end_banner_node);
+   end_banner.id = "endBanner";
+   endScreenContainer!.appendChild(end_banner);
+   const end_score = document.createElement('h4');
 
-	const end_banner = document.createElement('h3');
-	const end_banner_node = document.createTextNode("Congratulations!");
-	end_banner.appendChild(end_banner_node);
-	end_banner.id = "endBanner";
-	endScreenContainer!.appendChild(end_banner);
-	const end_score = document.createElement('h4');
+// This here will be a lot more complex: 
+// The score will be submitted, server evaluates using algorithm,
+// the score gets sent back to client.
+const end_score_node = document.createTextNode("Your score is " + score + "/" + (round - 1) + "!");
 
-	// This here will be a lot more complex: 
-	// The score will be submitted, server evaluates using algorithm,
-	// the score gets sent back to client.
-	const end_score_node = document.createTextNode("Your score is " + score + "/" + (round - 1) + "!");
-
-	end_score.appendChild(end_score_node);
-	end_score.id = "endScore";
-	endScreenContainer!.appendChild(end_score);
+end_score.appendChild(end_score_node);
+end_score.id = "endScore";
+endScreenContainer!.appendChild(end_score);
 }
+*/
 
