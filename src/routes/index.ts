@@ -9,6 +9,7 @@ import browse from "./browse";
 import problem from "./problem";
 import getProblem from "./get-problem";
 import session from "./get-session";
+import attempt from "./submit-attempt";
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.use("/browse", browse);
 router.use("/problem/", problem);
 router.use("/get-problem", getProblem);
 router.use("/get-session", session);
-
+router.use("/submit-attempt", attempt);
 
 router.get("/", (req, res) => {
 	if (!req.session.user){

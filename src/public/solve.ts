@@ -49,6 +49,41 @@ async function getProblem(url_id: unknown) {
 	}
 }
 
+async function submitAttempt() {
+	try {
+		const postUrl = "http://localhost:8000/submit-attempt";
+		const response: any = await fetch(postUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		let status: number = response.status;
+
+		if (status === 200){
+			// acceptable response
+			const problem_data = await response.json() as types; 
+			console.log(problem_data);
+			return problem_data;
+		}
+
+		if (status === 400){
+			console.log("Server responded incorrectly; status =" + status);
+		}
+
+		if (status === 500){
+			// unacceptable server problem
+			console.log("Server responded incorrectly; status =" + status);
+		}
+
+	} catch(error) {
+		console.log("Couldn't submit attempt --> " + error);
+		return;
+	}
+}
+
+
 (async () => {
 	const full_url = window.location.href;
 	// Select last digit patern in a string
@@ -64,10 +99,6 @@ async function getProblem(url_id: unknown) {
 			event.preventDefault();
 
 			const user_solution = (document.getElementById("solution") as HTMLInputElement).value;
-
-			// Remove once tested
-			console.log(user_solution);
-			console.log(problem_data.answer);
 
 			if (user_solution === problem_data.answer) {
 				const correct: boolean = true;
@@ -110,7 +141,7 @@ function end_screen(correct: boolean, problem_data: any, user_solution: any){
 	const dbRegexedData: any = dbRegex.
 		exec(problem_data.example);
 	const dsChild = document.
-		createTextNode("DB answer: " + dbRegexedData);
+		createTextNode("Intended result: " + dbRegexedData);
 	dbSolution!.appendChild(dsChild);
 	
 	const userAttempt = document.
@@ -119,7 +150,7 @@ function end_screen(correct: boolean, problem_data: any, user_solution: any){
 	const uaRegexedData: any = uaRegex.
 		exec(problem_data.example);
 	const uaChild = document.
-		createTextNode("Your answer: " + uaRegexedData);
+		createTextNode("Your result: " + uaRegexedData);
 	userAttempt!.appendChild(uaChild);
 
 	// Collect data regarding attempts, or whether
