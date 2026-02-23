@@ -16,7 +16,7 @@
 
 		<script src="/particles/particles_app.js"></script> 
 
-		<p><a href="/">click here to go back</a></p>
+		<p><a href="/browse/">click here to go back</a></p>
 
 		<h1 id="title"><%= response.title %></h1>
 		<p id="creator"> Created by: <%= response.creator %></p>
@@ -24,7 +24,7 @@
 
 		<form id="solution_form">
 			<p>
-			<label for="solution">your answer goes here</label>
+			<label for="solution">Your answer goes here --> </label>
 			<input name="solution" id="solution"/>
 			</p>
 
@@ -41,6 +41,8 @@
 		<p id="example_data"></p>
 		<p id="db_solution"></p>
 		<p id="user_attempt"></p>
+
+		<button hidden id="try_again" href="/solve/<%= response.problem_id %>">Retry</button>
 
 		<script src="../js/solve.js"></script>
 	</body>

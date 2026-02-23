@@ -24,22 +24,24 @@ async function getProblem(url_id: unknown) {
 		if (status === 200){
 			// acceptable response
 			const problem_data = await response.json() as types; 
-			console.log(problem_data);
 			return problem_data;
 		}
 
 		if (status === 400){
 			// unacceptable user problem
 			console.log("Server responded incorrectly; status =" + status);
+			window.location.assign("http://localhost:8000/browse")
+			return;
 		}
 
 		if (status === 500){
 			// unacceptable server problem
 			console.log("Server responded incorrectly; status =" + status);
+			return;
 		}
 
 	} catch(error) {
-		console.log("Error"+error);
+		console.log("Error --> " + error);
 
 		const getErr = document.
 			getElementById('title') as HTMLParagraphElement;
@@ -49,13 +51,14 @@ async function getProblem(url_id: unknown) {
 	}
 }
 
-async function submitAttempt() {
+async function submitAttempt(url_id: any, correct: boolean) {
 	try {
-		const postUrl = "http://localhost:8000/submit-attempt";
-		const response: any = await fetch(postUrl, {
+		const getUrl = "http://localhost:8000/submit-attempt/" + url_id;
+		const response: any = await fetch(getUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
+			body: JSON.stringify({correct: correct}),
 			},
 		});
 
@@ -63,22 +66,22 @@ async function submitAttempt() {
 
 		if (status === 200){
 			// acceptable response
-			const problem_data = await response.json() as types; 
-			console.log(problem_data);
-			return problem_data;
+			return;
 		}
 
 		if (status === 400){
 			console.log("Server responded incorrectly; status =" + status);
+			return;
 		}
 
 		if (status === 500){
 			// unacceptable server problem
 			console.log("Server responded incorrectly; status =" + status);
+			return;
 		}
 
 	} catch(error) {
-		console.log("Couldn't submit attempt --> " + error);
+		console.log(error);
 		return;
 	}
 }
@@ -100,18 +103,23 @@ async function submitAttempt() {
 
 			const user_solution = (document.getElementById("solution") as HTMLInputElement).value;
 
-			if (user_solution === problem_data.answer) {
-				const correct: boolean = true;
-				end_screen(correct, problem_data, user_solution);
-			} else {
-				const correct: boolean = false;
-				end_screen(correct, problem_data, user_solution);
+			if (user_solution){
+				if (user_solution === problem_data.answer) {
+					const correct: boolean = true;
+					result_screen(url_id, correct, problem_data, user_solution);
+				} else {
+					const correct: boolean = false;
+					result_screen(url_id, correct, problem_data, user_solution);
+				}
+			}
+			else {
+				return;
 			}
 		});
 	}
 })();
 
-function end_screen(correct: boolean, problem_data: any, user_solution: any){
+function result_screen(url_id: any, correct: boolean, problem_data: any, user_solution: any){
 	document.getElementById("creator")!.remove();
 	document.getElementById("instruction")!.remove();
 	document.getElementById("solution_form")!.remove();
@@ -132,7 +140,7 @@ function end_screen(correct: boolean, problem_data: any, user_solution: any){
 	const dbExample = document.
 		getElementById("example_data");
 	const deChild = document.
-		createTextNode("Test case: " + problem_data.example);
+		createTextNode("Test case: { " + problem_data.example + " }");
 	dbExample!.appendChild(deChild);
 
 	const dbSolution = document.
@@ -141,7 +149,7 @@ function end_screen(correct: boolean, problem_data: any, user_solution: any){
 	const dbRegexedData: any = dbRegex.
 		exec(problem_data.example);
 	const dsChild = document.
-		createTextNode("Intended result: " + dbRegexedData);
+		createTextNode("Intended result: { " + dbRegexedData + " }");
 	dbSolution!.appendChild(dsChild);
 	
 	const userAttempt = document.
@@ -150,13 +158,14 @@ function end_screen(correct: boolean, problem_data: any, user_solution: any){
 	const uaRegexedData: any = uaRegex.
 		exec(problem_data.example);
 	const uaChild = document.
-		createTextNode("Your result: " + uaRegexedData);
+		createTextNode("Your result: { " + uaRegexedData + " }");
 	userAttempt!.appendChild(uaChild);
 
-	// Collect data regarding attempts, or whether
-	// a completion took place.
-	// Needs a new (potentially multiple) route(s).
-	
+	submitAttempt(url_id, correct);
+
+	const tryAgain = document.getElementById("try_again");
+	tryAgain!.style.visibility = "visible";
+
 	return;
 }
 

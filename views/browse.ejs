@@ -32,11 +32,10 @@
 		</form>
 
 		<div class="content">
-			<p><a href="/problem/0">Wildcard</a></p>
 			<% results.forEach(i=> { %>
-			<p><a href="/problem/<%= i.problem_id %>">
-				<%= i.title %>
-			</a></p>
+				<p><a href="/problem/<%= i.problem_id %>">
+					<%= i.title %>
+				</a></p>
 			<% }); %>
 		</div>
 

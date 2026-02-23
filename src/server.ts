@@ -1,9 +1,4 @@
 import express from "express";
-
-// If the below import doesn't cause errors after being 
-// commented out, delete it:
-// import { Response, NextFunction } from "express"; 
-
 const app = express();
 import path from "path";
 
@@ -62,7 +57,7 @@ import session from "express-session";
 declare module "express-session" {
 	interface SessionData {
 		user: { username: string};
-  	}
+	}
 }
 
 const sessionMiddleware = session({
@@ -79,7 +74,7 @@ if (cookiePerm == true) {
 }
 
 app.use((req, res, next) => {
-	console.log('Session', req.session);
+	console.log("User: " + req.session.user);
 	next();
 });
 
