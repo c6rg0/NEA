@@ -4,6 +4,8 @@ const router = express.Router();
 import Database from 'better-sqlite3';
 const regex_problems = Database('./database/regex_problems.db', { verbose: console.log });
 
+import util from 'node:util';
+
 declare module 'express-session' {
 	interface SessionData {
 		user: { username: string };
@@ -14,6 +16,9 @@ router.post('/:id', async (req, res) => {
 	const id  = req.params.id;
 	let user = req.session.user;
 	let correct = req.body;
+
+	console.log("Correct? -> " + correct);
+	console.log(util.inspect(req.body, {showHidden: true, depth: null}));
 
 	const update_attempts = regex_problems.prepare('UPDATE problems SET times_attempted = times_attempted + 1 WHERE problem_id = (@id);');
 	update_attempts.run({id: id});

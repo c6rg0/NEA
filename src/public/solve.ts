@@ -3,9 +3,9 @@ interface types {
 	answer: string,
 }
 
-async function getProblem(url_id: unknown) {
+async function getProblem(urlId: unknown) {
 	try {
-		const getUrl = "http://localhost:8000/get-problem/" + url_id;
+		const getUrl = "http://localhost:8000/get-problem/" + urlId;
 		const response: any = await fetch(getUrl, {
 			method: 'GET',
 			headers: {
@@ -51,14 +51,14 @@ async function getProblem(url_id: unknown) {
 	}
 }
 
-async function submitAttempt(url_id: any, correct: boolean) {
+async function submitAttempt(urlId: any, correct: boolean) {
 	try {
-		const getUrl = "http://localhost:8000/submit-attempt/" + url_id;
-		const response: any = await fetch(getUrl, {
+		const getUrl = "http://localhost:8000/submit-attempt/" + urlId;
+		const response = await fetch(getUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-			body: JSON.stringify({correct: correct}),
+				body: JSON.stringify({correct: correct}),
 			},
 		});
 
@@ -86,30 +86,44 @@ async function submitAttempt(url_id: any, correct: boolean) {
 	}
 }
 
+class Data {
+	private reForId: RegExp = /\d+$/
+	public urlId: any 
+	public problemData: any
+
+	async fetchData(fullUrl: string){
+		this.urlId = this.reForId.exec(fullUrl)
+		this.problemData = await getProblem(this.urlId)
+	}
+
+	async submitAttempt(fullUrl: string, correct: boolean){
+		this.urlId = this.reForId.exec(fullUrl);
+		console.log(correct);
+		submitAttempt(this.urlId, correct);
+	}
+}
 
 (async () => {
-	const full_url = window.location.href;
-	// Select last digit patern in a string
-	const re_for_id = /\d+$/;
-	const url_id = re_for_id.exec(full_url);
-	const problem_data = await getProblem(url_id);
+	const fullUrl = window.location.href;
+	const D = new Data();
+	await D.fetchData(fullUrl);
 
 	const solutionForm = document.
 		getElementById("solution_form") as HTMLFormElement;
 
-	if (problem_data){
+	if (D.fetchData != null){
 		solutionForm.addEventListener("submit", (event) => {
 			event.preventDefault();
 
-			const user_solution = (document.getElementById("solution") as HTMLInputElement).value;
+			const userSolution = (document.getElementById("solution") as HTMLInputElement).value;
 
-			if (user_solution){
-				if (user_solution === problem_data.answer) {
+			if (userSolution){
+				if (userSolution === D.problemData.answer) {
 					const correct: boolean = true;
-					result_screen(url_id, correct, problem_data, user_solution);
+					resultsScreen(fullUrl, correct, D, userSolution);
 				} else {
 					const correct: boolean = false;
-					result_screen(url_id, correct, problem_data, user_solution);
+					resultsScreen(fullUrl, correct, D, userSolution);
 				}
 			}
 			else {
@@ -117,9 +131,10 @@ async function submitAttempt(url_id: any, correct: boolean) {
 			}
 		});
 	}
+
 })();
 
-function result_screen(url_id: any, correct: boolean, problem_data: any, user_solution: any){
+function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: any){
 	document.getElementById("creator")!.remove();
 	document.getElementById("instruction")!.remove();
 	document.getElementById("solution_form")!.remove();
@@ -140,28 +155,28 @@ function result_screen(url_id: any, correct: boolean, problem_data: any, user_so
 	const dbExample = document.
 		getElementById("example_data");
 	const deChild = document.
-		createTextNode("Test case: { " + problem_data.example + " }");
+		createTextNode("Test case: { " + D.problemData.example + " }");
 	dbExample!.appendChild(deChild);
 
 	const dbSolution = document.
 		getElementById("db_solution");
-	const dbRegex = new RegExp(problem_data.answer);
+	const dbRegex = new RegExp(D.problemData.answer);
 	const dbRegexedData: any = dbRegex.
-		exec(problem_data.example);
+		exec(D.problemData.example);
 	const dsChild = document.
 		createTextNode("Intended result: { " + dbRegexedData + " }");
 	dbSolution!.appendChild(dsChild);
-	
+
 	const userAttempt = document.
 		getElementById("user_attempt");
-	const uaRegex = new RegExp(user_solution);
+	const uaRegex = new RegExp(userSolution);
 	const uaRegexedData: any = uaRegex.
-		exec(problem_data.example);
+		exec(D.problemData.example);
 	const uaChild = document.
 		createTextNode("Your result: { " + uaRegexedData + " }");
 	userAttempt!.appendChild(uaChild);
 
-	submitAttempt(url_id, correct);
+	D.submitAttempt(fullUrl, correct);
 
 	const tryAgain = document.getElementById("try_again");
 	tryAgain!.style.visibility = "visible";

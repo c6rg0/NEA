@@ -14,7 +14,7 @@
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-color: #fbf1c7;
+	background-color: #282828;
 	z-index: -1;	
 }
 
@@ -49,25 +49,25 @@ html, body {
 }
 
 a:link {
-	color: #3c3836;
+	color: #d5c4a1;
 	background-color: tranparent;
 	text-decoration: none;
 }
 
 a:visited {
-	color: #3c3836;
+	color: #d5c4a1;
 	background-color: tranparent;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #7c6f64;
+	color: #d5c4a1;
 	background-color: tranparent;
 	text-decoration: underline;
 }
 
 a:active {
-	color: #7c6f64;
+	color: #d5c4a1;
 	background-color: tranparent;
 	text-decoration: none;
 }
@@ -89,7 +89,7 @@ a:active {
 	vertical-align: text-top;
 	font-size: 35px;
 	font-family: ubuntu-medium;
-	color: #3c3836;
+	color: #ebdbb2;
 	text-align: right;
 }
 
@@ -97,7 +97,7 @@ h1 {
 	text-align: left;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: #3c3836;
+	color: #ebdbb2;
 
 }
 
@@ -105,27 +105,27 @@ h2 {
 	text-align: left;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: #3c3836;
+	color: #ebdbb2;
 }
 
 h3 {
 	text-align: center;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: #3c3836;
+	color: #ebdbb2;
 }
 
 h4 {
 	text-align: center;
 	font-size: 45px;
 	font-family: ubuntu-medium;
-	color: #3c3836;
+	color: #ebdbb2;
 }
 
 p {
 	text-align: left;
 	font-size: 35px;
 	font-family: ubuntu-medium;
-	color: #3c3836;
+	color: #ebdbb2;
 }
 

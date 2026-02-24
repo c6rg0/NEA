@@ -77,9 +77,8 @@ to view the website.*\
 - [x] Make a broswing system
 - [x] Make a problem creation system
 - [ ] Make a problem searching system
-- [ ] Make solving problems possible (quiz.ts -> solve.ts)
+- [x] Make solving problems possible (quiz.ts -> solve.ts)
 
-- [ ] Use fetch api to fill in any gaps
 - [ ] Make an algorithm to determine regex problem difficulty
 - [ ] Make an elo/pp system to determine user skill
 - [ ] Add leaderboards and other front end features
