@@ -43,6 +43,7 @@ regex_problems.exec(`
 
 	CREATE TABLE IF NOT EXISTS Users(
 		user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+		elo INTEGER DEFAULT 1500,
 		[username] TEXT UNIQUE NOT NULL,
 		[password] TEXT NOT NULL
 	);
