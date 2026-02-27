@@ -1,51 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="UTF-8">
-	<title>Create a quiz</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="shortcut icon" href="#">
+	<head>
+		<meta charset="UTF-8">
+		<title>Create a quiz</title>
+		<link rel="shortcut icon" href="#">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/style.css">
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/">Regex practice site</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav nav-underline">
+						<li class="nav-item">
+							<a class="nav-link" href="/browse">Browse</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="/create">Create</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link "href="/account">Account</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 
-</head>
+		<p id="cheatsheet"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet">(JS regex cheatsheet)</a></p>
+		<p>NOTE: Do not include delimiters.</p>
 
-<body>
+		<form id="problem_form">
+			<div class="mb-3">
+			<p>
+			<label for="title" class="form-label">Problem title:</label>
+			<input name="title" id="title" class="form-control"/>
+			</p>
+			</div>
 
-	<h1><a href="/">Regex practice site</a> | Problem creation</h1>
-	<h2 id="cheatsheet" ><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet"></a> 
-		JavaScript regex cheatsheet</h2>
+			<div class="mb-3">
+			<p>
+			<label for="instr" class="form-label">Instruction:</label>
+			<input name="instr" id="instr" class="form-control"/>
+			</p>
+			</div>
 
-	<form id="problem_form">
-		<p>
-			<label for="title">Problem title:</label>
-			<input name="title" id="title"/>
-		</p>
-		<p>
-			<label for="instr">Instruction:</label>
-			<input name="instr" id="instr"/>
-		</p>
-		<p>
-			<label for="answ">Answer:</label>
-			<input name="answ" id="answ"/>
-		</p>
-		<p>
-			<label for="exmpl">Data to use regex on:</label>
-			<input name="exmpl" id="exmpl"/>
-		</p>
+			<div class="mb-3">
+			<p>
+			<label for="answ" class="form-label">Answer:</label>
+			<input name="answ" id="answ" class="form-control"/>
+			</p>
+			</div>
+
+			<div class="mb-3">
+			<p>
+			<label for="exmpl" class="form-label">Data to use regex on:</label>
+			<input name="exmpl" id="exmpl" class="form-control"/>
+			</p>
+			</div>
+
 			<div class="button_container">
-			<button type="submit">submit</button>
-		</div>
+				<button type="submit" class="form-control">submit</button>
+			</div>
 
-	</form>
-	
-	<div id="result"></div>
-	<p id="errP" style="color: red"></p>
-	
+		</form>
 
-	<h2 id="confirm_msg" ></h2>
-	<div class="button_container" id="button_container" ></div>
+		<div id="result"></div>
+		<p id="errP" style="color: red"></p>
 
-	<script src="js/create.js"></script>
+		<h2 id="confirm_msg" ></h2>
+		<div class="button_container" id="button_container" ></div>
 
-</body>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+		<script src="js/create.js"></script>
+	</body>
 </html> 

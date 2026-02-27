@@ -4,27 +4,50 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Solving...</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 		<link rel="stylesheet" href="/css/style.css">
 		<link rel="shortcut icon" href="#">
 	</head>
-
 	<body>
 
-		<p><a href="/browse/">click here to go back</a></p>
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/">Regex practice site</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav nav-underline">
+						<li class="nav-item">
+							<a class="nav-link" href="/browse">Browse</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/create">Create</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/account">Account</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
 
 		<h1 id="title"><%= response.title %></h1>
 		<p id="creator"> Created by: <%= response.creator %></p>
 		<p id="instruction"> Instruction: <%= response.instruction %></p>
 
 		<form id="solution_form">
+			<div>
 			<p>
-			<label for="solution">Your answer goes here --> </label>
-			<input name="solution" id="solution"/>
+				<label for="solution">Your solution: </label>
+				<input name="solution" id="solution" class="form-control"/>
 			</p>
-
-			<div class="button_container">
-				<button type="submit">Lets test that out!</button>
 			</div>
+
+			<!--<div class="button_container">-->
+			<button type="submit" class="btn btn-light">Lets test that out!</button>
+			<!--</div>-->
 		</form>
 
 
