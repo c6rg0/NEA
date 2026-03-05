@@ -13,24 +13,18 @@ declare module "express-session" {
   }
 }
 
-router.post("/", async (req, res) => {
-	const user_search = req.body;
-	console.log("Search:", user_search);
+router.post("/:id", async (req, res) => {
+	const query = req.params.id;
+	console.log("Search:", query);
 
-	const select_search = regex_problems.prepare(`SELECT title FROM Problems;`).get(user_search.name);
+	const select_search = regex_problems.prepare(`MATCH title FROM Problems WHERE title = ?;`).get(query);
 
 	if (select_search) {
 		console.log("Results shown");
-		console.log();
+		return res.render("user", { results: select_search });
 	} else{
-		console.log("501: Not implemented");
-		console.log();
+		return console.log("501: Not implemented");
 	}
-
-	res.redirect('/browse');
-	/*
-	Info about dynamic routing:
-	https://stackoverflow.com/questions/25623041/how-to-configure-dynamic-routes-with-express-js*/
 
 });
 

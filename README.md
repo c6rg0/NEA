@@ -79,8 +79,7 @@ to view the website.*\
 - [ ] Make a problem searching system
 - [x] Make solving problems possible (quiz.ts -> solve.ts)
 
-- [ ] Make an algorithm to determine regex problem difficulty
-- [ ] Make an elo/pp system to determine user skill
+- [ ] Make an elo/pp system to determine user skill and problem diff
 - [ ] Add leaderboards and other front end features
 - [ ] Finish off the styling
 
