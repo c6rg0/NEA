@@ -21,9 +21,9 @@ router.post("/:id", async (req, res) => {
 
 	if (select_search) {
 		console.log("Results shown");
-		return res.render("user", { results: select_search });
+		return res.render("search", { results: select_search });
 	} else{
-		return console.log("501: Not implemented");
+		return res.status(404).send("Data not found");
 	}
 
 });

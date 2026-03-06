@@ -27,7 +27,7 @@ async function getProblem(urlId: unknown) {
 			return problem_data;
 		}
 
-		if (status === 400){
+			if (status === 400){
 			// unacceptable user problem
 			console.log("Server responded incorrectly; status =" + status);
 			window.location.assign("http://localhost:8000/browse")
@@ -58,7 +58,7 @@ async function submitAttempt(urlId: any, correct: boolean) {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				body: JSON.stringify({correct: correct}),
+			body: JSON.stringify({isCorrect: correct}),
 			},
 		});
 
@@ -135,8 +135,7 @@ class Data {
 })();
 
 function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: any){
-	document.getElementById("creator")!.remove();
-	document.getElementById("instruction")!.remove();
+	document.getElementById("pre-solution")!.remove();
 	document.getElementById("solution_form")!.remove();
 
 	const rightOrWrong = document.
@@ -176,6 +175,7 @@ function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: 
 		createTextNode("Your result: { " + uaRegexedData + " }");
 	userAttempt!.appendChild(uaChild);
 
+	console.log(correct);
 	D.submitAttempt(fullUrl, correct);
 
 	const tryAgain = document.getElementById("try_again");

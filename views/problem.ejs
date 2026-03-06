@@ -32,17 +32,22 @@
 			</div>
 		</nav>
 
-
-		<h1 id="title"><%= response.title %></h1>
-		<p id="creator"> Created by: <%= response.creator %></p>
-		<p id="instruction"> Instruction: <%= response.instruction %></p>
+		<div id="pre-solution">
+			<h1 id="title"><%= response.title %></h1>
+			<p id="creator" > Created by: 
+			<a href="/user/<%= response.creator %>">
+			<%= response.creator %>
+			</a></p>
+			<p id="diff"> Difficulty rating: <%= response.diff %></p>
+			<p id="instruction"> Instruction: <%= response.instruction %></p>
+		</div>
 
 		<form id="solution_form">
 			<div>
-			<p>
+				<p>
 				<label for="solution">Your solution: </label>
 				<input name="solution" id="solution" class="form-control"/>
-			</p>
+				</p>
 			</div>
 
 			<!--<div class="button_container">-->

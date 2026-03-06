@@ -12,11 +12,15 @@ declare module 'express-session' {
 	}
 }
 
+function preCalc(){
+
+}
+
 function probability(rating1: number, rating2: number) {
 	return 1.0 / (1+ Math.pow(10, (rating1 - rating2) / 400.0));
 }
 
-function elo_update(rating1: number, rating2: number, k: number, outcome: number){
+function eloUpdate(rating1: number, rating2: number, k: number, outcome: number){
 	// Elo algorithm
 	let pb = probability(rating1, rating2);
 	let pa = probability(rating2, rating1);
@@ -38,7 +42,7 @@ interface types{
 router.post('/:id', async (req, res) => {
 	const id  = req.params.id;
 	let user = req.session.user;
-	let correct = req.body;
+	let correct: boolean = req.body;
 
 	console.log("Correct? -> " + correct);
 	console.log(util.inspect(req.body, {showHidden: true, depth: null}));
@@ -68,7 +72,7 @@ router.post('/:id', async (req, res) => {
 			const k: number = 30;
 			let outcome: number = 1;
 
-			elo_update(rating1, rating2, k, outcome);
+			eloUpdate(rating1, rating2, k, outcome);
 
 			return res.status(200).send("Successfully updated attempts and added completion!");
 
