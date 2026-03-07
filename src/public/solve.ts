@@ -53,13 +53,13 @@ async function getProblem(urlId: unknown) {
 
 async function submitAttempt(urlId: any, correct: boolean) {
 	try {
-		const getUrl = "http://localhost:8000/submit-attempt/" + urlId;
+		const getUrl = "http://localhost:8000/submit-attempt";
 		const response = await fetch(getUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-			body: JSON.stringify({isCorrect: correct}),
 			},
+			body: JSON.stringify({correct: correct, urlId: urlId}),
 		});
 
 		let status: number = response.status;
@@ -88,16 +88,17 @@ async function submitAttempt(urlId: any, correct: boolean) {
 
 class Data {
 	private reForId: RegExp = /\d+$/
-	public urlId: any 
-	public problemData: any
+	public urlId: any;
+	public problemData: any;
 
 	async fetchData(fullUrl: string){
-		this.urlId = this.reForId.exec(fullUrl)
-		this.problemData = await getProblem(this.urlId)
+		this.urlId = this.reForId.exec(fullUrl);
+		this.problemData = await getProblem(this.urlId);
 	}
 
 	async submitAttempt(fullUrl: string, correct: boolean){
 		this.urlId = this.reForId.exec(fullUrl);
+		this.urlId = this.urlId[0];
 		console.log(correct);
 		submitAttempt(this.urlId, correct);
 	}

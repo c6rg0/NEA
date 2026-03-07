@@ -36,10 +36,10 @@
 
 		<form id="search_form">
 			<div class="mb-3">
-			<p>
-			<label for="Search" class="form-label">Search:</label>
-			<input name="Search" id="search" class="form-control"/>
-			</p>
+				<p>
+				<label for="Search" class="form-label">Search:</label>
+				<input name="Search" id="search" class="form-control"/>
+				</p>
 			</div>
 
 			<div class="button_container">
@@ -52,8 +52,10 @@
 			<% results.forEach(i=> { %>
 			<p><a href="/problem/<%= i.problem_id %>">
 				<%= i.title %>
-				| <%= i.diff %>
-			</a></p>
+			</a>
+			| <%= i.diff %>
+			| <%= i.times_attempted %> attempts
+			</p>
 			<% }); %>
 		</div>
 

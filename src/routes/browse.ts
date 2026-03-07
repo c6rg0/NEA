@@ -15,7 +15,7 @@ declare module "express-session" {
 
 router.get("/", async (req, res) => {
 	
-	const search  = regex_problems.prepare(`SELECT problem_id, title, diff FROM Problems LIMIT 10;`);
+	const search  = regex_problems.prepare(`SELECT problem_id, title, diff, times_attempted FROM Problems LIMIT 10;`);
 	const search_result = search.all();
 	console.log(search_result);
 	

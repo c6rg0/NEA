@@ -16,10 +16,10 @@ const router = express.Router();
 router.use("/submit-signup", submitSignup);
 router.use("/submit-login", submitLogin);
 router.use("/create-problem", createProblem);
-router.use("/search", searchRequest);
+router.use("/search/", searchRequest);
 router.use("/browse", browse);
 router.use("/problem", problem);
-router.use("/get-problem", getProblem);
+router.use("/get-problem/", getProblem);
 router.use("/get-session", session);
 router.use("/submit-attempt", attempt);
 

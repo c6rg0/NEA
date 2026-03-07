@@ -15,6 +15,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Master route import:
 import router from "./routes/index";
 
+
+// A solved table can be created to store
+// user completions by problem_id, user_id, 
+// time and attempts.
 regex_problems.exec(`
 	CREATE TABLE IF NOT EXISTS Problems(
 		problem_id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -24,7 +24,7 @@ function eloUpdate(rating1: number, rating2: number, k: number, outcome: number)
 	// Elo algorithm
 	let pb = probability(rating1, rating2);
 	let pa = probability(rating2, rating1);
-	
+
 	rating1 = rating1 + k * (outcome - pa);
 	rating2 = rating2 + k * ((1 - outcome) - pb);
 
@@ -39,40 +39,38 @@ interface types{
 	diff: number,
 }
 
-router.post('/:id', async (req, res) => {
-	const id  = req.params.id;
+router.post('/', async (req, res) => {
 	let user = req.session.user;
-	let correct: boolean = req.body;
-
-	console.log("Correct? -> " + correct);
-	console.log(util.inspect(req.body, {showHidden: true, depth: null}));
+	let attempt = req.body;
 
 	const update_attempts = regex_problems.
 		prepare('UPDATE problems SET times_attempted = times_attempted + 1 WHERE problem_id = (@id);');
-	update_attempts.run({id: id});
+	update_attempts.run({id: attempt.urlId});
 
-	if (user || correct == true) {
+	if (attempt.correct == true) {
 		try {
 			const update_attempts = regex_problems.
 				prepare('UPDATE problems SET times_solved = times_solved + 1 WHERE problem_id = (@id);');
-			update_attempts.run({id: id});
+			update_attempts.run({id: attempt.urlId});
 
 			// select problem/user elo
+			if (user){
 
-			const user_elo = regex_problems.
-				prepare('SELECT elo FROM Users WHERE username = ?').
-				get(req.session.user) as types;
+				const user_elo = regex_problems.
+					prepare('SELECT elo FROM Users WHERE username = ?').
+					get(req.session.user) as types;
 
-			const problem_elo = regex_problems.
-				prepare('SELECT diff FROM Problems WHERE problem_id = ?').
-				get(id) as types;
+				const problem_elo = regex_problems.
+					prepare('SELECT diff FROM Problems WHERE problem_id = ?').
+					get(attempt.urlId) as types;
 
-			let rating1: any = user_elo;
-			let rating2: any = problem_elo;
-			const k: number = 30;
-			let outcome: number = 1;
+				let rating1: any = user_elo;
+				let rating2: any = problem_elo;
+				const k: number = 30;
+				let outcome: number = 1;
 
-			eloUpdate(rating1, rating2, k, outcome);
+				eloUpdate(rating1, rating2, k, outcome);
+			}
 
 			return res.status(200).send("Successfully updated attempts and added completion!");
 
