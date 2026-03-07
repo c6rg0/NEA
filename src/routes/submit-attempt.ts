@@ -4,82 +4,89 @@ const router = express.Router();
 import Database from 'better-sqlite3';
 const regex_problems = Database('./database/regex_problems.db', { verbose: console.log });
 
-import util from 'node:util';
-
 declare module 'express-session' {
 	interface SessionData {
 		user: { username: string };
 	}
 }
 
-function preCalc(){
-
-}
-
-function probability(rating1: number, rating2: number) {
-	return 1.0 / (1+ Math.pow(10, (rating1 - rating2) / 400.0));
-}
-
-function eloUpdate(rating1: number, rating2: number, k: number, outcome: number){
-	// Elo algorithm
-	let pb = probability(rating1, rating2);
-	let pa = probability(rating2, rating1);
-
-	rating1 = rating1 + k * (outcome - pa);
-	rating2 = rating2 + k * ((1 - outcome) - pb);
-
-	console.log("Updated elo ratings:")
-	console.log("Rating1: ", rating1);
-	console.log("Rating2: ", rating2);
-	return;
-}
-
 interface types{
 	elo: number,
 	diff: number,
+	urlId: number,
+}
+
+function probability(userElo: any, problemElo: any) {
+	console.log();
+	console.log("Prob r:")
+	console.log("userElo: ", userElo.elo);
+	console.log("problemElo: ", problemElo.diff);
+
+	return 1.0 / (1+ Math.pow(10, (userElo.elo - problemElo.diff) / 400.0));
+}
+
+function eloUpdate(userElo: any, problemElo: any){
+	const k: number = 30;
+	let outcome: number = 1;
+
+	// Elo algorithm
+	let pb = probability(userElo, problemElo);
+	let pa = probability(userElo, problemElo);
+
+	userElo = userElo.elo + k * (outcome - pa);
+	problemElo = problemElo.diff + k * ((1 - outcome) - pb);
+
+	console.log("Updated elo ratings:")
+	console.log("userElo: ", userElo);
+	console.log("problemElo: ", problemElo);
+	return [userElo, problemElo];
 }
 
 router.post('/', async (req, res) => {
-	let user = req.session.user;
-	let attempt = req.body;
+	try {
+		let user = req.session.user;
+		let attempt = req.body;
 
-	const update_attempts = regex_problems.
-		prepare('UPDATE problems SET times_attempted = times_attempted + 1 WHERE problem_id = (@id);');
-	update_attempts.run({id: attempt.urlId});
+		const updateAttempts = regex_problems.
+			prepare('UPDATE problems SET times_attempted = times_attempted + 1 WHERE problem_id = (@id);');
+		updateAttempts.run({id: attempt.urlId});
+		console.log("Path 1");
 
-	if (attempt.correct == true) {
-		try {
-			const update_attempts = regex_problems.
-				prepare('UPDATE problems SET times_solved = times_solved + 1 WHERE problem_id = (@id);');
-			update_attempts.run({id: attempt.urlId});
-
-			// select problem/user elo
-			if (user){
-
-				const user_elo = regex_problems.
-					prepare('SELECT elo FROM Users WHERE username = ?').
-					get(req.session.user) as types;
-
-				const problem_elo = regex_problems.
-					prepare('SELECT diff FROM Problems WHERE problem_id = ?').
-					get(attempt.urlId) as types;
-
-				let rating1: any = user_elo;
-				let rating2: any = problem_elo;
-				const k: number = 30;
-				let outcome: number = 1;
-
-				eloUpdate(rating1, rating2, k, outcome);
-			}
-
-			return res.status(200).send("Successfully updated attempts and added completion!");
-
-		} catch (error) {
-			console.log(error);
-			return res.status(500).send("Something has gone wrong (HTTP 500)");
+		if (attempt.correct == true) {
+			const updateSolved = regex_problems.
+				prepare('UPDATE Problems SET times_solved = times_solved + 1 WHERE problem_id = (@id);');
+			updateSolved.run({id: attempt.urlId});
+			console.log("Path 2");
 		}
-	} else {
-		return res.status(200).send("Successfully updated attempts!");
+
+		if (user){
+			let userElo = regex_problems.
+				prepare('SELECT elo FROM Users WHERE username = ?').
+				get(req.session.user) as types;
+
+			let problemElo = regex_problems.
+				prepare('SELECT diff FROM Problems WHERE problem_id = ?').
+				get(attempt.urlId) as types;
+
+			// [object Object]NaN
+			const [newUserElo, newProblemElo] = eloUpdate(userElo, problemElo);
+
+			const userEloUpdate = regex_problems.
+				prepare('UPDATE Users SET elo = (@userElo) WHERE user_id = (@user);');
+			userEloUpdate.run({userElo: newUserElo, user: user});
+
+			const problemEloUpdate = regex_problems.
+				prepare('UPDATE Problems SET diff = (@diff) WHERE problem_id = (@id);');
+			problemEloUpdate.run({diff: newProblemElo, id: attempt.urlId});
+
+			console.log("Path 3");
+		}
+
+		return res.status(200).send("Success.");
+
+	} catch (error) {
+		console.log(error);
+		return res.status(500).send("HTTP CODE 500 D:");
 	}
 });
 
