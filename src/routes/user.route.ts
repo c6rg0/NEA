@@ -11,15 +11,15 @@ declare module "express-session" {
   }
 }
 
-router.post('/:id', (req, res) => {
+router.get('/:id', (req, res) => {
 	let user = req.params.id;
 	
 	// SQL table not updated for this yet
-	const user_search  = regex_problems.prepare(`SELECT problem_id, title FROM Problems LIMIT 10;`);
-	const search_result = user_search.all();
+	// I need to create a results table that connects users and problems via completions
+	const userSearch = regex_problems.prepare(`SELECT username, elo FROM Users WHERE username = ?`).get(user);
 
 	// views/user.ejs doesn't exist yet
-	res.render("user", { results: search_result } );
+	res.render("user", { results: userSearch } );
 
 });
 

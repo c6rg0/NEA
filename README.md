@@ -80,7 +80,7 @@ to view the website.*\
 - [x] Make solving problems possible (quiz.ts -> solve.ts)
 
 - [x] Make an ELO system to determine user skill and problem diff
-- [ ] Balance the ELO system (determine how much a loss/win affects ELO)
+- [ ] Balance the ELO system (determine by how much loss/win affects ELO)
 - [ ] Add a leaderboard and user system
 - [ ] Populate the database with problems that are seperate from user created content
 - [ ] Finish off the styling
