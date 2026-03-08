@@ -90,7 +90,7 @@ app.get("/create", (req, res) => {
 	res.render('create');
 });
 
-app.get("/create-success", (req, res) => {
+app.get("/create_success", (req, res) => {
 	res.render('create-success');
 });
 
@@ -102,7 +102,7 @@ app.get("/signup", (req, res) => {
 	res.render('signup');
 });
 
-app.get("/signup-success", (req, res) => {
+app.get("/signup_success", (req, res) => {
 	res.redirect("/login");
 });
 
@@ -110,7 +110,7 @@ app.get("/login", (req, res) => {
 	res.render('login' );
 });
 
-app.get("/login-success", (req, res) => {
+app.get("/login_success", (req, res) => {
 	res.redirect("/");
 });
 
