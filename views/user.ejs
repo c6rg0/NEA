@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Solving...</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/style.css">
+		<link rel="shortcut icon" href="#">
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/">Regex practice site</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav nav-underline">
+						<li class="nav-item">
+							<a class="nav-link" href="/browse">Browse</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/create">Create</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/account">Account</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div id="pre-solution">
+			<h1 id="title"><%= response.title %></h1>
+			<p id="creator" > Created by: 
+			<a href="/user/<%= response.creator %>">
+			<%= response.creator %>
+			</a></p>
+			<p id="diff"> Difficulty rating: <%= response.diff %></p>
+			<p id="instruction"> Instruction: <%= response.instruction %></p>
+		</div>
+
+		<form id="solution_form">
+			<div>
+				<p>
+				<label for="solution">Your solution: </label>
+				<input name="solution" id="solution" class="form-control"/>
+				</p>
+			</div>
+
+			<!--<div class="button_container">-->
+			<button type="submit" class="btn btn-light">Lets test that out!</button>
+			<!--</div>-->
+		</form>
+
+
+		<div id="button_container" class="button_container"></div>
+		<div id="end_screen_container"></div>
+
+		<p id="right_or_wrong"></p>
+		<p id="example_data"></p>
+		<p id="db_solution"></p>
+		<p id="user_attempt"></p>
+
+		<button hidden id="try_again" href="/solve/<%= response.problem_id %>">Retry</button>
+
+		<script src="../js/solve.js"></script>
+	</body>
+
+</html> 

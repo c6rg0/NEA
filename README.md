@@ -79,8 +79,10 @@ to view the website.*\
 - [ ] Make a problem searching system
 - [x] Make solving problems possible (quiz.ts -> solve.ts)
 
-- [ ] Make an elo/pp system to determine user skill and problem diff
-- [ ] Add leaderboards and other front end features
+- [x] Make an ELO system to determine user skill and problem diff
+- [ ] Balance the ELO system (determine how much a loss/win affects ELO)
+- [ ] Add a leaderboard and user system
+- [ ] Populate the database with problems that are seperate from user created content
 - [ ] Finish off the styling
 
 

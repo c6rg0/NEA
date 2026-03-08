@@ -1,6 +1,6 @@
 async function problemPost(input_title: string, input_instr: string, input_answer: string, input_example: string) {
 	try {
-		const response = await fetch("http://localhost:8000/create-problem", {
+		const response = await fetch("http://localhost:8000/create", {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

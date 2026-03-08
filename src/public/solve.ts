@@ -3,9 +3,9 @@ interface types {
 	answer: string,
 }
 
-async function getProblem(urlId: unknown) {
+async function getSolution(urlId: unknown) {
 	try {
-		const getUrl = "http://localhost:8000/get-problem/" + urlId;
+		const getUrl = "http://localhost:8000/solution/" + urlId;
 		const response: any = await fetch(getUrl, {
 			method: 'GET',
 			headers: {
@@ -53,7 +53,7 @@ async function getProblem(urlId: unknown) {
 
 async function submitAttempt(urlId: any, correct: boolean) {
 	try {
-		const getUrl = "http://localhost:8000/submit-attempt";
+		const getUrl = "http://localhost:8000/attempt";
 		const response = await fetch(getUrl, {
 			method: 'POST',
 			headers: {
@@ -93,7 +93,7 @@ class Data {
 
 	async fetchData(fullUrl: string){
 		this.urlId = this.reForId.exec(fullUrl);
-		this.problemData = await getProblem(this.urlId);
+		this.problemData = await getSolution(this.urlId);
 	}
 
 	async submitAttempt(fullUrl: string, correct: boolean){
