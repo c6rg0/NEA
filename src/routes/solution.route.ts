@@ -20,9 +20,8 @@ interface types {
 
 router.get("/:id", async(req, res) => {
 	const id  = req.params.id;
-	console.log(req.params.id);
 
-	try{
+	try {
 		const response  = regex_problems.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(id);
 		console.log("answer = " + (response as types).answer);
 

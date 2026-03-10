@@ -20,7 +20,6 @@ interface userPassword {
 
 router.post('/', async (req, res) => {
 	const user_input = req.body;
-	// console.log("request:", user_input);
 	if (!user_input || !user_input.username) {
 		return res.status(204).send('Username is required');
 	}
@@ -48,12 +47,9 @@ router.post('/', async (req, res) => {
 
 	if (check) {
 		req.session.user = user_input.username;
-		console.log("res.status(200).send(Authentication successfull);");
-		// res.status(200).send("Authentication successfull");
 		res.redirect("/");
 		return;
 	} else {
-		console.log("res.status(401).send(Unauthorized);");
 		res.status(401).send("Unauthorized");
 		return;
 	}

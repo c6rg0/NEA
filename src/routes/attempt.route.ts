@@ -12,34 +12,34 @@ declare module 'express-session' {
 
 interface types{
 	elo: number,
-	diff: number,
 	urlId: number,
 }
 
 function probability(userElo: any, problemElo: any) {
-	console.log();
-	console.log("Prob r:")
-	console.log("userElo: ", userElo.elo);
-	console.log("problemElo: ", problemElo.diff);
-
-	return 1.0 / (1+ Math.pow(10, (userElo.elo - problemElo.diff) / 400.0));
+	return 1.0 / (1+ Math.pow(10, (userElo.elo - problemElo.elo) / 400.0));
 }
 
-function eloUpdate(userElo: any, problemElo: any){
-	const k: number = 30;
-	let outcome: number = 1;
+class Elo {
+	private diff: number = 30;
+	private outcome: number = 1;
+	public winner: number = 0;
+	public loser: number = 0;
 
-	// Elo algorithm
-	let pb = probability(userElo, problemElo);
-	let pa = probability(userElo, problemElo);
+	newDiff(userElo: any, problemElo: any){
 
-	userElo = userElo.elo + k * (outcome - pa);
-	problemElo = problemElo.diff + k * ((1 - outcome) - pb);
+	}
 
-	console.log("Updated elo ratings:")
-	console.log("userElo: ", userElo);
-	console.log("problemElo: ", problemElo);
-	return [userElo, problemElo];
+	probability(userElo: any, problemElo: any){
+		return 1.0 / (1+ Math.pow(10, (userElo.elo - problemElo.elo) / 400.0));
+	}
+
+	update(winner: any, loser: any){
+		let pb = this.probability(winner, loser);
+		let pa = this.probability(winner, loser);
+
+		this.winner  = winner.elo + this.diff * (this.outcome - pa);
+		this.loser = loser.elo + this.diff * ((1 - this.outcome - pb));
+	}
 }
 
 router.post('/', async (req, res) => {
@@ -50,36 +50,51 @@ router.post('/', async (req, res) => {
 		const updateAttempts = regex_problems.
 			prepare('UPDATE problems SET times_attempted = times_attempted + 1 WHERE problem_id = (@id);');
 		updateAttempts.run({id: attempt.urlId});
-		console.log("Path 1");
 
 		if (attempt.correct == true) {
 			const updateSolved = regex_problems.
 				prepare('UPDATE Problems SET times_solved = times_solved + 1 WHERE problem_id = (@id);');
 			updateSolved.run({id: attempt.urlId});
-			console.log("Path 2");
 		}
+
+		let winner: number | unknown;
+		let loser: number | unknown;
 
 		if (user){
 			let userElo = regex_problems.
 				prepare('SELECT elo FROM Users WHERE username = ?').
 				get(req.session.user) as types;
 
-			let problemElo = regex_problems.
-				prepare('SELECT diff FROM Problems WHERE problem_id = ?').
+			let problemElo  = regex_problems.
+				prepare('SELECT elo FROM Problems WHERE problem_id = ?').
 				get(attempt.urlId) as types;
+	
+			if (attempt.correct == true){
+				winner = userElo;
+				loser = problemElo;
+			} else if (attempt.correct == false){
+				loser = userElo;
+				winner = problemElo;
+			}
 
-			// [object Object]NaN
-			const [newUserElo, newProblemElo] = eloUpdate(userElo, problemElo);
+			const E = new Elo();
+			E.update(winner, loser);
 
 			const userEloUpdate = regex_problems.
 				prepare('UPDATE Users SET elo = (@userElo) WHERE user_id = (@user);');
-			userEloUpdate.run({userElo: newUserElo, user: user});
 
 			const problemEloUpdate = regex_problems.
-				prepare('UPDATE Problems SET diff = (@diff) WHERE problem_id = (@id);');
-			problemEloUpdate.run({diff: newProblemElo, id: attempt.urlId});
+				prepare('UPDATE Problems SET elo = (@elo) WHERE problem_id = (@id);');
 
-			console.log("Path 3");
+			if (attempt.correct == true){
+				userEloUpdate.run({userElo: E.winner, user: user});
+				problemEloUpdate.run({elo: E.loser, id: attempt.urlId});
+
+			} else if (attempt.correct == false){
+				userEloUpdate.run({userElo: E.loser, user: user});
+				problemEloUpdate.run({elo: E.winner, id: attempt.urlId});
+			}
+
 		}
 
 		return res.status(200).send("Success.");

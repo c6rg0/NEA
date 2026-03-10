@@ -20,7 +20,6 @@ interface userPassword {
 
 router.post('/', async (req, res) => {
 	const user_input = req.body;
-	console.log("request:", user_input);
 	if (!user_input || !user_input.username) {
 		return res.status(304).send("Username is missing");
 	}
@@ -32,7 +31,6 @@ router.post('/', async (req, res) => {
 	const existing_user = regex_problems.prepare(`SELECT username FROM Users WHERE username = ?`).get(user_input.username);
 	if (existing_user) {
 		res.status(409).send("Username already exists");
-		console.log("res.status(409).send(username already exists);");
 	}
 	else{
 		let passLength: number = user_input.password.length;
@@ -48,7 +46,6 @@ router.post('/', async (req, res) => {
 			}
 
 			const hashed_pass = await hashPassword(parsed_pass);
-			console.log(hashed_pass);
 
 			const insert = regex_problems.prepare(`
 				INSERT INTO Users (username, password) VALUES
@@ -59,7 +56,6 @@ router.post('/', async (req, res) => {
 				console.log(err);
 				return res.status(500).send(err);
 			}
-			console.log("res.status(201).send(Account successfully created);");
 			res.redirect("/login");
 			return;
 		}

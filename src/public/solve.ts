@@ -61,24 +61,8 @@ async function submitAttempt(urlId: any, correct: boolean) {
 			},
 			body: JSON.stringify({correct: correct, urlId: urlId}),
 		});
-
 		let status: number = response.status;
-
-		if (status === 200){
-			// acceptable response
-			return;
-		}
-
-		if (status === 400){
-			console.log("Server responded incorrectly; status =" + status);
-			return;
-		}
-
-		if (status === 500){
-			// unacceptable server problem
-			console.log("Server responded incorrectly; status =" + status);
-			return;
-		}
+		console.log(status);
 
 	} catch(error) {
 		console.log(error);
@@ -99,7 +83,6 @@ class Data {
 	async submitAttempt(fullUrl: string, correct: boolean){
 		this.urlId = this.reForId.exec(fullUrl);
 		this.urlId = this.urlId[0];
-		console.log(correct);
 		submitAttempt(this.urlId, correct);
 	}
 }
@@ -176,7 +159,6 @@ function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: 
 		createTextNode("Your result: { " + uaRegexedData + " }");
 	userAttempt!.appendChild(uaChild);
 
-	console.log(correct);
 	D.submitAttempt(fullUrl, correct);
 
 	const tryAgain = document.getElementById("try_again");

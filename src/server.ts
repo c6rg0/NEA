@@ -27,7 +27,7 @@ regex_problems.exec(`
 		instruction TEXT NOT NULL,
 		example TEXT NOT NULL,
 		answer TEXT NOT NULL,
-		diff INTEGER DEFAULT 0, 
+		elo INTEGER DEFAULT 400, 
 		times_attempted INTEGER DEFAULT 0,
 		times_solved INTEGER DEFAULT 0,
 		time_created INTEGER DEFAULT (strftime('%s', 'now'))
@@ -39,15 +39,14 @@ regex_problems.exec(`
 		user_id INTEGER NOT NULL,
 		problem_id INTEGER NOT NULL,
 		solved BOOLEAN NOT NULL,
-		time_taken INTEGER,
-		time_submitted INTEGER,
+		time_submitted INTEGER DEFAULT (strftime('%s', 'now')),
 		FOREIGN KEY (user_id) REFERENCES Users(user_id),
 		FOREIGN KEY (problem_id) REFERENCES Problem(problem_id) ON DELETE CASCADE
 	);
 
 	CREATE TABLE IF NOT EXISTS Users(
 		user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		elo INTEGER DEFAULT 1500,
+		elo INTEGER DEFAULT 400,
 		[username] TEXT UNIQUE NOT NULL,
 		[password] TEXT NOT NULL
 	);
