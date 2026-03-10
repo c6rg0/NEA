@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
 			
 			console.log("Data inserted successfully");
 			console.log();
-			res.redirect('/create-success');
+			res.redirect('/create_success');
 		}
 	} else {
 		console.log("session_user: []");

@@ -30,7 +30,7 @@ async function problemPost(input_title: string, input_instr: string, input_answe
 		}
 
 		if (status === 200){
-			window.location.assign("/create-success");
+			window.location.assign("/create_success");
 			return;
 		}
 

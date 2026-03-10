@@ -91,7 +91,7 @@ app.get("/create", (req, res) => {
 });
 
 app.get("/create_success", (req, res) => {
-	res.render('create-success');
+	res.render('create_success');
 });
 
 app.get("/account", (req, res) => {
@@ -102,16 +102,8 @@ app.get("/signup", (req, res) => {
 	res.render('signup');
 });
 
-app.get("/signup_success", (req, res) => {
-	res.redirect("/login");
-});
-
 app.get("/login", (req, res) => {
 	res.render('login' );
-});
-
-app.get("/login_success", (req, res) => {
-	res.redirect("/");
 });
 
 app.get("/disable-cookies", (req, res) => {
