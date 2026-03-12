@@ -32,14 +32,14 @@
 			</div>
 		</nav>
 
-		<div id="pre-solution">
-			<h1 id="title"><%= response.title %></h1>
+		<div id="pre_solution">
+			<h1 id="title"><%= info.title %></h1>
 			<p id="creator" > Created by: 
-			<a href="/user/<%= response.creator %>">
-			<%= response.creator %>
+			<a href="/user/<%= info.creator %>">
+			<%= info.creator %>
 			</a></p>
-			<p id="diff"> Difficulty rating: <%= response.elo %></p>
-			<p id="instruction"> Instruction: <%= response.instruction %></p>
+			<p id="diff"> Difficulty rating: <%= info.elo %></p>
+			<p id="instruction"> Instruction: <%= info.instruction %></p>
 		</div>
 
 		<form id="solution_form">
@@ -55,6 +55,20 @@
 			<!--</div>-->
 		</form>
 
+		<p>Recent attempts:</p>
+		<div id="recent_attempts">
+			<% attempts.forEach(i=> { %>
+				<p><a href="/user/<%= i.username %>">
+					<%= i.username %>
+				</a>
+				<% if(i.solved == "TRUE"){ %>
+				| [x]
+				<% } if(i.solved == "FALSE") { %>
+				| [ ] 
+				<% } %>
+				</p>
+			<% }); %>
+		</div>
 
 		<div id="button_container" class="button_container"></div>
 		<div id="end_screen_container"></div>
@@ -64,7 +78,7 @@
 		<p id="db_solution"></p>
 		<p id="user_attempt"></p>
 
-		<button hidden id="try_again" href="/solve/<%= response.problem_id %>">Retry</button>
+		<button hidden id="try_again" href="/solve/<%= info.problem_id %>">Retry</button>
 
 		<script src="../js/solve.js"></script>
 	</body>

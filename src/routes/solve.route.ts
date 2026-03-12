@@ -1,4 +1,3 @@
-//problem.ts
 import express from "express";
 
 const router = express.Router();
@@ -20,9 +19,14 @@ router.get("/:id", async(req, res) => {
 	const id  = req.params.id;
 
 	try{
-		const response  = regex_problems.prepare(`SELECT * FROM Problems WHERE problem_id = ?;`).get(id) as fetch | undefined;
+		const info  = regex_problems.prepare(`SELECT * FROM Problems WHERE problem_id = ?;`).get(id) as fetch | undefined;
 
-		res.render("solve", {response: response});
+		const attempts  = regex_problems.prepare(`SELECT * FROM Attempts WHERE problem_id = ? LIMIT 10;`);
+		const attempts_result = attempts.all(id);
+
+		console.log(attempts);
+
+		res.render("solve", {info: info, attempts: attempts_result});
 
 	} catch(error){
 		return res.status(500).send(error + ": unkown error");

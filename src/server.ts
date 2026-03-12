@@ -36,12 +36,16 @@ regex_problems.exec(`
 
 	CREATE TABLE IF NOT EXISTS Attempts(
 		attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		user_id INTEGER NOT NULL,
+		username INTEGER NOT NULL,
 		problem_id INTEGER NOT NULL,
+		old_user_elo INTEGER NOT NULL,
+		old_prob_elo INTEGER NOT NULL,
+		new_user_elo INTEGER NOT NULL,
+		new_prob_elo INTEGER NOT NULL,
 		solved BOOLEAN NOT NULL,
 		time_submitted INTEGER DEFAULT (strftime('%s', 'now')),
-		FOREIGN KEY (user_id) REFERENCES Users(user_id),
-		FOREIGN KEY (problem_id) REFERENCES Problem(problem_id) ON DELETE CASCADE
+		FOREIGN KEY (username) REFERENCES Users(username),
+		FOREIGN KEY (problem_id) REFERENCES Problems(problem_id) ON DELETE CASCADE
 	);
 
 	CREATE TABLE IF NOT EXISTS Users(

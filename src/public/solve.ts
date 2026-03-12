@@ -119,7 +119,8 @@ class Data {
 })();
 
 function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: any){
-	document.getElementById("pre-solution")!.remove();
+	document.getElementById("pre_solution")!.remove();
+	document.getElementById("recent_attempts")!.remove();
 	document.getElementById("solution_form")!.remove();
 
 	const rightOrWrong = document.

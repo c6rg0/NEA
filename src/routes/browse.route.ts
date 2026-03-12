@@ -17,13 +17,8 @@ router.get("/", async (req, res) => {
 	
 	const search  = regex_problems.prepare(`SELECT problem_id, title, elo, times_attempted FROM Problems LIMIT 10;`);
 	const search_result = search.all();
-	console.log(search_result);
 	
 	res.render("browse", { results: search_result } );
 });
 
 export default router;
-
-// [<a href="/quiz/<%= item.id %>">] for redirecting
-// to the quiz routes
- 
