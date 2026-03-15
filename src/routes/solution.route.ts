@@ -1,4 +1,3 @@
-//problem.ts
 import express from "express";
 
 const router = express.Router();
@@ -16,7 +15,6 @@ interface types {
 	example: string,
 	answer: string,
 }
-
 
 router.get("/:id", async(req, res) => {
 	const id  = req.params.id;
