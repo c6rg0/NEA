@@ -52,21 +52,16 @@ class Attempts{
 		}
 	}
 	
-	record(user: any, attempt: any, userElo: any, problemElo: any, newUserElo: any, newProbElo: any){
+	record(user: any, attempt: any){
 		console.log(attempt.correct);
 
-		let solved: string | unknown;
 		if (attempt.correct == true){
-			solved = "TRUE";
+			const newAttempt  = regex_problems.
+				prepare('INSERT INTO Attempts(username, problem_id, tries) VALUES(@username, @problem_id, @tries);');
+			newAttempt.run({username: user, problem_id: attempt.urlId, tries: 1});
 		} else if (attempt.correct == false){
-			solved = "FALSE";
+			return;
 		}
-
-		const newAttempt  = regex_problems.
-			prepare('INSERT INTO Attempts(username, problem_id, old_user_elo, old_prob_elo, new_user_elo, new_prob_elo, solved) VALUES(@username, @problem_id, @old_user_elo, @old_prob_elo, @new_user_elo, @new_prob_elo, @solved);');
-
-		newAttempt.run({username: user, problem_id: attempt.urlId, old_user_elo: userElo.elo, old_prob_elo: problemElo.elo, new_user_elo: newUserElo, new_prob_elo: newProbElo, solved: solved});
-
 	}
 
 }
@@ -74,6 +69,7 @@ class Attempts{
 router.post('/', async (req, res) => {
 	try {
 		let user = req.session.user;
+		console.log(user);
 		let attempt = req.body;
 
 		let A = new Attempts();
@@ -105,7 +101,7 @@ router.post('/', async (req, res) => {
 			E.updateElo(winner, loser);
 
 			const userEloUpdate = regex_problems.
-				prepare('UPDATE Users SET elo = (@userElo) WHERE user_id = (@user);');
+				prepare('UPDATE Users SET elo = (@userElo) WHERE username = (@user);');
 
 			const problemEloUpdate = regex_problems.
 				prepare('UPDATE Problems SET elo = (@elo) WHERE problem_id = (@id);');
@@ -123,7 +119,7 @@ router.post('/', async (req, res) => {
 				newProbElo = E.winner;
 			}
 
-			A.record(user, attempt, userElo, problemElo, newUserElo, newProbElo);
+			A.record(user, attempt);
 
 		}
 

@@ -37,6 +37,23 @@
 			<p id="elo">Elo: <%= results.elo %></p>
 		</div>
 
+		<p>Hardest solved:</p>
+		<div id="hardest_solved">
+			<% attempts.forEach(i=> { %>
+			<p>
+				<a href="/solve/<%= i.problem_id %>">
+					<%= i.title %>
+				</a>
+				| <%= i.elo %>*	| 
+				<% if(i.tries == 1){ %>
+				<%= i.tries %> try
+				<% } else { %>
+				<%= i.tries %> tries
+				<% }; %>
+			</p>
+			<% }); %>
+		</div>
+
 		<script src="../js/user.js"></script>
 	</body>
 

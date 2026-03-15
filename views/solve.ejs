@@ -61,11 +61,7 @@
 				<p><a href="/user/<%= i.username %>">
 					<%= i.username %>
 				</a>
-				<% if(i.solved == "TRUE"){ %>
-				| [x]
-				<% } if(i.solved == "FALSE") { %>
-				| [ ] 
-				<% } %>
+				| at elo <%= i.elo %>
 				</p>
 			<% }); %>
 		</div>

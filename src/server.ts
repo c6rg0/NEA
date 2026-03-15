@@ -15,10 +15,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Master route import:
 import router from "./routes/index";
 
-
-// A solved table can be created to store
-// user completions by problem_id, user_id, 
-// time and attempts.
 regex_problems.exec(`
 	CREATE TABLE IF NOT EXISTS Problems(
 		problem_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,23 +32,18 @@ regex_problems.exec(`
 
 	CREATE TABLE IF NOT EXISTS Attempts(
 		attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		username INTEGER NOT NULL,
+		username TEXT NOT NULL,
 		problem_id INTEGER NOT NULL,
-		old_user_elo INTEGER NOT NULL,
-		old_prob_elo INTEGER NOT NULL,
-		new_user_elo INTEGER NOT NULL,
-		new_prob_elo INTEGER NOT NULL,
-		solved BOOLEAN NOT NULL,
+		tries INTEGER DEFAULT 0,
 		time_submitted INTEGER DEFAULT (strftime('%s', 'now')),
 		FOREIGN KEY (username) REFERENCES Users(username),
-		FOREIGN KEY (problem_id) REFERENCES Problems(problem_id) ON DELETE CASCADE
+		FOREIGN KEY (problem_id) REFERENCES Problems(problem_id)
 	);
 
 	CREATE TABLE IF NOT EXISTS Users(
-		user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		elo INTEGER DEFAULT 400,
-		[username] TEXT UNIQUE NOT NULL,
-		[password] TEXT NOT NULL
+		[username] TEXT PRIMARY KEY UNIQUE NOT NULL,
+		[password] TEXT NOT NULL,
+		elo INTEGER DEFAULT 400
 	);
 
 `);

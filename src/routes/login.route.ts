@@ -46,9 +46,10 @@ router.post('/', async (req, res) => {
 	const check = await verifyPassword(parsed_pass, hashed_pass);
 
 	if (check) {
-		const user_id = regex_problems.prepare
-		(`SELECT password FROM Users WHERE username = ?`)
-		.get(user_input.username) as userPassword | undefined;
+
+		// const user_id = regex_problems.prepare
+		// (`SELECT password FROM Users WHERE username = ?`)
+		// .get(user_input.username) as userPassword | undefined;
 
 		req.session.user = user_input.username;
 		res.redirect("/");
