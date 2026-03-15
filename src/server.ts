@@ -48,8 +48,6 @@ regex_problems.exec(`
 
 `);
 
-// CREATE INDEX IF NOT EXISTS idx_link_problem ON Link(problem_id);
-
 app.use(express.static(path.join(__dirname, "public")));
 
 import session from "express-session";
@@ -77,7 +75,6 @@ app.use((req, res, next) => {
 	next();
 });
 
-
 app.use("/", router);
 
 app.get("/create", (req, res) => {
@@ -86,36 +83,6 @@ app.get("/create", (req, res) => {
 
 app.get("/create_success", (req, res) => {
 	res.render("create_success");
-});
-
-app.get("/account", (req, res) => {
-	res.render("account");
-});
-
-app.get("/signup", (req, res) => {
-	res.render("signup");
-});
-
-app.get("/login", (req, res) => {
-	res.render("login" );
-});
-
-app.get("/disable-cookies", (req, res) => {
-	req.session.destroy((err) => {
-		if (err) {
-			console.error("Error destroying session", err);
-			res.send("Error destroying session");
-			res.redirect("/account");
-		} else {
-			res.send("Session destroyed");
-			cookiePerm = false;
-			res.redirect("/");
-		};
-	}
-)});
-
-app.get("/logout", (req, res) => {
-	req.session.user = { username: "" };
 });
 
 const port = 8000;

@@ -1,4 +1,3 @@
-//index.ts
 import express from "express";
 
 import signup from "./signup.route";
@@ -10,6 +9,8 @@ import solve from "./solve.route";
 import solution from "./solution.route";
 import session from "./session.route";
 import attempt from "./attempt.route";
+import account from "./account.route";
+import logout from "./logout.route";
 import user from "./user.route";
 import leaderboard from "./leaderboard.route";
 
@@ -24,6 +25,8 @@ router.use("/solve", solve);
 router.use("/solution", solution);
 router.use("/session", session);
 router.use("/attempt", attempt);
+router.use("/account", account);
+router.use("/logout", logout);
 router.use("/user", user);
 router.use("/leaderboard", leaderboard);
 

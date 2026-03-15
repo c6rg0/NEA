@@ -16,6 +16,10 @@ interface userPassword {
 	password: string;
 }
 
+router.get("/", (req, res) => {
+	res.render("login");
+});
+
 router.post("/", async (req, res) => {
 	const user_input = req.body;
 	if (!user_input || !user_input.username) {
@@ -45,14 +49,10 @@ router.post("/", async (req, res) => {
 	const check = await verifyPassword(parsed_pass, hashed_pass);
 
 	if (check) {
-
-		// const user_id = regex_problems.prepare
-		// (`SELECT password FROM Users WHERE username = ?`)
-		// .get(user_input.username) as userPassword | undefined;
-
 		req.session.user = user_input.username;
 		res.redirect("/");
 		return;
+
 	} else {
 		res.status(401).send("Unauthorized");
 		return;

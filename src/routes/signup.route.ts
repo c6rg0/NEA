@@ -16,6 +16,10 @@ interface userPassword {
 	password: string;
 }
 
+router.get("/", (req, res) => {
+	res.render("signup");
+});
+
 router.post("/", async (req, res) => {
 	const user_input = req.body;
 	if (!user_input || !user_input.username) {

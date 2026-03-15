@@ -12,16 +12,22 @@
 <body>
 		<h1>Regex practice site</h1>
 		<div class="d-grid gap-2">
-			<p><% if(login==false){ %>
-				<a href="/account"><button class="btn btn-danger btn-lg" type="button"><%= login_status %></button></a>
-			<% } %> </p>
-
-			<p><% if(login==true){ %>
-			<a href="/user/<%= login_status %>"><button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
-			<% } %> </p>
-
 			<a href="/browse"><button class="btn btn-light btn-lg" type="button">Browse</button></a>
 			<a href="/create"><button class="btn btn-light btn-lg" type="button">Create</button></a>
+			<a href="/leaderboard"><button class="btn btn-light btn-lg" type="button">Leaderboard</button></a>
+
+			<% if(login==false){ %>
+				<a href="/account">
+					<button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
+				</a>
+			<% } %>
+
+			<% if(login==true){ %>
+				<a href="/account">
+					<button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
+				</a>
+			<% } %>
+
 		</div>
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

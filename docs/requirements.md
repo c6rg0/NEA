@@ -1,6 +1,6 @@
 # Algorithms
 - [x] Cross-table parameterised SQL (need JOINs and this is ticked)
-- [ ] Aggregate SQL functions (calculations - will be useful for random frontend info)
+- [ ] Aggregate SQL functions (*1*)
 - [ ] User/CASE-generated DDL script (useless)
 - [ ] Graph/Tree Traversal (tree might be needed for the problem difficulty evaluator algorithm)
 - [ ] List operations (not needed)
@@ -13,6 +13,9 @@
 - [ ] Dynamic generation of objects based on complex user-defined use of OOP model
 - [x] Server-side scripting using request and response objects and server-side extensions for a complex client-server model
 - [ ] Calling parameterised Web service APIs and parsing JSON/XML to service a complex client-server model
+
+## Ideas:
+1. Display average problems solved/attempted
 
 
 # Characteristic
