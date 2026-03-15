@@ -1,5 +1,5 @@
 # Algorithms
-- [ ] Cross-table parameterised SQL (need JOINs and this is ticked)
+- [x] Cross-table parameterised SQL (need JOINs and this is ticked)
 - [ ] Aggregate SQL functions (calculations - will be useful for random frontend info)
 - [ ] User/CASE-generated DDL script (useless)
 - [ ] Graph/Tree Traversal (tree might be needed for the problem difficulty evaluator algorithm)

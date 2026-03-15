@@ -11,6 +11,7 @@ import solution from "./solution.route";
 import session from "./session.route";
 import attempt from "./attempt.route";
 import user from "./user.route";
+import leaderboard from "./leaderboard.route";
 
 const router = express.Router();
 
@@ -24,14 +25,15 @@ router.use("/solution", solution);
 router.use("/session", session);
 router.use("/attempt", attempt);
 router.use("/user", user);
+router.use("/leaderboard", leaderboard);
 
 router.get("/", (req, res) => {
 	if (!req.session.user){
-		res.render('index', { login_status: "Not logged in", login: false} );
+		res.render("index", { login_status: "Not logged in", login: false} );
 	}
 	if (req.session.user){
 		let login_status = req.session.user;
-		res.render('index', { login_status: login_status, login: true } );
+		res.render("index", { login_status: login_status, login: true } );
 	}
 });
 

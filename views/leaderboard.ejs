@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Solving...</title>
+		<title>Leaderboard</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 		<link rel="stylesheet" href="/css/style.css">
 		<link rel="shortcut icon" href="#">
@@ -32,24 +32,19 @@
 			</div>
 		</nav>
 
-		<div id="user_data">
-			<p id="username"><%= results.username %></p>
-			<p id="elo">Elo: <%= results.elo %></p>
-		</div>
-
-		<p>Hardest solved:</p>
-		<div id="hardest_solved">
+		<p>Leaderboard:</p>
+		<div id="leaderboard">
 			<% attempts.forEach(i=> { %>
 			<p>
 				<a href="/solve/<%= i.problem_id %>">
 					<%= i.title %>
 				</a>
+
 				| <%= i.elo %>*	| 
-				<% if(i.tries == 1){ %>
-				<%= i.tries %> try
-				<% } else { %>
-				<%= i.tries %> tries
-				<% }; %>
+
+				<a href="/user/<%= i.username %>">
+					<%= i.username %>
+				</a>
 			</p>
 			<% }); %>
 		</div>

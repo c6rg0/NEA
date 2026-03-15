@@ -1,8 +1,8 @@
 async function sigPost(user: string, pass: string) {
 	const response = await fetch("http://localhost:8000/signup", {
-		method: 'POST',
+		method: "POST",
 		headers: {
-			'Content-Type': 'application/json',
+			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({username: user, password: pass }),
 	});
@@ -31,13 +31,13 @@ const sigForm = document.
 	getElementById("signup_form") as HTMLFormElement;
 
 const sigExists = document.
-	getElementById('exists') as HTMLParagraphElement;
+	getElementById("exists") as HTMLParagraphElement;
 const sigLength = document.
-	getElementById('length') as HTMLParagraphElement;
+	getElementById("length") as HTMLParagraphElement;
 const sigNums = document.
-	getElementById('nums') as HTMLParagraphElement;
+	getElementById("nums") as HTMLParagraphElement;
 const sigSymbol = document.
-	getElementById('symbol') as HTMLParagraphElement;
+	getElementById("symbol") as HTMLParagraphElement;
 
 sigForm.addEventListener("submit", (event) => {
         event.preventDefault(); 
@@ -63,7 +63,7 @@ sigForm.addEventListener("submit", (event) => {
 
 	for(let i = 0; i < passLen; i++){
 		const char: string = password[i];
-		if (char >= '0' && char <= '9'){
+		if (char >= "0" && char <= "9"){
 			num = true;
 		}
 		else if (!/[a-zA-Z0-9]/.test(char)){

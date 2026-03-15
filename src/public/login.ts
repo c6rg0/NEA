@@ -1,8 +1,8 @@
 async function logPost(user: string, pass: string) {
 	const response = await fetch("http://localhost:8000/login", {
-		method: 'POST',
+		method: "POST",
 		headers: {
-			'Content-Type': 'application/json',
+			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({username: user, password: pass }),
 
@@ -24,18 +24,17 @@ async function logPost(user: string, pass: string) {
 
 }
 
-
 const logForm = document.
 	getElementById("login_form") as HTMLFormElement;
 
 const logExists = document.
-	getElementById('exists') as HTMLParagraphElement;
+	getElementById("exists") as HTMLParagraphElement;
 const logLength = document.
-	getElementById('length') as HTMLParagraphElement;
+	getElementById("length") as HTMLParagraphElement;
 const logNums = document.
-	getElementById('nums') as HTMLParagraphElement;
+	getElementById("nums") as HTMLParagraphElement;
 const logSymbol = document.
-	getElementById('symbol') as HTMLParagraphElement;
+	getElementById("symbol") as HTMLParagraphElement;
 
 logForm.addEventListener("submit", (event) => {
         event.preventDefault(); 
@@ -61,7 +60,7 @@ logForm.addEventListener("submit", (event) => {
 
 	for(let i = 0; i < passLen; i++){
 		const char: string = password[i];
-		if (char >= '0' && char <= '9'){
+		if (char >= "0" && char <= "9"){
 			num = true;
 		}
 		else if (!/[a-zA-Z0-9]/.test(char)){

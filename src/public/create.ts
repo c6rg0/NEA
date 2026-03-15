@@ -1,9 +1,9 @@
 async function problemPost(input_title: string, input_instr: string, input_answer: string, input_example: string) {
 	try {
 		const response = await fetch("http://localhost:8000/create", {
-			method: 'POST',
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 			// this will need everything, not just title
 			body: JSON.stringify({title: input_title, instruction: input_instr, answer: input_answer, example: input_example}),
@@ -44,7 +44,7 @@ async function problemPost(input_title: string, input_instr: string, input_answe
 const problemForm = document.
 	getElementById("problem_form") as HTMLFormElement;
 const errormsg = document.
-	getElementById('errP') as HTMLParagraphElement;
+	getElementById("errP") as HTMLParagraphElement;
 
 problemForm.addEventListener("submit", (event) => {
         event.preventDefault(); 

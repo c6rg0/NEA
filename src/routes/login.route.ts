@@ -1,14 +1,12 @@
-//submit-login.ts
 import express from "express";
-// import path from "path";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
-import Database from 'better-sqlite3';
-const regex_problems = Database('./database/regex_problems.db', { verbose: console.log });
+import Database from "better-sqlite3";
+const regex_problems = Database("./database/regex_problems.db", { verbose: console.log });
 
-declare module 'express-session' {
+declare module "express-session" {
   interface SessionData {
     user: { username: string };
   }
@@ -18,21 +16,22 @@ interface userPassword {
 	password: string;
 }
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
 	const user_input = req.body;
 	if (!user_input || !user_input.username) {
-		return res.status(204).send('Username is required');
+		return res.status(204).send("Username is required");
 	}
 	if (!user_input || !user_input.password) {
-		return res.status(204).send('Password is required');
+		return res.status(204).send("Password is required");
 	}
 
-	const result = regex_problems.prepare
-	(`SELECT password FROM Users WHERE username = ?`)
-	.get(user_input.username) as userPassword | undefined;
+	const result = regex_problems.prepare(`
+		SELECT password FROM Users 
+		WHERE username = ?
+	`).get(user_input.username) as userPassword | undefined;
 	
 	if (!result || !result.password) {
-		return res.status(401).send('Invalid username or password');
+		return res.status(401).send("Invalid username or password");
 	}
 
 	const parsed_pass = user_input.password;

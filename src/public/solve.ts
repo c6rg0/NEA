@@ -7,9 +7,9 @@ async function getSolution(urlId: unknown) {
 	try {
 		const getUrl = "http://localhost:8000/solution/" + urlId;
 		const response: any = await fetch(getUrl, {
-			method: 'GET',
+			method: "GET",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 		});
 
@@ -44,7 +44,7 @@ async function getSolution(urlId: unknown) {
 		console.log("Error --> " + error);
 
 		const getErr = document.
-			getElementById('title') as HTMLParagraphElement;
+			getElementById("title") as HTMLParagraphElement;
 
 		getErr.innerHTML = ("!!Network error!!");
 		return;
@@ -55,9 +55,9 @@ async function submitAttempt(urlId: any, correct: boolean) {
 	try {
 		const getUrl = "http://localhost:8000/attempt";
 		const response = await fetch(getUrl, {
-			method: 'POST',
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({correct: correct, urlId: urlId}),
 		});

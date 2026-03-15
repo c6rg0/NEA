@@ -1,10 +1,10 @@
 import express from "express";
 const router = express.Router();
 
-import Database from 'better-sqlite3';
-const regex_problems = Database('./database/regex_problems.db', { verbose: console.log });
+import Database from "better-sqlite3";
+const regex_problems = Database("./database/regex_problems.db", { verbose: console.log });
 
-declare module 'express-session' {
+declare module "express-session" {
 	interface SessionData {
 		user: { username: string };
 	}
@@ -41,13 +41,21 @@ class Elo {
 
 class Attempts{
 	increment(attempt: any){
-		const updateAttempts = regex_problems.
-			prepare('UPDATE problems SET times_attempted = times_attempted + 1 WHERE problem_id = (@id);');
+		const updateAttempts = regex_problems.prepare(`
+			UPDATE problems 
+			SET times_attempted = times_attempted + 1 
+			WHERE problem_id = (@id);
+		`);
+
 		updateAttempts.run({id: attempt.urlId});
 
 		if (attempt.correct == true) {
-			const updateSolved = regex_problems.
-				prepare('UPDATE Problems SET times_solved = times_solved + 1 WHERE problem_id = (@id);');
+			const updateSolved = regex_problems.prepare(`
+				UPDATE Problems 
+				SET times_solved = times_solved + 1 
+				WHERE problem_id = (@id);
+			`);
+
 			updateSolved.run({id: attempt.urlId});
 		}
 	}
@@ -56,9 +64,13 @@ class Attempts{
 		console.log(attempt.correct);
 
 		if (attempt.correct == true){
-			const newAttempt  = regex_problems.
-				prepare('INSERT INTO Attempts(username, problem_id, tries) VALUES(@username, @problem_id, @tries);');
+			const newAttempt  = regex_problems.prepare(`
+				INSERT INTO Attempts(username, problem_id, tries)
+				VALUES(@username, @problem_id, @tries);
+			`);
+
 			newAttempt.run({username: user, problem_id: attempt.urlId, tries: 1});
+
 		} else if (attempt.correct == false){
 			return;
 		}
@@ -66,7 +78,7 @@ class Attempts{
 
 }
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
 	try {
 		let user = req.session.user;
 		console.log(user);
@@ -81,13 +93,15 @@ router.post('/', async (req, res) => {
 		let newProbElo: number | unknown;
 
 		if (user){
-			let userElo = regex_problems.
-				prepare('SELECT elo FROM Users WHERE username = ?').
-				get(user) as types;
+			let userElo = regex_problems.prepare(`
+				SELECT elo FROM Users 
+				WHERE username = ?
+			`).get(user) as types;
 
-			let problemElo  = regex_problems.
-				prepare('SELECT elo FROM Problems WHERE problem_id = ?').
-				get(attempt.urlId) as types;
+			let problemElo  = regex_problems.prepare(`
+				SELECT elo FROM Problems 
+				WHERE problem_id = ?`
+			).get(attempt.urlId) as types;
 	
 			if (attempt.correct == true){
 				winner = userElo;
@@ -100,11 +114,17 @@ router.post('/', async (req, res) => {
 			const E = new Elo();
 			E.updateElo(winner, loser);
 
-			const userEloUpdate = regex_problems.
-				prepare('UPDATE Users SET elo = (@userElo) WHERE username = (@user);');
+			const userEloUpdate = regex_problems.prepare(`
+				UPDATE Users 
+				SET elo = (@userElo) 
+				WHERE username = (@user);
+			`);
 
-			const problemEloUpdate = regex_problems.
-				prepare('UPDATE Problems SET elo = (@elo) WHERE problem_id = (@id);');
+			const problemEloUpdate = regex_problems.prepare(`
+				UPDATE Problems 
+				SET elo = (@elo) 
+				WHERE problem_id = (@id);
+			`);
 
 			if (attempt.correct == true){
 				userEloUpdate.run({userElo: E.winner, user: user});
