@@ -11,16 +11,16 @@
     "type": "git",
     "url": "git+https://github.com/c6rg0/NEA.git"
   },
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "author": "Gabriel",
   "type": "typescript",
   "main": "server.js",
   "directories": {
-    "src": "typescript source code",
-    "public": "js and css files",
+    "src": "source code",
+    "public": "client side files after compilation",
     "views": "EJS files",
-    "database": "sqlite3 databases",
-    "doc": "docs"
+    "database": "sqlite3 database",
+    "docs": "documentation"
   },
   "scripts": {
     "start": "node server.js"

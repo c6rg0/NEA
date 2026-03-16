@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Create a quiz</title>
+		<title>Creating</title>
 		<link rel="shortcut icon" href="#">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 		<link rel="stylesheet" href="/css/style.css">
@@ -34,8 +34,9 @@
 			</div>
 		</nav>
 
-		<p id="cheatsheet"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet">(JS regex cheatsheet)</a></p>
-		<p>NOTE: Do not include delimiters.</p>
+		<p> Creation </p>
+
+		<p id="cheatsheet"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet">Cheatsheet</a></p>
 
 		<form id="problem_form">
 			<div class="mb-3">
@@ -54,15 +55,17 @@
 
 			<div class="mb-3">
 			<p>
-			<label for="answ" class="form-label">Answer:</label>
-			<input name="answ" id="answ" class="form-control"/>
+			<label for="exmpl" class="form-label">Test case:</label>
+			<input name="exmpl" id="exmpl" class="form-control"/>
 			</p>
 			</div>
 
+			<p>Solution:</p>
+
 			<div class="mb-3">
 			<p>
-			<label for="exmpl" class="form-label">Data to use regex on:</label>
-			<input name="exmpl" id="exmpl" class="form-control"/>
+			<label for="answ" class="form-label">NOTE: Do not include delimiters, and use JavaScript regex</label>
+			<input name="answ" id="answ" class="form-control"/>
 			</p>
 			</div>
 
@@ -77,7 +80,8 @@
 
 		<h2 id="confirm_msg" ></h2>
 
-		<div class="button_container" id="button_container" ></div>
+		<div class="button_container" id="a_button_container" ></div>
+		<div class="button_container" id="b_button_container" ></div>
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 		<script src="js/create.js"></script>

@@ -1,3 +1,32 @@
+async function redirectSetup(input_title: string) {
+	try {
+		const response = await fetch("http://localhost:8000/redirect", {
+			method: "SEARCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				title: input_title
+			}),
+		});
+
+		let status: number = response.status;
+		console.log(status);
+
+		if (status === 200){
+			console.log(response);
+			window.location.assign("/redirect/" + response);
+			return;
+		} else {
+			return console.log(status);
+		}
+
+	} catch(error) {
+		console.log("Error: "+error);
+		return errormsg.innerHTML = ("Network error, check console!");
+	}
+}
+
 async function problemPost(input_title: string, input_instr: string, input_answer: string, input_example: string) {
 	try {
 		const response = await fetch("http://localhost:8000/create", {
@@ -5,39 +34,26 @@ async function problemPost(input_title: string, input_instr: string, input_answe
 			headers: {
 				"Content-Type": "application/json",
 			},
-			// this will need everything, not just title
-			body: JSON.stringify({title: input_title, instruction: input_instr, answer: input_answer, example: input_example}),
+			body: JSON.stringify({
+				title: input_title, 
+				instruction: input_instr, 
+				answer: input_answer, 
+				example: input_example
+			}),
 		});
 
 		let status: number = response.status;
 		console.log(status);
-
-		if (status === 204){
-			errormsg.innerHTML = "Please login first and retry after you're logged in!";
-			return;
-		}
-
-		if (status === 401){
-			// User error
-			errormsg.innerHTML =  "";
-			return;
-		}
-
-		if (status === 409){
-			// Clash with existing data
-			errormsg.innerHTML = "";
-			return;
-		}
-
+		
 		if (status === 200){
-			window.location.assign("/create_success");
-			return;
+			return redirectSetup(input_title);
+		} else {
+			return console.log(status);
 		}
 
 	} catch(error) {
-		console.log("Error"+error);
-		errormsg.innerHTML = ("!!Network error!!");
-		return;
+		console.log("Error: "+error);
+		return errormsg.innerHTML = ("Network error, check console!");
 	}
 }
 
@@ -104,16 +120,31 @@ function regexConfirm(input_title: string, input_instr: string, input_answer: st
 	const confirmMsgChild = document.createTextNode("Is [" + array + "] the data out of [" + input_example + "] that you want to use?");
 	confirmMsg!.appendChild(confirmMsgChild);
 	
-	const buttonContainer = document.getElementById("button_container");
-	let button = document.createElement("BUTTON");
-	let button_node = document.
-		createTextNode("Sumbit");
-	button.appendChild(button_node);
-	button.id = ("submit_button");
-	buttonContainer!.appendChild(button);
+	const aButtonContainer = document.getElementById("a_button_container");
+	let agreeButton = document.createElement("BUTTON");
+	let aButtonNode = document.createTextNode("Yep");
 
-	button.onclick = function() {
+	agreeButton.appendChild(aButtonNode);
+	agreeButton.id = ("submit_button");
+	agreeButton.className = ("btn btn-light btn-lg");
+	aButtonContainer!.appendChild(agreeButton);
+
+	const dButtonContainer = document.getElementById("b_button_container");
+	let disagreeButton = document.createElement("BUTTON");
+	let dButtonNode = document.createTextNode("Cancel creation");
+
+	disagreeButton.appendChild(dButtonNode);
+	disagreeButton.id = ("submit_button");
+	disagreeButton.className = ("btn btn-light btn-lg");
+	dButtonContainer!.appendChild(disagreeButton);
+
+	agreeButton.onclick = function() {
 		return problemPost(input_title, input_instr, input_answer, input_example);
+
+	}
+
+	disagreeButton.onclick = function() {
+		window.location.assign("/create");
 
 	}
 	

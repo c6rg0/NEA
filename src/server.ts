@@ -26,8 +26,7 @@ regex_problems.exec(`
 		elo INTEGER DEFAULT 400, 
 		times_attempted INTEGER DEFAULT 0,
 		times_solved INTEGER DEFAULT 0,
-		time_created INTEGER DEFAULT (strftime("%s", "now"))
-
+		time_created INTEGER DEFAULT (strftime('%s', 'now'))
 	);
 
 	CREATE TABLE IF NOT EXISTS Attempts(
@@ -35,7 +34,7 @@ regex_problems.exec(`
 		username TEXT NOT NULL,
 		problem_id INTEGER NOT NULL,
 		tries INTEGER DEFAULT 0,
-		time_submitted INTEGER DEFAULT (strftime("%s", "now")),
+		time_submitted INTEGER DEFAULT (strftime('%s', 'now')),
 		FOREIGN KEY (username) REFERENCES Users(username),
 		FOREIGN KEY (problem_id) REFERENCES Problems(problem_id)
 	);
@@ -43,7 +42,8 @@ regex_problems.exec(`
 	CREATE TABLE IF NOT EXISTS Users(
 		[username] TEXT PRIMARY KEY UNIQUE NOT NULL,
 		[password] TEXT NOT NULL,
-		elo INTEGER DEFAULT 400
+		elo INTEGER DEFAULT 400,
+		time_created INTEGER DEFAULT (strftime('%s', 'now'))
 	);
 
 `);
@@ -76,14 +76,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/", router);
-
-app.get("/create", (req, res) => {
-	res.render("create");
-});
-
-app.get("/create_success", (req, res) => {
-	res.render("create_success");
-});
 
 const port = 8000;
 app.listen(port, () => {

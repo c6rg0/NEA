@@ -80,7 +80,7 @@ to view the website.*\
 - [x] Make an ELO system to determine user skill and problem diff
 
 - [X] Add a leaderboard and user system
-- [ ] Catch up on the frontend, and improve user interaction (going to new problem after creation, fixing the button to confirm creation etc)
+- [ ] Catch up on the frontend, and improve user interaction (going to new problem after creation etc)
 - [ ] Make a problem searching system
 - [ ] Balance the ELO system (determine by how much loss/win affects ELO)
 - [ ] Populate the database with problems that are seperate from user created content

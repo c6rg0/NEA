@@ -21,7 +21,7 @@ router.get("/:id", (req, res) => {
 	const attempts  = regex_problems.prepare(`
 		SELECT * FROM Attempts 
 		JOIN Problems ON Attempts.problem_id = Problems.problem_id 
-		WHERE Attempts.username = ? LIMIT 10;
+		WHERE Attempts.username = ? 
 	`);
 
 	const attempts_result = attempts.all(user);

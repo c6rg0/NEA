@@ -10,6 +10,14 @@ declare module "express-session" {
   }
 }
 
+interface problem_types {
+	problem_id: number
+}
+
+router.get("/", (req, res) => {
+	res.render("create");
+});
+
 router.post("/", (req, res) => {
 	const user_input = req.body;
 	
@@ -28,8 +36,15 @@ router.post("/", (req, res) => {
 				instruction: user_input.instruction, example: user_input.example,
 				answer: user_input.answer
 			});
+			
+			const id_search = regex_problems.prepare(`
+				SELECT problem_id 
+				FROM Problems 
+				WHERE title = ?
+			`).get(user_input.title) as problem_types;
+			console.log("problem_id: ", id_search.problem_id);
 
-			res.redirect("/create_success");
+			return res.status(200).send();
 		}
 	} else {
 		res.status(204).send("Please login first and retry after you're logged in!");
