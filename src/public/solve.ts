@@ -162,8 +162,31 @@ function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: 
 
 	D.submitAttempt(fullUrl, correct);
 
-	const tryAgain = document.getElementById("try_again");
-	tryAgain!.style.visibility = "visible";
+	const hButtonContainer = document.getElementById("h_button_container");
+	let homeButton = document.createElement("BUTTON");
+	let hButtonNode = document.createTextNode("Go home");
+
+	homeButton.appendChild(hButtonNode);
+	homeButton.id = ("submit_button");
+	homeButton.className = ("btn btn-light btn-lg");
+	hButtonContainer!.appendChild(homeButton);
+
+	const rButtonContainer = document.getElementById("r_button_container");
+	let retryButton = document.createElement("BUTTON");
+	let rButtonNode = document.createTextNode("Retry!");
+
+	retryButton.appendChild(rButtonNode);
+	retryButton.id = ("submit_button");
+	retryButton.className = ("btn btn-light btn-lg");
+	rButtonContainer!.appendChild(retryButton);
+
+	homeButton.onclick = function() {
+		return window.location.assign("/");
+	}
+
+	retryButton.onclick = function() {
+		return window.location.assign(fullUrl);
+	}
 
 	return;
 }

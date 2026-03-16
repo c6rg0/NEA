@@ -27,7 +27,8 @@ router.search("/", (req, res) => {
 	console.log(userSearch);
 
 	if (userSearch){
-		return res.send(userSearch);
+		const url = "/redirect/" + userSearch.problem_id;
+		return res.redirect(303, url);
 	} else {
 		return res.status(404).send("Couldn't find problem_id using title");
 	}

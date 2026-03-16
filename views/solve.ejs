@@ -64,7 +64,7 @@
 				<p><a href="/user/<%= i.username %>">
 					<%= i.username %>
 				</a>
-				| at elo <%= i.elo %>
+				| at <%= i.elo %> elo 
 				</p>
 			<% }); %>
 		</div>
@@ -77,7 +77,8 @@
 		<p id="db_solution"></p>
 		<p id="user_attempt"></p>
 
-		<button hidden id="try_again" href="/solve/<%= info.problem_id %>">Retry</button>
+		<div class="button_container" id="h_button_container" ></div>
+		<div class="button_container" id="r_button_container" ></div>
 
 		<script src="../js/solve.js"></script>
 	</body>

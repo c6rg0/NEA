@@ -15,7 +15,7 @@ async function redirectSetup(input_title: string) {
 
 		if (status === 200){
 			console.log(response);
-			window.location.assign("/redirect/" + response);
+			window.location.assign(response.url);
 			return;
 		} else {
 			return console.log(status);
@@ -145,7 +145,6 @@ function regexConfirm(input_title: string, input_instr: string, input_answer: st
 
 	disagreeButton.onclick = function() {
 		window.location.assign("/create");
-
 	}
 	
 }
