@@ -16,26 +16,49 @@ interface types{
 }
 
 class Elo {
-	private diff: number = 30;
+	// diff/difference is a bad variable name, "factor" is a better descriptor
+	private diff: number = 25;
+	private difference: number = 0;
+
 	private outcome: number = 1;
-	public winner: number = 0;
-	public loser: number = 0;
+	public winnerElo: number = 0;
+	public loserElo: number = 0;
 
-	newDiff(winner: any, loser: any){
-		// I would need winnerDiff and loserDiff; 
-		// no clue how that would work lol.
+	newDiff(winnerElo: any, loserElo: any){
+		// Smurfing -> minimal gains or huge loss
+		// Doing well despite low elo -> huge gains or minimal loss
+		// Average -> average (and similar) gains and loss
+
+
+		if (winnerElo.elo > loserElo.elo){
+			this.difference = winnerElo.elo - loserElo.elo;
+		} else {
+			this.difference = loserElo.elo - winnerElo.elo;
+		}
+		
+		// I'll have to use the quadratic formula that swings upwards or downwards
+		// depending on who lost/won and the elo difference between them
+
+
+
+		console.log(this.difference);
+		let factor: number = this.difference / 200;
+		console.log(factor);
+		return factor;
+		
 	}
 
-	probability(winner: any, loser: any){
-		return 1.0 / (1+ Math.pow(10, (winner.elo - loser.elo) / 400.0));
+	probability(winnerElo: any, loserElo: any){
+		return 1.0 / (1+ Math.pow(10, (winnerElo.elo - loserElo.elo) / 400.0));
 	}
 
-	updateElo(winner: any, loser: any){
-		let pb = this.probability(winner, loser);
-		let pa = this.probability(winner, loser);
+	updateElo(winnerElo: any, loserElo: any){
+		let pb = this.probability(winnerElo, loserElo);
+		let pa = this.probability(winnerElo, loserElo);
+		// this.diff = this.newDiff(winnerElo, loserElo);
 
-		this.winner  = winner.elo + this.diff * (this.outcome - pa);
-		this.loser = loser.elo + this.diff * ((1 - this.outcome - pb));
+		this.winnerElo  = winnerElo.elo + this.diff * (this.outcome - pa);
+		this.loserElo = loserElo.elo + this.diff * ((1 - this.outcome - pb));
 	}
 }
 
@@ -87,8 +110,8 @@ router.post("/", async (req, res) => {
 		let A = new Attempts();
 		A.increment(attempt);
 
-		let winner: number | unknown;
-		let loser: number | unknown;
+		let winnerElo: number | unknown;
+		let loserElo: number | unknown;
 		let newUserElo: number | unknown;
 		let newProbElo: number | unknown;
 
@@ -104,15 +127,15 @@ router.post("/", async (req, res) => {
 			).get(attempt.urlId) as types;
 	
 			if (attempt.correct == true){
-				winner = userElo;
-				loser = problemElo;
+				winnerElo = userElo;
+				loserElo = problemElo;
 			} else if (attempt.correct == false){
-				loser = userElo;
-				winner = problemElo;
+				loserElo = userElo;
+				winnerElo = problemElo;
 			}
 
 			const E = new Elo();
-			E.updateElo(winner, loser);
+			E.updateElo(winnerElo, loserElo);
 
 			const userEloUpdate = regex_problems.prepare(`
 				UPDATE Users 
@@ -127,16 +150,16 @@ router.post("/", async (req, res) => {
 			`);
 
 			if (attempt.correct == true){
-				userEloUpdate.run({userElo: E.winner, user: user});
-				problemEloUpdate.run({elo: E.loser, id: attempt.urlId});
-				newUserElo = E.winner;
-				newProbElo = E.loser;
+				userEloUpdate.run({userElo: E.winnerElo, user: user});
+				problemEloUpdate.run({elo: E.loserElo, id: attempt.urlId});
+				newUserElo = E.winnerElo;
+				newProbElo = E.loserElo;
 
 			} else if (attempt.correct == false){
-				userEloUpdate.run({userElo: E.loser, user: user});
-				problemEloUpdate.run({elo: E.winner, id: attempt.urlId});
-				newUserElo = E.loser;
-				newProbElo = E.winner;
+				userEloUpdate.run({userElo: E.loserElo, user: user});
+				problemEloUpdate.run({elo: E.winnerElo, id: attempt.urlId});
+				newUserElo = E.loserElo;
+				newProbElo = E.winnerElo;
 			}
 
 			A.record(user, attempt);
