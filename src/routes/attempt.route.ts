@@ -16,8 +16,9 @@ interface types{
 }
 
 class Elo {
-	// diff/difference is a bad variable name, "factor" is a better descriptor
-	private diff: number = 25;
+	private kFactor: number = 25;
+	private wkFactor: number = 25;
+	private lkFactor: number = 25;
 	private difference: number = 0;
 
 	private outcome: number = 1;
@@ -29,23 +30,11 @@ class Elo {
 		// Doing well despite low elo -> huge gains or minimal loss
 		// Average -> average (and similar) gains and loss
 
-
 		if (winnerElo.elo > loserElo.elo){
-			this.difference = winnerElo.elo - loserElo.elo;
+			return (winnerElo.elo / loserElo.elo) * 20;
 		} else {
-			this.difference = loserElo.elo - winnerElo.elo;
+			return (loserElo.elo / winnerElo.elo) * 20;
 		}
-		
-		// I'll have to use the quadratic formula that swings upwards or downwards
-		// depending on who lost/won and the elo difference between them
-
-
-
-		console.log(this.difference);
-		let factor: number = this.difference / 200;
-		console.log(factor);
-		return factor;
-		
 	}
 
 	probability(winnerElo: any, loserElo: any){
@@ -55,10 +44,12 @@ class Elo {
 	updateElo(winnerElo: any, loserElo: any){
 		let pb = this.probability(winnerElo, loserElo);
 		let pa = this.probability(winnerElo, loserElo);
-		// this.diff = this.newDiff(winnerElo, loserElo);
+		// need two factors 
+		this.wkFactor = this.newDiff(winnerElo, loserElo);
+		this.lkFactor = this.newDiff(winnerElo, loserElo);
 
-		this.winnerElo  = winnerElo.elo + this.diff * (this.outcome - pa);
-		this.loserElo = loserElo.elo + this.diff * ((1 - this.outcome - pb));
+		this.winnerElo  = winnerElo.elo + this.kFactor * (this.outcome - pa);
+		this.loserElo = loserElo.elo + this.kFactor * ((1 - this.outcome - pb));
 	}
 }
 

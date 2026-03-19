@@ -27,8 +27,8 @@ router.get("/:id", async(req, res) => {
 		const attempts = regex_problems.prepare(`
 			SELECT Attempts.*, Users.elo
 			FROM Attempts
-			JOIN Problems ON Attempts.problem_id = Problems.problem_id
-			JOIN Users ON Attempts.username = Users.username
+			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id
+			INNER JOIN Users ON Attempts.username = Users.username
 			WHERE Attempts.problem_id = ? 
 			LIMIT 10;
 		`);

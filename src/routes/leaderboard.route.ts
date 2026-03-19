@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
 	const attempts = regex_problems.prepare(`
 		SELECT * FROM Attempts 
-		JOIN Problems ON Attempts.problem_id = Problems.problem_id
+		INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id
 		ORDER BY elo DESC
 		LIMIT 50;
 	`);

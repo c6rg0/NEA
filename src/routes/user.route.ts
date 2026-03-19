@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
 
 	const attempts  = regex_problems.prepare(`
 		SELECT * FROM Attempts 
-		JOIN Problems ON Attempts.problem_id = Problems.problem_id 
+		INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
 		WHERE Attempts.username = ? 
 	`);
 

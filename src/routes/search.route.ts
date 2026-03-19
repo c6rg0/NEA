@@ -12,15 +12,23 @@ declare module "express-session" {
   }
 }
 
-router.post("/:id", async (req, res) => {
-	const query = req.params.id;
-	console.log("Search:", query);
+router.get("/:id", async (req, res) => {
+	const id = req.params.id;
+	console.log("Search:", id);
 
-	const select_search = regex_problems.prepare(`MATCH title FROM Problems WHERE title = ?;`).get(query);
+	const search = regex_problems.prepare(`
+		SELECT Problems.* 
+		FROM Problems
+		INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid
+		WHERE Problems_fts MATCH ?
+		ORDER BY rank;
+	`);
 
-	if (select_search) {
+	const search_result = search.all(id);
+
+	if (search_result) {
 		console.log("Results shown");
-		res.render("search", { results: select_search });
+		res.render("search", { results: search_result, userSearch: id });
 	} else{
 		res.status(404).send("Data not found");
 	}

@@ -29,6 +29,30 @@ regex_problems.exec(`
 		time_created INTEGER DEFAULT (strftime('%s', 'now'))
 	);
 
+	CREATE VIRTUAL TABLE IF NOT EXISTS Problems_fts USING fts5(
+		title,
+		creator,
+		content='Problems',
+		content_rowid='problem_id'
+	);
+
+	CREATE TRIGGER IF NOT EXISTS problems_ai AFTER INSERT ON Problems BEGIN
+		INSERT INTO Problems_fts(rowid, title, creator)
+		VALUES (new.problem_id, new.title, new.creator);
+	END;
+
+	CREATE TRIGGER IF NOT EXISTS problems_ad AFTER DELETE ON Problems BEGIN
+		INSERT INTO Problems_fts(Problems_fts, rowid, title, creator)
+		VALUES ('delete', old.problem_id, old.title, old.creator);
+	END;
+
+	CREATE TRIGGER IF NOT EXISTS problems_au AFTER UPDATE ON Problems BEGIN
+		INSERT INTO Problems_fts(Problems_fts, rowid, title, creator)
+		VALUES ('delete', old.problem_id, old.title, old.creator);
+		INSERT INTO Problems_fts(rowid, title, creator)
+		VALUES (new.problem_id, new.title, new.creator);
+	END;
+
 	CREATE TABLE IF NOT EXISTS Attempts(
 		attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
 		username TEXT NOT NULL,
