@@ -81,7 +81,7 @@ to view the website.*\
 
 - [X] Add a leaderboard and user system
 - [x] Catch up on the frontend, and improve user interaction (going to new problem after creation etc)
-- [ ] Make a problem searching system
+- [x] Make a problem searching system
 - [ ] Balance the ELO system (determine by how much loss/win affects ELO)
 - [ ] Populate the database with problems that are seperate from user created content
 - [ ] Finish off the styling
