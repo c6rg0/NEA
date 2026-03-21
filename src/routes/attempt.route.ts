@@ -25,17 +25,22 @@ class Elo {
 	public winnerElo: number = 0;
 	public loserElo: number = 0;
 
-	newDiff(winnerElo: any, loserElo: any){
+	/*
+	kAlgWinner(winnerElo: any, loserElo: any){
 		// Smurfing -> minimal gains or huge loss
 		// Doing well despite low elo -> huge gains or minimal loss
 		// Average -> average (and similar) gains and loss
+		
 
-		if (winnerElo.elo > loserElo.elo){
-			return (winnerElo.elo / loserElo.elo) * 20;
-		} else {
-			return (loserElo.elo / winnerElo.elo) * 20;
-		}
+		let temp: number = winnerElo.elo / loserElo.elo;
+		console.log(temp);
+		return 0;
 	}
+
+	kAlgLoser(winnerElo: any, loserElo: any){
+		return 0;
+	}
+	*/
 
 	probability(winnerElo: any, loserElo: any){
 		return 1.0 / (1+ Math.pow(10, (winnerElo.elo - loserElo.elo) / 400.0));
@@ -44,9 +49,11 @@ class Elo {
 	updateElo(winnerElo: any, loserElo: any){
 		let pb = this.probability(winnerElo, loserElo);
 		let pa = this.probability(winnerElo, loserElo);
-		// need two factors 
-		this.wkFactor = this.newDiff(winnerElo, loserElo);
-		this.lkFactor = this.newDiff(winnerElo, loserElo);
+
+		/*
+		this.wkFactor = this.kAlgWinner(winnerElo, loserElo);
+		this.lkFactor = this.kAlgLoser(winnerElo, loserElo);
+		*/
 
 		this.winnerElo  = winnerElo.elo + this.kFactor * (this.outcome - pa);
 		this.loserElo = loserElo.elo + this.kFactor * ((1 - this.outcome - pb));

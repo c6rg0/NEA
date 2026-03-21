@@ -10,12 +10,14 @@ import solve from "./solve.route";
 import solution from "./solution.route";
 import session from "./session.route";
 import attempt from "./attempt.route";
-import account from "./account.route";
+import { accountRouter } from "./account.route";
 import logout from "./logout.route";
 import user from "./user.route";
 import leaderboard from "./leaderboard.route";
 
 const router = express.Router();
+
+const account  = accountRouter();
 
 router.use("/signup", signup);
 router.use("/login", login);

@@ -1,20 +1,23 @@
-import express from "express";
-const router = express.Router();
+import { Request, Response, Router } from 'express'
 
 declare module "express-session" {
-  interface SessionData {
-    user: { username: string };
-  }
+	interface SessionData {
+		user: { username: string };
+	}
 }
 
-router.get("/", (req, res) => {
-	if (!req.session.user){
-		res.render("account", { login: false });
-	}
-	if (req.session.user){
-		let login_status = req.session.user;
-		res.render("account", { login_status: login_status, login: true });
-	}
-});
+export function accountRouter(){
+	const router = Router();
 
-export default router;
+	router.get("/", (req: Request, res: Response) => {
+		if (!req.session.user){
+			res.render("account", { login: false });
+			return;
+		}
+		res.render("account", { login_status: req.session.user, login: true });
+	});
+
+	return router;
+}
+
+
