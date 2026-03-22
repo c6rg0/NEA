@@ -47,6 +47,8 @@ async function problemPost(input_title: string, input_instr: string, input_answe
 		
 		if (status === 200){
 			return redirectSetup(input_title);
+		} if (status === 204){
+			return errormsg.innerHTML = ("Please login first!");
 		} else {
 			return console.log(status);
 		}

@@ -1,24 +1,45 @@
 import express from "express";
 
-import signup from "./signup.route";
-import login from "./login.route";
-import create from "./create.route";
-import redirect from "./redirect.route";
-import search from "./search.route";
-import browse from "./browse.route";
-import solve from "./solve.route";
-import solution from "./solution.route";
-import session from "./session.route";
-import attempt from "./attempt.route";
+declare module "express-session" {
+	interface SessionData {
+		user: { username: string };
+	}
+}
+
+import Database from "better-sqlite3";
+const regex_problems = Database("./database/regex_problems.db", { verbose: console.log });
+
+import { signupRouter} from "./signup.route";
+import { loginRouter } from "./login.route";
+import { createRouter } from "./create.route";
+import { redirectRouter } from "./redirect.route";
+import { searchRouter } from "./search.route";
+import { browseRouter } from "./browse.route";
+import { solveRouter } from "./solve.route";
+import { solutionRouter } from "./solution.route";
+import { sessionRouter } from "./session.route";
+import { attemptRouter } from "./attempt.route";
 import { accountRouter } from "./account.route";
-import logout from "./logout.route";
-import user from "./user.route";
-import leaderboard from "./leaderboard.route";
+import { logoutRouter } from "./logout.route";
+import { userRouter } from "./user.route";
+import { leaderboardRouter } from "./leaderboard.route";
+
+const account = accountRouter();
+const attempt = attemptRouter(regex_problems);
+const browse = browseRouter(regex_problems);
+const create = createRouter(regex_problems);
+const leaderboard = leaderboardRouter(regex_problems);
+const login = loginRouter(regex_problems);
+const logout = logoutRouter();
+const redirect = redirectRouter(regex_problems);
+const search = searchRouter(regex_problems);
+const session = sessionRouter();
+const signup = signupRouter(regex_problems);
+const solve = solveRouter(regex_problems);
+const solution = solutionRouter(regex_problems);
+const user = userRouter(regex_problems);
 
 const router = express.Router();
-
-const account  = accountRouter();
-
 router.use("/signup", signup);
 router.use("/login", login);
 router.use("/create", create);
@@ -43,6 +64,5 @@ router.get("/", (req, res) => {
 		res.render("index", { login_status: login_status, login: true } );
 	}
 });
-
 
 export default router;

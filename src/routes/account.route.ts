@@ -1,11 +1,5 @@
 import { Request, Response, Router } from 'express'
 
-declare module "express-session" {
-	interface SessionData {
-		user: { username: string };
-	}
-}
-
 export function accountRouter(){
 	const router = Router();
 
@@ -19,5 +13,4 @@ export function accountRouter(){
 
 	return router;
 }
-
 
