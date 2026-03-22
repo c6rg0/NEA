@@ -58,12 +58,11 @@ you can go to step 2.\
 *NOTE: You're now in the project directory*\
 
 5. Compile the source code:\
-*NOTE: Chmod is used to set file permisions*
-`$ sudo chmod +x build.sh`
-`$ ./build`
+*NOTE: Chmod is used to set file permisions (there is a chance this is alread done for you)*
+`$ sudo chmod +x build_and_run.sh`
 
 6. Run the website!\
-`$ node script start`\
+`$ node run website`\
 If you go to `http://localhost:8000` in the browser, you can use and test the website.\
 *NOTE: To be clear, you can run the website in wsl, and use the browser in windows
 to view the website.*\

@@ -1,10 +1,13 @@
 # Ignore node_modules
 *node_modules/
 
-# Ignore compiled code
-*server.js
+# Ignore old compiled code
+*.js
 *public/js/*
 *routes/*
-*public/particles/particles_app.js
 
-
+# Ignore compiled code in dist/
+*dist/public/js/*
+*dist/*.js
+*dist/routes/*
+*dist/db/*js

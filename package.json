@@ -1,46 +1,43 @@
 {
-  "name": "nea",
-  "version": "1.0.0",
-  "description": "Quiz website",
-  "keywords": [],
-  "homepage": "https://github.com/c6rg0/NEA#readme",
-  "bugs": {
-    "url": "https://github.com/c6rg0/NEA/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/c6rg0/NEA.git"
-  },
-  "license": "MIT",
-  "author": "Gabriel",
-  "type": "typescript",
-  "main": "server.js",
-  "directories": {
-    "src": "source code",
-    "public": "client side files after compilation",
-    "views": "EJS files",
-    "database": "sqlite3 database",
-    "docs": "documentation"
-  },
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/express": "^5.0.6",
-    "bcrypt": "^6.0.0",
-    "better-sqlite3": "^12.4.1",
-    "body-parser": "^2.2.0",
-    "ejs": "^3.0.2",
-    "express": "^5.0.6",
-    "express-session": "^1.18.2",
-    "typescript": "^5.9.3"
-  },
-  "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13",
-    "@types/express-session": "^1.18.2"
-  },
-  "engines": {
-    "node": "24.13.0"
-  }
+	"name": "nea",
+	"version": "1.0.0",
+	"description": "Quiz website",
+	"keywords": [],
+	"homepage": "https://github.com/c6rg0/NEA#readme",
+	"bugs": {
+		"url": "https://github.com/c6rg0/NEA/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/c6rg0/NEA.git"
+	},
+	"license": "MIT",
+	"author": "Gabriel",
+	"type": "typescript",
+	"main": "server.js",
+	"directories": {
+		"src": "source code",
+		"dist": "distribution files/static + compiled files"
+	},
+	"scripts": {
+		"website": "./build_and_run.sh"
+	},
+	"dependencies": {
+		"@types/bcrypt": "^6.0.0",
+		"@types/express": "^5.0.6",
+		"bcrypt": "^6.0.0",
+		"better-sqlite3": "^12.4.1",
+		"body-parser": "^2.2.0",
+		"ejs": "^3.0.2",
+		"express": "^5.0.6",
+		"express-session": "^1.18.2",
+		"typescript": "^5.9.3"
+	},
+	"devDependencies": {
+		"@types/better-sqlite3": "^7.6.13",
+		"@types/express-session": "^1.18.2"
+	},
+	"engines": {
+		"node": "24.13.0"
+	}
 }

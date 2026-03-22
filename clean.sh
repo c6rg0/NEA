@@ -2,6 +2,8 @@
 # Removes compiled js code
 
 rm -rfv node_modules/
-rm -v server.js
-rm -rfv routes/*
-rm -rfv public/js/*
+
+rm -rfv dist/*.js
+rm -rfv dist/db/*js
+rm -rfv dist/routes/*
+rm -rfv dist/public/js/*

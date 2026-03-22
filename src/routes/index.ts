@@ -7,7 +7,7 @@ declare module "express-session" {
 }
 
 import Database from "better-sqlite3";
-const regex_problems = Database("./database/regex_problems.db", { verbose: console.log });
+const regex_problems = Database("./db/db.db", { verbose: console.log });
 
 import { signupRouter} from "./signup.route";
 import { loginRouter } from "./login.route";

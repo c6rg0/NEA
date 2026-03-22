@@ -9,15 +9,12 @@
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
 		"noEmitOnError": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
 		"moduleResolution": "node",
 
 		"target": "es2020",
-		"outDir": "./public/js/",
+		"outDir": "./dist/public/js/",
     		"rootDir": "./src/public/"
 	},
-  		"include": ["src/public/"],
-  		"exclude": ["src/server.ts"]
+  		"include": ["src/public/"]
 }
 
