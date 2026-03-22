@@ -9,6 +9,3 @@ tsc -p tsconfig.json
 tsc 
 tsc -p tsconfig.public.json
 
-cd dist/
-node server.js
-cd ..

@@ -20,7 +20,8 @@
 		"dist": "distribution files/static + compiled files"
 	},
 	"scripts": {
-		"website": "./build_and_run.sh"
+		"build": "./build.sh",
+		"website": "cd dist && node server.js && cd .."
 	},
 	"dependencies": {
 		"@types/bcrypt": "^6.0.0",

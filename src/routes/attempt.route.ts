@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 
-export function attemptRouter(regex_problems: Database.Database){
+export function attemptRouter(db: sqlite3.Database){
 	const router = Router();
 
 	interface types{
@@ -56,7 +56,7 @@ export function attemptRouter(regex_problems: Database.Database){
 
 	class Attempts{
 		increment(attempt: any){
-			const updateAttempts = regex_problems.prepare(`
+			const updateAttempts = db.prepare(`
 				UPDATE problems 
 				SET times_attempted = times_attempted + 1 
 				WHERE problem_id = (@id);
@@ -65,7 +65,7 @@ export function attemptRouter(regex_problems: Database.Database){
 			updateAttempts.run({id: attempt.urlId});
 
 			if (attempt.correct == true) {
-				const updateSolved = regex_problems.prepare(`
+				const updateSolved = db.prepare(`
 					UPDATE Problems 
 					SET times_solved = times_solved + 1 
 					WHERE problem_id = (@id);
@@ -76,7 +76,7 @@ export function attemptRouter(regex_problems: Database.Database){
 		}
 		
 		record(user: any, attempt: any){
-			const newAttempt  = regex_problems.prepare(`
+			const newAttempt  = db.prepare(`
 				INSERT INTO Attempts(username, problem_id, tries)
 				VALUES(@username, @problem_id, @tries);
 			`);
@@ -99,12 +99,12 @@ export function attemptRouter(regex_problems: Database.Database){
 			let newProbElo: number | unknown;
 
 			if (user){
-				let userElo = regex_problems.prepare(`
+				let userElo = db.prepare(`
 					SELECT elo FROM Users 
 					WHERE username = ?
 				`).get(user) as types;
 
-				let problemElo  = regex_problems.prepare(`
+				let problemElo  = db.prepare(`
 					SELECT elo FROM Problems 
 					WHERE problem_id = ?`
 				).get(attempt.urlId) as types;
@@ -120,13 +120,13 @@ export function attemptRouter(regex_problems: Database.Database){
 				const E = new Elo();
 				E.updateElo(winnerElo, loserElo);
 
-				const userEloUpdate = regex_problems.prepare(`
+				const userEloUpdate = db.prepare(`
 					UPDATE Users 
 					SET elo = (@userElo) 
 					WHERE username = (@user);
 				`);
 
-				const problemEloUpdate = regex_problems.prepare(`
+				const problemEloUpdate = db.prepare(`
 					UPDATE Problems 
 					SET elo = (@elo) 
 					WHERE problem_id = (@id);

@@ -1,12 +1,12 @@
 import { Request, Response, Router } from 'express'
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 
-export function browseRouter(regex_problems: Database.Database){
+export function browseRouter(db: sqlite3.Database){
 	const router = Router();
 
 	router.get("/", async (req: Request, res: Response) => {
 		
-		const search  = regex_problems.prepare(`
+		const search  = db.prepare(`
 			SELECT problem_id, title, elo, times_attempted 
 			FROM Problems 
 			LIMIT 10;`);

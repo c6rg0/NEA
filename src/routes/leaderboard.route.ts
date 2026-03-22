@@ -1,13 +1,12 @@
 import { Request, Response, Router } from 'express'
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 
-export function leaderboardRouter(regex_problems:
-				 Database.Database){
+export function leaderboardRouter(db: sqlite3.Database){
 	const router = Router();
 
 	router.get("/", async (req: Request, res: Response) => {
 
-		const attempts = regex_problems.prepare(`
+		const attempts = db.prepare(`
 			SELECT * FROM Attempts 
 			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id
 			ORDER BY elo DESC

@@ -1,9 +1,8 @@
 import { Request, Response, Router } from 'express'
 import bcrypt from "bcrypt";
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 
-export function loginRouter(
-	regex_problems: Database.Database){
+export function loginRouter(db: sqlite3.Database){
 
 	const router = Router();
 
@@ -27,7 +26,7 @@ export function loginRouter(
 			send("Password is required");
 		}
 
-		const result = regex_problems.prepare(`
+		const result = db.prepare(`
 			SELECT password FROM Users 
 			WHERE username = ?
 		`).get(user_input.username) as userPassword | undefined;

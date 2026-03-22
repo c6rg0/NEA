@@ -1,7 +1,7 @@
-import { Request, Response, Router } from 'express'
-import Database from "better-sqlite3";
+import { Request, Response, Router } from "express";
+import sqlite3 from "better-sqlite3";
 
-export function createRouter(regex_problems: Database.Database){
+export function createRouter(db: sqlite3.Database){
 	const router = Router();
 
 	interface problem_types {
@@ -21,7 +21,7 @@ export function createRouter(regex_problems: Database.Database){
 				return res.status(204).send("Title is required");
 			} else {
 				
-				const insert_problem = regex_problems.prepare(`
+				const insert_problem = db.prepare(`
 					INSERT INTO Problems (title, creator, instruction, example, answer) 
 					VALUES(@title, @creator, @instruction, @example, @answer);
 				`);
@@ -32,7 +32,7 @@ export function createRouter(regex_problems: Database.Database){
 					answer: user_input.answer
 				});
 				
-				const id_search = regex_problems.prepare(`
+				const id_search = db.prepare(`
 					SELECT problem_id 
 					FROM Problems 
 					WHERE title = ?

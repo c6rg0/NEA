@@ -1,18 +1,18 @@
 import { Request, Response, Router } from "express";
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 
-export function userRouter(regex_problems: Database.Database){
+export function userRouter(db: sqlite3.Database){
 	const router = Router();
 
 	router.get("/:id", (req: Request, res: Response) => {
 		let user = req.params.id;
 		
-		const userSearch = regex_problems.prepare(`
+		const userSearch = db.prepare(`
 			SELECT username, elo 
 			FROM Users WHERE username = ?
 		`).get(user);
 
-		const attempts  = regex_problems.prepare(`
+		const attempts  = db.prepare(`
 			SELECT * FROM Attempts 
 			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
 			WHERE Attempts.username = ? 

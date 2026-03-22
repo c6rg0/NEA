@@ -1,7 +1,7 @@
 # Algorithms
 - [x] Cross-table parameterised SQL 
 - [ ] Aggregate SQL functions (*1*)
-- [ ] User/CASE-generated DDL script (useless)
+- [ ] User/CASE-generated DDL script
 - [ ] Graph/Tree Traversal (tree might be needed for the problem difficulty evaluator algorithm)
 - [ ] List operations (not needed)
 - [ ] Linked list maintenance (not needed)
@@ -20,7 +20,7 @@
 
 # Characteristic
 - [ ] Modules (subroutines) with appropriate interfaces (*2*).
-- [ ] Loosely coupled modules (subroutines) – module code interacts with other parts of the program through its interface only.
+- [x] Loosely coupled modules (subroutines) – module code interacts with other parts of the program through its interface only.
 - [ ] Cohesive modules (subroutines) – module code does just one thing.
 - [x] Modules(collections of subroutines) – subroutines with common purpose grouped.
 - [ ] Defensive programming.

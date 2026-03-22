@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 
-export function redirectRouter(regex_problems: Database.Database){
+export function redirectRouter(db: sqlite3.Database){
 	const router = Router();
 
 	interface redirectTypes{
@@ -13,7 +13,7 @@ export function redirectRouter(regex_problems: Database.Database){
 		const id  = req.body as redirectTypes;
 		console.log(id);
 
-		const userSearch = regex_problems.prepare(`
+		const userSearch = db.prepare(`
 			SELECT problem_id 
 			FROM Problems WHERE title = ?
 		`).get(id.title) as redirectTypes;

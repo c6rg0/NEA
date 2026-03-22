@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 import bcrypt from "bcrypt";
 
 
-export function signupRouter(regex_problems: Database.Database){
+export function signupRouter(db: sqlite3.Database){
 	const router = Router();
 
 	router.get("/", (req: Request, res: Response) => {
@@ -20,7 +20,7 @@ export function signupRouter(regex_problems: Database.Database){
 			return res.status(304).send("Password is missing");
 		}
 		
-		const existing_user = regex_problems.prepare(`
+		const existing_user = db.prepare(`
 			SELECT username FROM Users 
 			WHERE username = ?
 		`).get(user_input.username);
@@ -43,7 +43,7 @@ export function signupRouter(regex_problems: Database.Database){
 
 				const hashed_pass = await hashPassword(parsed_pass);
 
-				const insert = regex_problems.prepare(`
+				const insert = db.prepare(`
 					INSERT INTO Users (username, password) 
 					VALUES (@username , @password);
 				`);

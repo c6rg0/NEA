@@ -59,17 +59,14 @@ you can go to step 2.\
 
 5. Compile the source code:\
 *NOTE: Chmod is used to set file permisions (there is a chance this is alread done for you)*
-`$ sudo chmod +x build_and_run.sh`
+`$ sudo chmod +x build.sh`
+`$ npm run build`
 
 6. Run the website!\
 `$ node run website`\
 If you go to `http://localhost:8000` in the browser, you can use and test the website.\
-*NOTE: To be clear, you can run the website in wsl, and use the browser in windows
+*NOTE: As far as I'm aware, you can run the website in wsl, and use the browser in windows
 to view the website.*\
-
-> If an error occurs relating to `mismatched versions`:
-> Use `$ npm ci`,
-> it does a clean install, and disregards existsing node modules in the project.
 
 ## To do list:
 - [x] Redesign the database (until further notice)

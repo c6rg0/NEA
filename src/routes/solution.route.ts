@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
-import Database from "better-sqlite3";
+import sqlite3 from "better-sqlite3";
 
-export function solutionRouter(regex_problems: Database.Database){
+export function solutionRouter(db: sqlite3.Database){
 	const router = Router();
 
 	interface types {
@@ -13,7 +13,7 @@ export function solutionRouter(regex_problems: Database.Database){
 		const id  = req.params.id;
 
 		try {
-			const response  = regex_problems.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(id);
+			const response  = db.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(id);
 			console.log("answer = " + (response as types).answer);
 
 			return res.json(response);

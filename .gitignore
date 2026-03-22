@@ -1,13 +1,8 @@
 # Ignore node_modules
 *node_modules/
 
-# Ignore old compiled code
-*.js
-*public/js/*
-*routes/*
-
 # Ignore compiled code in dist/
-*dist/public/js/*
 *dist/*.js
-*dist/routes/*
 *dist/db/*js
+*dist/routes/*.js
+*dist/public/js/*
