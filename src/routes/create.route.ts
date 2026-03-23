@@ -9,7 +9,12 @@ export function createRouter(db: sqlite3.Database){
 	}
 
 	router.get("/", (req: Request, res: Response) => {
-		res.render("create");
+		if (req.session.user){
+			res.render("create", { login: true } );
+			return;
+		}
+
+		res.render("create", { login: false } );
 		return;
 	});
 

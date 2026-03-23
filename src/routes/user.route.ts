@@ -8,19 +8,29 @@ export function userRouter(db: sqlite3.Database){
 		let user = req.params.id;
 		
 		const userSearch = db.prepare(`
-			SELECT username, elo 
+			SELECT username, elo, time_created
 			FROM Users WHERE username = ?
 		`).get(user);
 
-		const attempts  = db.prepare(`
+		const attempts = db.prepare(`
 			SELECT * FROM Attempts 
 			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
 			WHERE Attempts.username = ? 
+			ORDER BY Problems.elo DESC
 		`);
+
+		const averageEloAttempted = db.prepare(`
+			SELECT AVG(Problems.elo) 
+			AS avg_elo
+			FROM Attempts 
+			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
+			WHERE Attempts.username = ? 
+		`).get(user);
+		console.log(averageEloAttempted);
 
 		const attempts_result = attempts.all(user);
 
-		res.render("user", { results: userSearch, attempts: attempts_result });
+		res.render("user", { results: userSearch, attempts: attempts_result, average: averageEloAttempted});
 	});
 
 	return router;

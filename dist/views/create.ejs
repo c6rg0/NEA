@@ -34,9 +34,14 @@
 			</div>
 		</nav>
 
+
+		<% if (login == true){ %>
 		<p> Creation </p>
 
-		<p id="cheatsheet"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet">Cheatsheet</a></p>
+		<a id="cheatsheet" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet">
+			<button class="btn btn-light btn-lg" type="button">Cheatsheet</button>
+		</a>
+
 
 		<form id="problem_form">
 			<div class="mb-3">
@@ -82,6 +87,20 @@
 
 		<div class="button_container" id="a_button_container" ></div>
 		<div class="button_container" id="b_button_container" ></div>
+
+		<% } if (login == false) { %>
+			<p> Please login before creating a regex problem </p>
+
+			<a href="/">
+				<button class="btn btn-light btn-lg" type="button">Home</button>
+			</a>
+
+			<a href="/login">
+				<button class="btn btn-light btn-lg" type="button">Login</button>
+			</a>
+		<% } %>
+
+
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 		<script src="js/create.js"></script>

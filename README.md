@@ -77,7 +77,9 @@ to view the website.*\
 
 - [X] Add a leaderboard and user system
 - [x] Catch up on the frontend, and improve user interaction (going to new problem after creation etc)
-- [ ] AMEND: Use ejs to make users login first before creation
+- [x] AMEND: Use ejs to make users login first before creation
+- [X] AMEND: The data being fetched and displayed for the leaderboard makes no sense. Better: user, elo, date joined
+- [ ] AMEND: Display account creation date on user
 - [x] Make a problem searching system
 - [ ] Balance the ELO system (determine by how much loss/win affects ELO)
 - [ ] Populate the database with problems that are seperate from user created content
