@@ -37,8 +37,8 @@
 
 		<div id="user_data">
 			<p id="username"><%= results.username %></p>
-			<% var x = new Date(results.time_created); %>
-			<p id="joined">Joined: <%= x.toDateString(); %></p>
+			<% var x = new Date(results.time_created * 1000); %>
+			<p id="joined">Joined: <%= x.toDateString() %></p>
 			<p id="elo">Elo: <%= results.elo %></p>
 			<p id="av_elo">Avg difficulty solved: <%= average.avg_elo %></p>
 		</div>

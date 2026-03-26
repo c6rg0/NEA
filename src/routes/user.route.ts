@@ -11,6 +11,7 @@ export function userRouter(db: sqlite3.Database){
 			SELECT username, elo, time_created
 			FROM Users WHERE username = ?
 		`).get(user);
+		console.log(userSearch);
 
 		const attempts = db.prepare(`
 			SELECT * FROM Attempts 
@@ -26,7 +27,6 @@ export function userRouter(db: sqlite3.Database){
 			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
 			WHERE Attempts.username = ? 
 		`).get(user);
-		console.log(averageEloAttempted);
 
 		const attempts_result = attempts.all(user);
 

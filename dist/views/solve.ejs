@@ -37,18 +37,23 @@
 
 		<div id="pre_solution">
 			<h1 id="title"><%= info.title %></h1>
+
 			<p id="creator" > Created by: 
 			<a href="/user/<%= info.creator %>">
 			<%= info.creator %>
 			</a></p>
-			<p id="diff"> Difficulty rating: <%= info.elo %></p>
+
+			<% var x = new Date(info.time_created * 1000); %>
+			<p>Created: <%= x.toDateString() %>
+			| Difficulty rating: <%= info.elo %></p>
+
 			<p id="instruction"> Instruction: <%= info.instruction %></p>
 		</div>
 
 		<form id="solution_form">
 			<div>
 				<p>
-				<label for="solution">Your solution: </label>
+				<label for="solution"></label>
 				<input name="solution" id="solution" class="form-control"/>
 				</p>
 			</div>
