@@ -1,10 +1,10 @@
 # Bettersqlite3 manual
 
 ## Import
-`import Database from 'better-sqlite3';`
+`import sqlite3 from 'better-sqlite3';`
 
 ## Defigning a database
-`const db = new Database('location/location', { verbose: console.log });`
+`const db = new sqlite3('location/location', { verbose: console.log });`
 
 `db.pragrma('journal_mode = WAL');`
 (this increases performance)

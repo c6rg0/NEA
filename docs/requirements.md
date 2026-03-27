@@ -1,6 +1,6 @@
 # Algorithms
 - [x] Cross-table parameterised SQL 
-- [ ] Aggregate SQL functions (*1*)
+- [x] Aggregate SQL functions (*1*)
 - [ ] User/CASE-generated DDL script
 - [ ] Graph/Tree Traversal (tree might be needed for the problem difficulty evaluator algorithm)
 - [ ] List operations (not needed)
