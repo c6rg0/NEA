@@ -6,13 +6,13 @@ export function browseRouter(db: sqlite3.Database){
 
 	router.get("/", async (req: Request, res: Response) => {
 		
-		const search  = db.prepare(`
+		const search = db.prepare(`
 			SELECT problem_id, title, elo, times_attempted 
 			FROM Problems 
 			LIMIT 10;`);
-		const search_result = search.all();
+		const results = search.all();
 		
-		res.render("browse", { results: search_result } );
+		res.render("browse", { results: results } );
 		return;
 	});
 

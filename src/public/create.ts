@@ -23,7 +23,7 @@ async function redirectSetup(input_title: string) {
 
 	} catch(error) {
 		console.log("Error: "+error);
-		return errormsg.innerHTML = ("Network error, check console!");
+		return errormsg.innerHTML = ("Network error!");
 	}
 }
 
@@ -55,7 +55,7 @@ async function problemPost(input_title: string, input_instr: string, input_answe
 
 	} catch(error) {
 		console.log("Error: "+error);
-		return errormsg.innerHTML = ("Network error, check console!");
+		return errormsg.innerHTML = ("Network error!");
 	}
 }
 
@@ -69,16 +69,24 @@ problemForm.addEventListener("submit", (event) => {
         const input_title  = (document.getElementById("title") as HTMLInputElement).value;
         const input_instr = (document.getElementById("instr") as HTMLInputElement).value;
 	const input_example  = (document.getElementById("exmpl") as HTMLInputElement).value;
-	// Conversion from string to RegExp
 	const input_answer = (document.getElementById("answ") as HTMLInputElement).value;
-	const conv_answer = new RegExp(input_answer);
+
+	const test_input: RegExp = /\/(\w+)/ig;
+	const delimsExist = test_input.exec(input_answer);
 
 	if (input_title.trim() === "" || input_instr.trim() === "" || input_answer.trim() === "" || input_example.trim() === "") {
-        	errormsg.innerHTML = 
-			"Please fill in the fields!";
-        } else {
+		errormsg.innerHTML = 
+			"Please fill in all fields!";
+
+	} if (delimsExist){
+		errormsg.innerHTML = 
+			"Do not include delimiters in your regular expression.";
+
+	} else {
+		const conv_answer = new RegExp(input_answer);
 		errormsg.innerHTML = "";
 		regexTest(input_title, input_instr, input_answer, conv_answer, input_example);
+
 	}
 });
 
@@ -89,9 +97,7 @@ function regexTest(input_title: string, input_instr: string, input_answer: strin
 		regexConfirm(input_title, input_instr, input_answer, conv_answer, input_example);
 	} else {
 		console.log("Test came: false D:");
-		errormsg.innerHTML = "Please use JS regex, and include delimiters!";
-		return;
-	}
+		errormsg.innerHTML = "Please use JS regex, and include delimiters!"; return; }
 
 }
 

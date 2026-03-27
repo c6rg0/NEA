@@ -16,11 +16,11 @@ export function searchRouter(db: sqlite3.Database){
 			ORDER BY rank;
 		`);
 
-		const search_result = search.all(id);
+		const results = search.all(id);
 
-		if (search_result) {
+		if (results) {
 			console.log("Results shown");
-			res.render("search", { results: search_result, userSearch: id });
+			res.render("search", { results: results, userSearch: id });
 		} else{
 			res.status(404).send("Data not found");
 		}

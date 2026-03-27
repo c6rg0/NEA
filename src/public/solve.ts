@@ -23,8 +23,8 @@ async function getSolution(urlId: unknown) {
 
 		if (status === 200){
 			// acceptable response
-			const problem_data = await response.json() as types; 
-			return problem_data;
+			const problemData = await response.json() as types; 
+			return problemData;
 		}
 
 			if (status === 400){

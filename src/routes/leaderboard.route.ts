@@ -13,9 +13,9 @@ export function leaderboardRouter(db: sqlite3.Database){
 			LIMIT 50;
 		`);
 
-		const attempts_result = attempts.all();
+		const attemptsResult = attempts.all();
 
-		res.render("leaderboard", { attempts: attempts_result });
+		res.render("leaderboard", { attempts: attemptsResult });
 
 	});
 

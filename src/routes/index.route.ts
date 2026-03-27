@@ -9,8 +9,8 @@ export function indexRouter(){
 			return;
 		}
 		if (req.session.user){
-			let login_status = req.session.user;
-			res.render("index", { login_status: login_status, login: true } );
+			let loginStatus = req.session.user;
+			res.render("index", { login_status: loginStatus, login: true } );
 			return;
 		}
 	});

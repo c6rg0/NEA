@@ -26,9 +26,9 @@ export function solveRouter(db: sqlite3.Database){
 				LIMIT 10;
 			`);
 
-			const attempts_result = attempts.all(id);
+			const attemptsResult = attempts.all(id);
 
-			res.render("solve", {info: info, attempts: attempts_result});
+			res.render("solve", {info: info, attempts: attemptsResult});
 
 		} catch(error){
 			return res.status(500).send(error + ": unkown error");

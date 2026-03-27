@@ -28,9 +28,9 @@ export function userRouter(db: sqlite3.Database){
 			WHERE Attempts.username = ? 
 		`).get(user);
 
-		const attempts_result = attempts.all(user);
+		const attemptsResult = attempts.all(user);
 
-		res.render("user", { results: userSearch, attempts: attempts_result, average: averageEloAttempted});
+		res.render("user", { results: userSearch, attempts: attemptsResult, average: averageEloAttempted});
 	});
 
 	return router;

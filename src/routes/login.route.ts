@@ -16,47 +16,44 @@ export function loginRouter(db: sqlite3.Database){
 	});
 
 	router.post("/", async (req, res) => {
-		const user_input = req.body;
-		if (!user_input || !user_input.username) {
+		const userInput = req.body;
+
+		if (!userInput || !userInput.username || !userInput.password) {
 			return res.status(204).
-			send("Username is required");
-		}
-		if (!user_input || !user_input.password) {
-			return res.status(204).
-			send("Password is required");
+			send("Required credentials are missing.");
 		}
 
 		const result = db.prepare(`
 			SELECT password FROM Users 
 			WHERE username = ?
-		`).get(user_input.username) as userPassword | undefined;
+		`).get(userInput.username) as userPassword | undefined;
 		
 		if (!result || !result.password) {
 			return res.status(401).
 			send("Invalid username or password");
 		}
 
-		const parsed_pass = user_input.password;
-		const hashed_pass = result.password; 
+		const inputPass: string = userInput.password;
+		const hashedPass: string = result.password; 
 
-		async function verifyPassword(parsed_pass:
-			string, hashed_pass: string): Promise<boolean> {
+		async function verifyPassword(inputPass:
+			string, hashedPass: string): Promise<boolean> {
 
-			const check = await bcrypt.
-			compare(parsed_pass, hashed_pass);
+			const match: boolean = await bcrypt.
+			compare(inputPass, hashedPass);
 
-			return check;
+			return match;
 		}
 
-		const check = await verifyPassword(parsed_pass, hashed_pass);
+		const match: boolean = await verifyPassword(inputPass, hashedPass);
 
-		if (check) {
-			req.session.user = user_input.username;
+		if (match) {
+			req.session.user = userInput.username;
 			res.redirect("/");
 			return;
 
 		} else {
-			res.status(401).send("Unauthorized");
+			res.status(401).send("Incorrect password or username.");
 			return;
 		}
 	});

@@ -2,7 +2,6 @@ import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 import bcrypt from "bcrypt";
 
-
 export function signupRouter(db: sqlite3.Database){
 	const router = Router();
 
@@ -11,37 +10,36 @@ export function signupRouter(db: sqlite3.Database){
 	});
 
 	router.post("/", async (req: Request, res: Response) => {
-		const user_input = req.body;
-		if (!user_input || !user_input.username) {
-			return res.status(304).send("Username is missing");
+		const userInput = req.body;
+
+		if (!userInput || !userInput.username || !userInput.password) {
+			return res.status(304).send("Required fields are missing.");
 		}
 
-		if (!user_input || !user_input.password) {
-			return res.status(304).send("Password is missing");
-		}
-		
-		const existing_user = db.prepare(`
+		const existingUser = db.prepare(`
 			SELECT username FROM Users 
 			WHERE username = ?
-		`).get(user_input.username);
+		`).get(userInput.username);
 
-		if (existing_user) {
+		if (existingUser) {
 			res.status(409).send("Username already exists");
-		}
-		else{
-			let passLength: number = user_input.password.length;
+		} else {
+
+			let passLength: number = userInput.password.length;
+
 			if ( passLength < 6) {
 				return res.status(406).send("Password is too short");
 			} else {
-				const parsed_pass = user_input.password;
+
+				const pass = userInput.password;
 				
-				async function hashPassword(parsed_pass: string): Promise<string> {
+				async function hashPassword(pass: string): Promise<string> {
 					const saltRounds = 10;
-					const hashed_pass = await bcrypt.hash(parsed_pass, saltRounds);
-					return hashed_pass;
+					const hashedPass = await bcrypt.hash(pass, saltRounds);
+					return hashedPass;
 				}
 
-				const hashed_pass = await hashPassword(parsed_pass);
+				const hashedPass = await hashPassword(pass);
 
 				const insert = db.prepare(`
 					INSERT INTO Users (username, password) 
@@ -49,7 +47,7 @@ export function signupRouter(db: sqlite3.Database){
 				`);
 
 				try {
-					insert.run({ username: user_input.username, password: hashed_pass });
+					insert.run({ username: userInput.username, password: hashedPass });
 				} catch (err) {
 					console.log(err);
 					return res.status(500).send(err);
