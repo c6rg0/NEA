@@ -1,90 +1,48 @@
-async function logPost(user: string, pass: string) {
+function loginResponse(response: Response){
+	console.log(response.status);
+
+	if (response.status === 401){
+		return loginExists.innerHTML = "Incorrect username or password!";
+	} if (response.status === 200){
+		return window.location.assign("/");
+	} else {
+		return loginExists.innerHTML = "501";
+	}
+}
+
+async function loginPost(username: string, password: string) {
 	const response = await fetch("http://localhost:8000/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({username: user, password: pass }),
-
+		body: JSON.stringify({
+			username: username, 
+			password: password 
+		}),
 	});
 
-	let status: number = response.status;
-	console.log(status);
-
-	if (status === 401){
-		logExists.innerHTML = "Incorrect username or password!";
-		return;
-	} if (status === 200){
-		window.location.assign("/");
-		return;
-	} else {
-		logExists.innerHTML = "501";
-		return;
-	}
-
+	return loginResponse(response);
 }
 
-const logForm = document.
+const loginForm = document.
 	getElementById("login_form") as HTMLFormElement;
-
-const logExists = document.
+const loginExists = document.
 	getElementById("exists") as HTMLParagraphElement;
-const logLength = document.
+const loginLength = document.
 	getElementById("length") as HTMLParagraphElement;
-const logNums = document.
-	getElementById("nums") as HTMLParagraphElement;
-const logSymbol = document.
-	getElementById("symbol") as HTMLParagraphElement;
 
-logForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", (event) => {
         event.preventDefault(); 
         const username = (document.getElementById("username") as HTMLInputElement).value;
         const password = (document.getElementById("password") as HTMLInputElement).value;
 
         if (username.trim() === " || password.trim() === ") {
-        	return logLength.innerHTML = 
+        	return loginLength.innerHTML = 
 			"Please fill in the fields";
-        }
-
-	let passLen:number = password.length;
-	let len = true;
-
-	if (passLen < 6) {
-		len = false; 
-		return logLength.innerHTML = 
-		"Password must be 6 characters or more!";
-	}
-	
-	let num = true;
-	let symbol = true;
-
-	for(let i = 0; i < passLen; i++){
-		const char: string = password[i];
-		if (char >= "0" && char <= "9"){
-			num = true;
-		}
-		else if (!/[a-zA-Z0-9]/.test(char)){
-			symbol = true;
-		}
-	}
-
-	if (len == true && num == true && symbol == true){
-		logLength.innerHTML = "";
-		logNums.innerHTML = "";
-		logSymbol.innerHTML = "";
-
-		const user: string = username;
-		const pass: string = password;
-		logPost(user, pass);
-	}
-
-	else if(!num){
-		logNums.innerHTML = "Please include at least 1 number!";
-		return;
-	}
-	else if (!symbol){
-		logSymbol.innerHTML = "Please include at least 1 symbol!";
-		return;
+        } else {
+		loginLength.innerHTML = "";
+		return loginPost(username, password);
 	}
 });
 

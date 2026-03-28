@@ -1,4 +1,15 @@
-async function redirectSetup(input_title: string) {
+function redirect(response: Response){
+	console.log(response.status);
+
+	if (response.status === 200){
+		console.log(response);
+		return window.location.assign(response.url);
+	} else {
+		return console.log(response.status);
+	}
+}
+
+async function redirectSetup(title: string) {
 	try {
 		const response = await fetch("http://localhost:8000/redirect", {
 			method: "SEARCH",
@@ -6,20 +17,11 @@ async function redirectSetup(input_title: string) {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				title: input_title
+				title: title
 			}),
 		});
-
-		let status: number = response.status;
-		console.log(status);
-
-		if (status === 200){
-			console.log(response);
-			window.location.assign(response.url);
-			return;
-		} else {
-			return console.log(status);
-		}
+		
+		return redirect(response);
 
 	} catch(error) {
 		console.log("Error: "+error);
@@ -27,7 +29,19 @@ async function redirectSetup(input_title: string) {
 	}
 }
 
-async function problemPost(input_title: string, input_instr: string, input_answer: string, input_example: string) {
+function afterPost(response: Response, title: string){
+	console.log(response.status);
+		
+	if (response.status === 200){
+		return redirectSetup(title);
+	} if (response.status === 204){
+		return errormsg.innerHTML = ("Please login first!");
+	} else {
+		return console.log(response.status);
+	}
+}
+
+async function problemPost(title: string, instr: string, answer: string, example: string) {
 	try {
 		const response = await fetch("http://localhost:8000/create", {
 			method: "POST",
@@ -35,23 +49,14 @@ async function problemPost(input_title: string, input_instr: string, input_answe
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				title: input_title, 
-				instruction: input_instr, 
-				answer: input_answer, 
-				example: input_example
+				title: title, 
+				instruction: instr, 
+				answer: answer, 
+				example: example
 			}),
 		});
 
-		let status: number = response.status;
-		console.log(status);
-		
-		if (status === 200){
-			return redirectSetup(input_title);
-		} if (status === 204){
-			return errormsg.innerHTML = ("Please login first!");
-		} else {
-			return console.log(status);
-		}
+		return afterPost(response, title);
 
 	} catch(error) {
 		console.log("Error: "+error);
@@ -66,66 +71,58 @@ const errormsg = document.
 
 problemForm.addEventListener("submit", (event) => {
         event.preventDefault(); 
-        const input_title  = (document.getElementById("title") as HTMLInputElement).value;
-        const input_instr = (document.getElementById("instr") as HTMLInputElement).value;
-	const input_example  = (document.getElementById("exmpl") as HTMLInputElement).value;
-	const input_answer = (document.getElementById("answ") as HTMLInputElement).value;
+        const title  = (document.getElementById("title") as HTMLInputElement).value;
+        const instr = (document.getElementById("instr") as HTMLInputElement).value;
+	const example  = (document.getElementById("exmpl") as HTMLInputElement).value;
+	const answer = (document.getElementById("answ") as HTMLInputElement).value;
 
 	const test_input: RegExp = /\/(\w+)/ig;
-	const delimsExist = test_input.exec(input_answer);
+	const delimsExist = test_input.exec(answer);
 
-	if (input_title.trim() === "" || input_instr.trim() === "" || input_answer.trim() === "" || input_example.trim() === "") {
+	if (title.trim() === "" || instr.trim() === "" || answer.trim() === "" || example.trim() === "") {
 		errormsg.innerHTML = 
-			"Please fill in all fields!";
+			"Don't leave empty fields!";
 
 	} if (delimsExist){
 		errormsg.innerHTML = 
-			"Do not include delimiters in your regular expression.";
+			"Don't include delimiters in your regular expression.";
 
 	} else {
-		const conv_answer = new RegExp(input_answer);
+		const conv_answer = new RegExp(answer);
 		errormsg.innerHTML = "";
-		regexTest(input_title, input_instr, input_answer, conv_answer, input_example);
+		regexTest(title, instr, answer, conv_answer, example);
 
 	}
 });
 
-function regexTest(input_title: string, input_instr: string, input_answer: string, conv_answer: RegExp, input_example: string){
+function regexTest(title: string, instr: string, answer: string, conv_answer: RegExp, example: string){
 	
-	if (conv_answer.test(input_example)){
+	if (conv_answer.test(example)){
 		console.log("Test came: true!");
-		regexConfirm(input_title, input_instr, input_answer, conv_answer, input_example);
+		regexConfirm(title, instr, answer, conv_answer, example);
 	} else {
 		console.log("Test came: false D:");
-		errormsg.innerHTML = "Please use JS regex, and include delimiters!"; return; }
-
+		return errormsg.innerHTML = "Please use JS regex, and include delimiters!"; 
+	}
 }
 
-function regexConfirm(input_title: string, input_instr: string, input_answer: string, conv_answer: RegExp, input_example: string){
+function regexConfirm(title: string, instr: string, answer: string, conv_answer: RegExp, example: string){
 
-	// Delete visual elements
-	try{
-		document.getElementById("problem_form")!.remove();
-		document.getElementById("cheatsheet")!.remove();
-	} catch (err) {
-		console.log("Oopsie, something has gone wrong --> " + err)
-	}
+	document.getElementById("problem_form")!.remove();
+	document.getElementById("cheatsheet")!.remove();
 
-	// Have the user confirm whether the data and solution match,
-	// If not revert screen.
-
-	let array = conv_answer.exec(input_example);
+	let array = conv_answer.exec(example);
 
 	if (array === null){
 		window.location.assign("http://localhost:8000/create");
 		return errormsg.innerHTML = ("Regex expression didn't match anything, please try again!");
 
 	} else {
-		console.log("Is [" + array + "] the data out of [" + input_example + "] that you want to use?");	
+		console.log("Is [" + array + "] the data out of [" + example + "] that you want to use?");	
 	}
 
 	const confirmMsg = document.getElementById("confirm_msg");
-	const confirmMsgChild = document.createTextNode("Is [" + array + "] the data out of [" + input_example + "] that you want to use?");
+	const confirmMsgChild = document.createTextNode("Is [" + array + "] the data out of [" + example + "] that you want to use?");
 	confirmMsg!.appendChild(confirmMsgChild);
 	
 	const aButtonContainer = document.getElementById("a_button_container");
@@ -147,7 +144,7 @@ function regexConfirm(input_title: string, input_instr: string, input_answer: st
 	dButtonContainer!.appendChild(disagreeButton);
 
 	agreeButton.onclick = function() {
-		return problemPost(input_title, input_instr, input_answer, input_example);
+		return problemPost(title, instr, answer, example);
 
 	}
 

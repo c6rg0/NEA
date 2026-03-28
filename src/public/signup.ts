@@ -1,4 +1,24 @@
-async function sigPost(user: string, pass: string) {
+function signupResponse(response: Response){
+	console.log(response.status);
+
+	if (response.status == 204){
+		return existsMsg.innerHTML = "Username or/and password is required!";
+	}
+
+	if (response.status == 401){
+		return existsMsg.innerHTML = "Incorrect username or password!";
+	}
+	
+	if (response.status == 409){
+		return existsMsg.innerHTML = "Username already exists!";
+	}
+
+	if (response.status == 200){
+		return window.location.assign("/login");
+	}
+}
+
+async function postSignup(user: string, pass: string) {
 	const response = await fetch("http://localhost:8000/signup", {
 		method: "POST",
 		headers: {
@@ -7,61 +27,44 @@ async function sigPost(user: string, pass: string) {
 		body: JSON.stringify({username: user, password: pass }),
 	});
 
-	let status: number = response.status;
-	console.log(status);
-
-	if (status == 204){
-		sigExists.innerHTML = "Username or/and password is required!";
-	}
-
-	if (status == 401){
-		sigExists.innerHTML = "Incorrect username or password!";
-	}
-	
-	if (status == 409){
-		sigExists.innerHTML = "Username already exists!";
-	}
-
-	if (status == 200){
-		window.location.assign("/login");
-	}
+	return signupResponse(response);
 }
 
-const sigForm = document.
+const signupForm = document.
 	getElementById("signup_form") as HTMLFormElement;
 
-const sigExists = document.
-	getElementById("exists") as HTMLParagraphElement;
-const sigLength = document.
+const existsMsg = document.
+	getElementById("existsMsg") as HTMLParagraphElement;
+const lengthMsg = document.
 	getElementById("length") as HTMLParagraphElement;
-const sigNums = document.
+const numsMsg = document.
 	getElementById("nums") as HTMLParagraphElement;
-const sigSymbol = document.
+const symbolMsg = document.
 	getElementById("symbol") as HTMLParagraphElement;
 
-sigForm.addEventListener("submit", (event) => {
+signupForm.addEventListener("submit", (event) => {
         event.preventDefault(); 
         const username = (document.getElementById("username") as HTMLInputElement).value;
         const password = (document.getElementById("password") as HTMLInputElement).value;
 
         if (username.trim() === "" || password.trim() === "") {
-        	sigLength.innerHTML = 
-			"Please fill in the fields";
+        	lengthMsg.innerHTML = 
+			"Please fill in all fields";
         }
 
-	let passLen:number = password.length;
-	let len = true;
+	// Everything below this is pretty convoluted
 
-	if (passLen < 6) {
-		sigLength.innerHTML = 
-		"Password must be 6 characters or more!";
-		len = false; 
-	}
-	
+	let len = true;
 	let num = false;
 	let symbol = false;
 
-	for(let i = 0; i < passLen; i++){
+	if (password.length < 6) {
+		lengthMsg.innerHTML = 
+		"Password must be 6 characters or more!";
+		len = false; 
+	}
+
+	for(let i = 0; i < password.length; i++){
 		const char: string = password[i];
 		if (char >= "0" && char <= "9"){
 			num = true;
@@ -72,19 +75,19 @@ sigForm.addEventListener("submit", (event) => {
 	}
 
 	if (len == true && num == true && symbol == true){
-		sigLength.innerHTML = "";
-		sigNums.innerHTML = "";
-		sigSymbol.innerHTML = "";
+		lengthMsg.innerHTML = "";
+		numsMsg.innerHTML = "";
+		symbolMsg.innerHTML = "";
 
 		const user: string = username;
 		const pass: string = password;
-		sigPost(user, pass);
+		postSignup(user, pass);
 	}
 
 	else if(!num){
-		sigNums.innerHTML = "Please include at least 1 number!";
+		numsMsg.innerHTML = "Please include at least 1 number!";
 	}
 	else if (!symbol){
-		sigSymbol.innerHTML = "Please include at least 1 symbol!";
+		symbolMsg.innerHTML = "Please include at least 1 symbol!";
 	}
 });

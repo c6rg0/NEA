@@ -6,37 +6,21 @@ interface types {
 async function getSolution(urlId: unknown) {
 	try {
 		const getUrl = "http://localhost:8000/solution/" + urlId;
-		const response: any = await fetch(getUrl, {
+		const response: Response = await fetch(getUrl, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
 			},
 		});
 
-		let status: number = response.status;
-
-		if (status === 404){
-			// problem_id not found (either got removed or out of bounds)
-			window.location.assign("http://localhost:8000/browse")
-			return;
-		}
-
-		if (status === 200){
+		if (response.status === 200){
 			// acceptable response
 			const problemData = await response.json() as types; 
 			return problemData;
 		}
 
-			if (status === 400){
-			// unacceptable user problem
-			console.log("Server responded incorrectly; status =" + status);
+		else {
 			window.location.assign("http://localhost:8000/browse")
-			return;
-		}
-
-		if (status === 500){
-			// unacceptable server problem
-			console.log("Server responded incorrectly; status =" + status);
 			return;
 		}
 
@@ -46,7 +30,7 @@ async function getSolution(urlId: unknown) {
 		const getErr = document.
 			getElementById("title") as HTMLParagraphElement;
 
-		getErr.innerHTML = ("!!Network error!!");
+		getErr.innerHTML = ("Network error!");
 		return;
 	}
 }
@@ -54,15 +38,16 @@ async function getSolution(urlId: unknown) {
 async function submitAttempt(urlId: any, correct: boolean) {
 	try {
 		const getUrl = "http://localhost:8000/attempt";
-		const response = await fetch(getUrl, {
+		const response: Response = await fetch(getUrl, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({correct: correct, urlId: urlId}),
+			body: JSON.stringify({
+				correct: correct, 
+				urlId: urlId
+			}),
 		});
-		let status: number = response.status;
-		console.log(status);
 
 	} catch(error) {
 		console.log(error);
