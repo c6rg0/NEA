@@ -10,6 +10,7 @@
 		"allowSyntheticDefaultImports": true,
 		"noEmitOnError": true,
 		"moduleResolution": "node",
+		"strictPropertyInitialization": false,
 
 		"target": "es2020",
 		"outDir": "./dist/public/js/",

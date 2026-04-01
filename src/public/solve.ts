@@ -1,9 +1,9 @@
-interface types {
+interface solutionTypes {
 	example: string,
 	answer: string,
 }
 
-async function getSolution(urlId: unknown) {
+async function getSolution(urlId: RegExpExecArray | null) {
 	try {
 		const getUrl = "http://localhost:8000/solution/" + urlId;
 		const response: Response = await fetch(getUrl, {
@@ -15,7 +15,7 @@ async function getSolution(urlId: unknown) {
 
 		if (response.status === 200){
 			// acceptable response
-			const problemData = await response.json() as types; 
+			const problemData = await response.json() as solutionTypes; 
 			return problemData;
 		}
 
@@ -35,7 +35,7 @@ async function getSolution(urlId: unknown) {
 	}
 }
 
-async function submitAttempt(urlId: any, correct: boolean) {
+async function submitAttempt(id: string, correct: boolean) {
 	try {
 		const getUrl = "http://localhost:8000/attempt";
 		const response: Response = await fetch(getUrl, {
@@ -45,7 +45,7 @@ async function submitAttempt(urlId: any, correct: boolean) {
 			},
 			body: JSON.stringify({
 				correct: correct, 
-				urlId: urlId
+				urlId: id
 			}),
 		});
 
@@ -57,18 +57,20 @@ async function submitAttempt(urlId: any, correct: boolean) {
 
 class Data {
 	private reForId: RegExp = /\d+$/
-	public urlId: any;
-	public problemData: any;
+	public urlId: RegExpExecArray | null;
+	private id: string;
+	public problemData: solutionTypes;
 
 	async fetchData(fullUrl: string){
 		this.urlId = this.reForId.exec(fullUrl);
-		this.problemData = await getSolution(this.urlId);
+		this.problemData = await getSolution(this.urlId) as solutionTypes;
 	}
 
 	async submitAttempt(fullUrl: string, correct: boolean){
 		this.urlId = this.reForId.exec(fullUrl);
-		this.urlId = this.urlId[0];
-		submitAttempt(this.urlId, correct);
+		if (!this.urlId) throw new Error("urlId is empty?");
+		this.id = this.urlId[0];
+		submitAttempt(this.id, correct);
 	}
 }
 
@@ -84,7 +86,7 @@ class Data {
 		solutionForm.addEventListener("submit", (event) => {
 			event.preventDefault();
 
-			const userSolution = (document.getElementById("solution") as HTMLInputElement).value;
+			const userSolution: string = (document.getElementById("solution") as HTMLInputElement).value;
 
 			if (userSolution){
 				if (userSolution === D.problemData.answer) {
@@ -103,34 +105,34 @@ class Data {
 
 })();
 
-function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: any){
+function resultsScreen(fullUrl: string, correct: boolean, D: Data, userSolution: string){
 	document.getElementById("pre_solution")!.remove();
 	document.getElementById("recent_attempts")!.remove();
 	document.getElementById("solution_form")!.remove();
 
 	const rightOrWrong = document.
 		getElementById("right_or_wrong");
-	let rwChild: any;
+	let rwChild: Text;
 
 	if (correct === true){
-		rwChild = document.createTextNode("Your answer is correct, yay!");
+		rwChild = document.createTextNode("Your answer is correct!");
 
-	} if (correct === false){
+	} else {
 		rwChild = document.createTextNode("Your answer is wrong.");
 	}
 
 	rightOrWrong!.appendChild(rwChild);
 
-	const dbExample = document.
+	const dbTest = document.
 		getElementById("example_data");
-	const deChild = document.
+	const testChild = document.
 		createTextNode("Test case: { " + D.problemData.example + " }");
-	dbExample!.appendChild(deChild);
+	dbTest!.appendChild(testChild);
 
 	const dbSolution = document.
 		getElementById("db_solution");
 	const dbRegex = new RegExp(D.problemData.answer);
-	const dbRegexedData: any = dbRegex.
+	const dbRegexedData: RegExpExecArray | null = dbRegex.
 		exec(D.problemData.example);
 	const dsChild = document.
 		createTextNode("Intended result: { " + dbRegexedData + " }");
@@ -139,7 +141,7 @@ function resultsScreen(fullUrl: string, correct: boolean, D: any, userSolution: 
 	const userAttempt = document.
 		getElementById("user_attempt");
 	const uaRegex = new RegExp(userSolution);
-	const uaRegexedData: any = uaRegex.
+	const uaRegexedData: RegExpExecArray | null = uaRegex.
 		exec(D.problemData.example);
 	const uaChild = document.
 		createTextNode("Your result: { " + uaRegexedData + " }");

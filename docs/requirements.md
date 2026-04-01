@@ -19,7 +19,7 @@
 
 
 # Characteristic
-- [ ] Modules (subroutines) with appropriate interfaces (*2*).
+- [x] Modules (subroutines) with appropriate interfaces (*2*).
 - [x] Loosely coupled modules (subroutines) – module code interacts with other parts of the program through its interface only.
 - [ ] Cohesive modules (subroutines) – module code does just one thing.
 - [x] Modules(collections of subroutines) – subroutines with common purpose grouped.
