@@ -4,58 +4,76 @@ import sqlite3 from "better-sqlite3";
 export function attemptRouter(db: sqlite3.Database){
 	const router = Router();
 
-	interface types{
+	interface userTypes {
+		username: string,
+	}
+
+	interface payloadTypes {
+		correct: boolean,
+		urlId: string,
+	}
+
+	interface dbTypes {
 		elo: number,
-		urlId: number,
+		tries: number,
+		solved: number,
 	}
 
 	class Elo {
-		private kFactor: number = 25;
-		private wkFactor: number = 25;
-		private lkFactor: number = 25;
-		private difference: number = 0;
+		private kFactor: number;
+		private outcome: number;
 
-		private outcome: number = 1;
-		public winnerElo: number = 0;
-		public loserElo: number = 0;
+		private pa: number = 0;
+		private pb: number = 0;
 
-		/*
-		kAlgWinner(winnerElo: any, loserElo: any){
-			// Smurfing -> minimal gains or huge loss
-			// Doing well despite low elo -> huge gains or minimal loss
-			// Average -> average (and similar) gains and loss
+		private userElo: number = 0;
+		private problemElo: number = 0;
+ 
+		public newUserElo: number = 0;
+		public newProblemElo: number = 0;
+
+		// constructor
+		constructor(kFactor: number, outcome: number) {
+		    this.kFactor = kFactor;
+		    this.outcome = outcome;
+		}
+
+		fetchElo(user: userTypes, attempt: payloadTypes){
+			let fetchUser = db.prepare(`
+				SELECT elo FROM Users 
+				WHERE username = ?
+			`).get(user) as dbTypes;
+
+			let fetchProblem = db.prepare(`
+				SELECT elo FROM Problems 
+				WHERE problem_id = ?`
+			).get(attempt.urlId) as dbTypes;
 			
-
-			let temp: number = winnerElo.elo / loserElo.elo;
-			console.log(temp);
-			return 0;
+			this.userElo = fetchUser.elo;
+			this.problemElo = fetchProblem.elo;
 		}
 
-		kAlgLoser(winnerElo: any, loserElo: any){
-			return 0;
-		}
-		*/
-
-		probability(winnerElo: any, loserElo: any){
-			return 1.0 / (1+ Math.pow(10, (winnerElo.elo - loserElo.elo) / 400.0));
+		// getter 
+		probability(rating1: number, rating2: number){
+			return 1 / (1 + Math.pow(10, (rating1 - rating2) / 400));
 		}
 
-		updateElo(winnerElo: any, loserElo: any){
-			let pb = this.probability(winnerElo, loserElo);
-			let pa = this.probability(winnerElo, loserElo);
+		// setter 
+		update(){
+			this.pa = this.probability(this.problemElo, this.userElo);
+			this.pb = this.probability(this.userElo, this.problemElo);
 
-			/*
-			this.wkFactor = this.kAlgWinner(winnerElo, loserElo);
-			this.lkFactor = this.kAlgLoser(winnerElo, loserElo);
-			*/
+			this.newUserElo  = this.userElo + this.kFactor * (this.outcome - this.pa);
+			this.newProblemElo = this.problemElo + this.kFactor * ((1 - this.outcome - this.pb));
 
-			this.winnerElo  = winnerElo.elo + this.kFactor * (this.outcome - pa);
-			this.loserElo = loserElo.elo + this.kFactor * ((1 - this.outcome - pb));
+			// float -> int 
+			this.newUserElo = Math.trunc(this.newUserElo);
+			this.newProblemElo = Math.trunc(this.newProblemElo);
 		}
 	}
 
 	class Attempts{
-		increment(attempt: any){
+		increment(attempt: payloadTypes){
 			const updateAttempts = db.prepare(`
 				UPDATE problems 
 				SET times_attempted = times_attempted + 1 
@@ -74,77 +92,105 @@ export function attemptRouter(db: sqlite3.Database){
 				updateSolved.run({id: attempt.urlId});
 			}
 		}
-		
-		record(user: any, attempt: any){
+
+		private user: userTypes;
+		private attempt: payloadTypes;
+
+		constructor(user: userTypes, attempt: payloadTypes){
+			this.user = user;
+			this.attempt = attempt;
+		}
+
+		record(E: Elo){
+			// Redirects user based on whether they already have
+			// history on a problem, then calls method to update
+			// elo.
+			
+			const fetchUser = db.prepare(`
+				SELECT solved FROM Attempts 
+				WHERE username = (@user) AND 
+				problem_id = (@id);
+			`).get({user: this.user, id: this.attempt.urlId}) as dbTypes;
+
+			if (fetchUser.solved == 0){
+				this.attemptUpdate();
+			} 
+			
+			else if (fetchUser.solved == 1){
+				this.attemptUpdate();
+			} 
+
+			else {
+				this.attemptInsert();
+			}
+
+			// Only updating elo once attempt has been inserted/updated
+			this.eloUpdate(E);
+		}
+
+		attemptInsert(){
 			const newAttempt  = db.prepare(`
-				INSERT INTO Attempts(username, problem_id, tries)
-				VALUES(@username, @problem_id, @tries);
+				INSERT INTO Attempts(username, problem_id)
+				VALUES(@username, @problem_id);
 			`);
 
-			newAttempt.run({username: user, problem_id: attempt.urlId, tries: 1});
+			newAttempt.run({username: this.user, problem_id: this.attempt.urlId});
 		}
+
+		attemptUpdate(){
+			const triesUpdate = db.prepare(`
+				UPDATE Attempts 
+				SET tries = tries + 1
+				WHERE username = (@user) AND 
+				problem_id = (@id);
+			`);
+
+			triesUpdate.run({user: this.user, id: this.attempt.urlId});
+
+		}
+
+		eloUpdate(E: Elo){
+			const userEloUpdate = db.prepare(`
+				UPDATE Users 
+				SET elo = (@userElo) 
+				WHERE username = (@user);
+			`);
+
+			userEloUpdate.run({userElo: E.newUserElo, user: this.user});
+
+			const problemEloUpdate = db.prepare(`
+				UPDATE Problems 
+				SET elo = (@elo) 
+				WHERE problem_id = (@id);
+			`);
+
+			problemEloUpdate.run({elo: E.newProblemElo, id: this.attempt.urlId});
+		}
+
 	}
 
 	router.post("/", async (req: Request, res: Response) => {
 		try {
-			let user = req.session.user;
-			let attempt = req.body;
+			let user = req.session.user as userTypes;
+			let attempt: payloadTypes = req.body;
 
-			let A = new Attempts();
+			let A = new Attempts(user, attempt);
 			A.increment(attempt);
 
-			let winnerElo: number | unknown;
-			let loserElo: number | unknown;
-			let newUserElo: number | unknown;
-			let newProbElo: number | unknown;
-
 			if (user){
-				let userElo = db.prepare(`
-					SELECT elo FROM Users 
-					WHERE username = ?
-				`).get(user) as types;
+				// 1 = user winner, 0 = user loser
+				let outcome: number;
 
-				let problemElo  = db.prepare(`
-					SELECT elo FROM Problems 
-					WHERE problem_id = ?`
-				).get(attempt.urlId) as types;
-		
-				if (attempt.correct == true){
-					winnerElo = userElo;
-					loserElo = problemElo;
-				} else if (attempt.correct == false){
-					loserElo = userElo;
-					winnerElo = problemElo;
-				}
+				if (attempt.correct == true){ outcome = 1; }
+				else { outcome = 0; }
 
-				const E = new Elo();
-				E.updateElo(winnerElo, loserElo);
+				const E = new Elo(25, outcome);
 
-				const userEloUpdate = db.prepare(`
-					UPDATE Users 
-					SET elo = (@userElo) 
-					WHERE username = (@user);
-				`);
+				E.fetchElo(user, attempt);
+				E.update();
 
-				const problemEloUpdate = db.prepare(`
-					UPDATE Problems 
-					SET elo = (@elo) 
-					WHERE problem_id = (@id);
-				`);
+				A.record(E);
 
-				if (attempt.correct == true){
-					userEloUpdate.run({userElo: E.winnerElo, user: user});
-					problemEloUpdate.run({elo: E.loserElo, id: attempt.urlId});
-					newUserElo = E.winnerElo;
-					newProbElo = E.loserElo;
-					A.record(user, attempt);
-
-				} else if (attempt.correct == false){
-					userEloUpdate.run({userElo: E.loserElo, user: user});
-					problemEloUpdate.run({elo: E.winnerElo, id: attempt.urlId});
-					newUserElo = E.loserElo;
-					newProbElo = E.winnerElo;
-				}
 			}
 
 			return res.status(200).send("Success.");

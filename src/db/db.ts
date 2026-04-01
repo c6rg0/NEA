@@ -46,7 +46,11 @@ export function dbSetup(){
 			attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
 			username TEXT NOT NULL,
 			problem_id INTEGER NOT NULL,
-			tries INTEGER DEFAULT 0,
+
+			-- 0 = false, 1 = true
+			solved INTEGER DEFAULT 0,
+
+			tries INTEGER DEFAULT 1,
 			time_submitted INTEGER DEFAULT (strftime('%s', 'now')),
 			FOREIGN KEY (username) REFERENCES Users(username),
 			FOREIGN KEY (problem_id) REFERENCES Problems(problem_id)
