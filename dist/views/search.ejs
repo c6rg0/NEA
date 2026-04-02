@@ -67,6 +67,15 @@
 
 		</div>
 
+		<% if(activity == "Searching..."){ %>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a id="prev_next" class="page-link" href="<%= back %>">Previous</a></li>
+				<li class="page-item"><a id="prev_next" class="page-link" href="<%= forward %>">Next</a></li>
+			</ul>
+		</nav>
+		<% } %>
+
 		<script src="/js/search.js"></script>
 	</body>
 </html> 

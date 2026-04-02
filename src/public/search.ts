@@ -18,6 +18,7 @@ searchForm.addEventListener("submit", (event) => {
 		const url = new URL("http://localhost:8000/search");
 
 		url.searchParams.set("q", search); 
+		// url.searchParams.set("o", "1"); 
 		// url.searchParams.set("sort", "tries_desc");
 		console.log(url.toString());
 		// "http://localhost:8000/search?q=Digit(&sort=tries_desc)"
@@ -28,3 +29,8 @@ searchForm.addEventListener("submit", (event) => {
 		return;
 	}
 });
+
+
+
+
+

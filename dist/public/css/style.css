@@ -39,6 +39,12 @@ html, body {
 	color: #cc241d;
 }
 
+#prev_next {
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
 a:link {
 	color: #d5c4a1;
 	background-color: tranparent;
