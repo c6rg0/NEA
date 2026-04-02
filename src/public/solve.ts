@@ -126,7 +126,7 @@ function resultsScreen(fullUrl: string, correct: boolean, D: Data, userSolution:
 	const dbTest = document.
 		getElementById("example_data");
 	const testChild = document.
-		createTextNode("Test case: { " + D.problemData.example + " }");
+		createTextNode("Test case: [ " + D.problemData.example + " ]");
 	dbTest!.appendChild(testChild);
 
 	const dbSolution = document.
@@ -135,7 +135,7 @@ function resultsScreen(fullUrl: string, correct: boolean, D: Data, userSolution:
 	const dbRegexedData: RegExpExecArray | null = dbRegex.
 		exec(D.problemData.example);
 	const dsChild = document.
-		createTextNode("Intended result: { " + dbRegexedData + " }");
+		createTextNode("Intended result: [ " + dbRegexedData + " ]");
 	dbSolution!.appendChild(dsChild);
 
 	const userAttempt = document.
@@ -144,7 +144,7 @@ function resultsScreen(fullUrl: string, correct: boolean, D: Data, userSolution:
 	const uaRegexedData: RegExpExecArray | null = uaRegex.
 		exec(D.problemData.example);
 	const uaChild = document.
-		createTextNode("Your result: { " + uaRegexedData + " }");
+		createTextNode("Your result: [ " + uaRegexedData + " ]");
 	userAttempt!.appendChild(uaChild);
 
 	D.submitAttempt(fullUrl, correct);

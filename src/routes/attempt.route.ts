@@ -21,7 +21,7 @@ export function attemptRouter(db: sqlite3.Database){
 
 	class Elo {
 		private kFactor: number;
-		private outcome: number;
+		public outcome: number;
 
 		private pa: number = 0;
 		private pb: number = 0;
@@ -111,42 +111,44 @@ export function attemptRouter(db: sqlite3.Database){
 				WHERE username = (@user) AND 
 				problem_id = (@id);
 			`).get({user: this.user, id: this.attempt.urlId}) as dbTypes;
+			console.log(fetchUser);
 
 			if (fetchUser.solved == 0){
-				this.attemptUpdate();
+				this.attemptUpdate(E);
+				this.eloUpdate(E);
 			} 
 			
-			else if (fetchUser.solved == 1){
-				this.attemptUpdate();
+			if (fetchUser.solved == 1){ 
+				// If a problem has been solved, then the user shouldn't
+				// gain more elo from it, it would defeat the purpose since
+				// people could farm easy problems.
 			} 
 
 			else {
-				this.attemptInsert();
+				this.attemptInsert(E);
+				this.eloUpdate(E);
 			}
-
-			// Only updating elo once attempt has been inserted/updated
-			this.eloUpdate(E);
 		}
 
-		attemptInsert(){
+		attemptInsert(E: Elo){
 			const newAttempt  = db.prepare(`
-				INSERT INTO Attempts(username, problem_id)
-				VALUES(@username, @problem_id);
+				INSERT INTO Attempts(username, problem_id, solved)
+				VALUES(@username, @problem_id, @solved);
 			`);
 
-			newAttempt.run({username: this.user, problem_id: this.attempt.urlId});
+			newAttempt.run({username: this.user, problem_id: this.attempt.urlId, solved: E.outcome});
 		}
 
-		attemptUpdate(){
+		attemptUpdate(E: Elo){
 			const triesUpdate = db.prepare(`
 				UPDATE Attempts 
-				SET tries = tries + 1
+				SET tries = tries + 1 AND
+				solved = (@solved)
 				WHERE username = (@user) AND 
 				problem_id = (@id);
 			`);
 
-			triesUpdate.run({user: this.user, id: this.attempt.urlId});
-
+			triesUpdate.run({solved: E.outcome, user: this.user, id: this.attempt.urlId});
 		}
 
 		eloUpdate(E: Elo){

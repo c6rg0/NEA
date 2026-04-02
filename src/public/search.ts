@@ -1,18 +1,23 @@
 const searchForm = document.
 	getElementById("search_form") as HTMLFormElement;
 
-document.addEventListener("DOMContentLoaded", () => {
-	searchForm.addEventListener("submit", (event) => {
-		event.preventDefault(); 
-		console.log("Listener fired, prevented default");
+// FTS5 doesn't allow special characters (like "'")
+// POC: SqliteError: fts5: syntax error near "'"	
+// Inputs should be stripped to just alphanumeric symbols
 
-		const search = (document.getElementById("search") as HTMLInputElement).value;
+searchForm.addEventListener("submit", (event) => {
+	event.preventDefault(); 
+	console.log("Listener fired, prevented default");
 
-		if (search.trim() === "") {
-			return;
-		} else {
-			const url = "http://localhost:8000/search/" + search;
-			return window.location.href = url;
-		}
-	});
+	const unsanitizedSearch = (document.getElementById("search") as HTMLInputElement).value;
+	const reForAlphNum: RegExp = /[a-zA-Z0-9]+/;
+	const search = reForAlphNum.exec(unsanitizedSearch);
+	console.log(search);
+
+	if (search) {
+		const url = "http://localhost:8000/search/" + search;
+		return window.location.href = url;
+	} else {
+		return;
+	}
 });

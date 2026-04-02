@@ -76,8 +76,8 @@ problemForm.addEventListener("submit", (event) => {
 	const example  = (document.getElementById("exmpl") as HTMLInputElement).value;
 	const answer = (document.getElementById("answ") as HTMLInputElement).value;
 
-	const test_input: RegExp = /\/(\w+)/ig;
-	const delimsExist = test_input.exec(answer);
+	const testInput: RegExp = /\/(\w+)/ig;
+	const delimsExist = testInput.exec(answer);
 
 	if (title.trim() === "" || instr.trim() === "" || answer.trim() === "" || example.trim() === "") {
 		errormsg.innerHTML = 
@@ -99,14 +99,14 @@ function regexTest(title: string, instr: string, answer: string, conv_answer: Re
 	
 	if (conv_answer.test(example)){
 		console.log("Test came: true!");
-		regexConfirm(title, instr, answer, conv_answer, example);
+		createConfirm(title, instr, answer, conv_answer, example);
 	} else {
 		console.log("Test came: false D:");
 		return errormsg.innerHTML = "Please use JS regex, and include delimiters!"; 
 	}
 }
 
-function regexConfirm(title: string, instr: string, answer: string, conv_answer: RegExp, example: string){
+function createConfirm(title: string, instr: string, answer: string, conv_answer: RegExp, example: string){
 
 	document.getElementById("problem_form")!.remove();
 	document.getElementById("cheatsheet")!.remove();
