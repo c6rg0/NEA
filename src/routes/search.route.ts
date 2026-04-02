@@ -4,9 +4,11 @@ import sqlite3 from "better-sqlite3";
 export function searchRouter(db: sqlite3.Database){
 	const router = Router();
 
-	router.get("/:id", async (req: Request, res: Response) => {
-		const id = req.params.id;
-		console.log("Search:", id);
+	router.get("/", async (req: Request, res: Response) => {
+		// Once sorting comes into play, more can be appended to this single constant
+		// const { query } = req.query;
+		const query = req.query.q;
+		console.log("Search query: " + query);
 
 		const search = db.prepare(`
 			SELECT Problems.* 
@@ -16,11 +18,10 @@ export function searchRouter(db: sqlite3.Database){
 			ORDER BY rank;
 		`);
 
-		const results = search.all(id);
+		const results = search.all(query);
 
 		if (results) {
-			console.log("Results shown");
-			res.render("search", { results: results, userSearch: id });
+			res.render("search", { activity: "Searching...", results: results, userSearch: query });
 		} else{
 			res.status(404).send("Data not found");
 		}

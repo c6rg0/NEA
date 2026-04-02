@@ -111,8 +111,12 @@ export function attemptRouter(db: sqlite3.Database){
 				WHERE username = (@user) AND 
 				problem_id = (@id);
 			`).get({user: this.user, id: this.attempt.urlId}) as dbTypes;
-			console.log(fetchUser);
 
+			if (!fetchUser){
+				this.attemptInsert(E);
+				this.eloUpdate(E);
+			}
+			
 			if (fetchUser.solved == 0){
 				this.attemptUpdate(E);
 				this.eloUpdate(E);

@@ -9,14 +9,21 @@ searchForm.addEventListener("submit", (event) => {
 	event.preventDefault(); 
 	console.log("Listener fired, prevented default");
 
-	const unsanitizedSearch = (document.getElementById("search") as HTMLInputElement).value;
-	const reForAlphNum: RegExp = /[a-zA-Z0-9]+/;
-	const search = reForAlphNum.exec(unsanitizedSearch);
+	let unsanitizedSearch = (document.getElementById("search") as HTMLInputElement).value;
+	const reForAlphNum: RegExp = /[^a-zA-Z0-9 ]/g;
+	const search: string = unsanitizedSearch.replace(reForAlphNum, "").trim();
 	console.log(search);
-
+	
 	if (search) {
-		const url = "http://localhost:8000/search/" + search;
-		return window.location.href = url;
+		const url = new URL("http://localhost:8000/search");
+
+		url.searchParams.set("q", search); 
+		// url.searchParams.set("sort", "tries_desc");
+		console.log(url.toString());
+		// "http://localhost:8000/search?q=Digit(&sort=tries_desc)"
+
+		window.location.assign(url.toString());
+
 	} else {
 		return;
 	}

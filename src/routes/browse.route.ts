@@ -12,7 +12,7 @@ export function browseRouter(db: sqlite3.Database){
 			LIMIT 10;`);
 		const results = search.all();
 		
-		res.render("browse", { results: results } );
+		res.render("search", { activity: "Browsing...", results: results } );
 		return;
 	});
 
