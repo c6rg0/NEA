@@ -2,61 +2,138 @@ import { Request, Response, Router } from 'express'
 import sqlite3 from "better-sqlite3";
 
 export function searchRouter(db: sqlite3.Database){
-	const router = Router();
+	const ROUTER = Router();
 
-	router.get("/", async (req: Request, res: Response) => {
-		let unsanitizedQuery = req.query.q;
-		const pageString = req.query.o;
+	ROUTER.get("/", async (req: Request, res: Response) => {
+		const UNSANITIZED_QUERY = req.query.q;
 
-		// Queries should get sanitised first
-		
-		let query: string = "";
-		if (unsanitizedQuery){
-			unsanitizedQuery = unsanitizedQuery.toString();
-			const reForAlphNum: RegExp = /[^a-zA-Z0-9 ]/g;
-			query = unsanitizedQuery.replace(reForAlphNum, "").trim();
+		// Elo ranges to filter
+		const QUERY_ELO_UPPER = req.query.fu; // "fu": filter upper
+		const QUERY_ELO_LOWER = req.query.fl; // ...: ... lower
+
+		let eloUpper: number; 
+		let eloLower: number = 0;
+
+		let conditions = "elo > " + eloLower; // + "AND elo < (@upper)";
+
+		if (QUERY_ELO_LOWER){
+			const PARSED = Number(QUERY_ELO_LOWER);
+			if (!isNaN(PARSED)){
+				eloLower = PARSED;
+				conditions = "elo > " + eloLower; // + "AND elo < (@upper)";
+			}
+		} if (QUERY_ELO_UPPER){
+			const PARSED = Number(QUERY_ELO_UPPER);
+			if (!isNaN(PARSED)){
+				eloUpper = PARSED;
+				conditions = "elo > " + eloLower + "AND elo < " + eloUpper;
+			}
+		} 
+
+		const QUERY_ORDER = req.query.order; // "DESC"(defualt)/"ASC"
+		let order: string = "DESC";
+		let orderWhitelist: string[];
+
+		if (QUERY_ORDER){
+			orderWhitelist = ["DESC", "ASC"];
+			if (orderWhitelist.includes(QUERY_ORDER.toString())){
+				order = QUERY_ORDER.toString();
+			}
+		} 
+
+		const QUERY_SORT = req.query.sort; // Difficulty/Time/Tries/Success-rate(if possible)
+		let sort: string = "time_created";
+		let sortWhitelist: string[];
+
+		if (QUERY_SORT){
+			sortWhitelist = ["elo", "time_created", "tries"]; 
+			if (sortWhitelist.includes(QUERY_SORT.toString())){
+				sort = QUERY_SORT.toString();
+			} else {
+				return res.status(400).send("Invalid sort option");
+			}
 		}
+
+		// Managing limit & offset relative to page
+		const QUERY_PAGE = req.query.page;
 
 		let page: number = 1;
-		if (pageString){
-			page = Number(pageString);
+		if (QUERY_PAGE){
+			const PARSED = Number(QUERY_PAGE);
+			if (!isNaN(PARSED)){
+				page = PARSED;
+			}
 		}
 
-		const limit = 50;
-		const offset = (page - 1) * limit; 
+		const LIMIT = 50;
+		const OFFSET = (page - 1) * LIMIT; 
 
-		const search = db.prepare(`
+		let query: string = "";
+		let inner_join = "";
+		let columns: string = "problem_id, title, elo, times_attempted";
+		let fts_match = "";
+		let activity: string = "Searching";
+
+		if (UNSANITIZED_QUERY){
+			query = UNSANITIZED_QUERY.toString();
+			const SYMBOL_STRIP: RegExp = /[^a-zA-Z0-9 ]/g;
+			query = query.replace(SYMBOL_STRIP, "").trim().slice(0, 100);
+			query = query + "*";
+
+			inner_join = "INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid";
+			columns = "Problems.*";
+			conditions = "Problems_fts MATCH (@query)";
+			sort = "rank";
+
+			activity = "after_query";
+		} 
+		
+		/*
+		results = db.prepare(`
+				SELECT problem_id, title, elo, times_attempted 
+				FROM Problems
+				WHERE elo > (@lower), elo < (@upper)
+				ORDER BY (@sort) (@order)
+				LIMIT (@limit) OFFSET (@offset);
+			`).all(search);
+
+		results = db.prepare(`
 			SELECT Problems.* 
 			FROM Problems
 			INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid
 			WHERE Problems_fts MATCH (@query)
 			ORDER BY rank
 			LIMIT (@limit) OFFSET (@offset);
-		`);
+		`).all(search);
+		*/
 
-		const results = search.all({ query: (query + "*"), limit: 50, offset: offset });
+		let results: sqlite3.RunResult | unknown[];
+		results = db.prepare(`
+			SELECT ${columns}
+			FROM Problems
+			${inner_join}
+			WHERE ${conditions}
+			ORDER BY ${sort}
+			LIMIT (@limit) OFFSET (@offset);
+		`).all({ query: query, limit: LIMIT, offset: OFFSET });
 
-		// reconstruction for navigation
-		const back = new URL("http://localhost:8000/search");
-		back.searchParams.set("q", query); 
-		back.searchParams.set("o", (page - 1).toString()); 
+		// URL reconstruction for navigation
+		const BACK = new URL("http://localhost:8000/search");
+		BACK.searchParams.set("q", query); 
+		BACK.searchParams.set("order", (page - 1).toString()); 
 
-		const forward = new URL("http://localhost:8000/search");
-		forward.searchParams.set("q", query); 
-		forward.searchParams.set("o", (page + 1).toString()); 
+		const FORWARD = new URL("http://localhost:8000/search");
+		FORWARD.searchParams.set("q", query); 
+		FORWARD.searchParams.set("order", (page + 1).toString()); 
 
-		if (search) {
-			res.render("search", { 
-				activity: "Searching...", 
-				results: results, 
-				userSearch: req.query.q,
-				back: back.toString(),
-				forward: forward.toString(),
-			});
-		} else{
-			res.status(404).send("Data not found");
-		}
+		res.render("search", { 
+			activity: activity, 
+			results: results, 
+			userSearch: req.query.q,
+			back: BACK.toString(),
+			forward: FORWARD.toString(),
+		});
 	});
 
-	return router;
+	return ROUTER;
 }

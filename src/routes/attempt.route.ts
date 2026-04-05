@@ -69,6 +69,12 @@ export function attemptRouter(db: sqlite3.Database){
 			// float -> int 
 			this.newUserElo = Math.trunc(this.newUserElo);
 			this.newProblemElo = Math.trunc(this.newProblemElo);
+
+			if (!Number.isNaN(this.newUserElo) && !Number.isNaN(this.newProblemElo)){
+				return;
+			} else {
+				return Error;
+			}
 		}
 	}
 
@@ -161,7 +167,7 @@ export function attemptRouter(db: sqlite3.Database){
 				SET elo = (@userElo) 
 				WHERE username = (@user);
 			`);
-
+			
 			userEloUpdate.run({userElo: E.newUserElo, user: this.user});
 
 			const problemEloUpdate = db.prepare(`
@@ -196,14 +202,13 @@ export function attemptRouter(db: sqlite3.Database){
 				E.update();
 
 				A.record(E);
-
 			}
 
 			return res.status(200).send("Success.");
 
-		} catch (error) {
-			console.log(error);
-			return res.status(500).send("HTTP CODE 500 D:");
+		} catch (Error) {
+			console.log(Error);
+			return res.status(500).send("HTTP CODE 500");
 		}
 	});
 

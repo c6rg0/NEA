@@ -4,7 +4,7 @@
 - Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage
   the compilation of the project, as well as to automate the removal of existing compiled 
   code unrelated to the functionality),
-- Markdown: `HTML5` (`CSS` for styling),
+- Markdown: `EJS (embedded JavaScript` (`CSS` for styling),
 - Package managers: `Nix` (personally), `APT` and `Homebrew` (examples included in the
   instructions), `npm` (nodejs package manager, in the instructions too),
 - JavaScript runtime: `NodeJS`
