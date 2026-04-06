@@ -39,12 +39,28 @@ html, body {
 	color: #cc241d;
 }
 
-#prev_next {
+#previous {
 	color: #000000;
 	background-color: tranparent;
 	text-decoration: none;
 }
 
+#next {
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+#order_asc{
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+#order_desc{
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
 a:link {
 	color: #d5c4a1;
 	background-color: tranparent;

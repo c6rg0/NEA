@@ -26,7 +26,7 @@ export function searchRouter(db: sqlite3.Database){
 			const PARSED = Number(QUERY_ELO_UPPER);
 			if (!isNaN(PARSED)){
 				eloUpper = PARSED;
-				conditions = "elo > " + eloLower + "AND elo < " + eloUpper;
+				conditions = "elo > " + eloLower + " AND elo < " + eloUpper;
 			}
 		} 
 
@@ -53,6 +53,8 @@ export function searchRouter(db: sqlite3.Database){
 				return res.status(400).send("Invalid sort option");
 			}
 		}
+
+		sort = sort + " " + order;
 
 		// Managing limit & offset relative to page
 		const QUERY_PAGE = req.query.page;
@@ -88,50 +90,24 @@ export function searchRouter(db: sqlite3.Database){
 			activity = "after_query";
 		} 
 		
-		/*
-		results = db.prepare(`
-				SELECT problem_id, title, elo, times_attempted 
-				FROM Problems
-				WHERE elo > (@lower), elo < (@upper)
-				ORDER BY (@sort) (@order)
-				LIMIT (@limit) OFFSET (@offset);
-			`).all(search);
-
-		results = db.prepare(`
-			SELECT Problems.* 
-			FROM Problems
-			INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid
-			WHERE Problems_fts MATCH (@query)
-			ORDER BY rank
-			LIMIT (@limit) OFFSET (@offset);
-		`).all(search);
-		*/
-
-		let results: sqlite3.RunResult | unknown[];
-		results = db.prepare(`
+		let results: sqlite3.RunResult | unknown[]
+		= db.prepare(`
 			SELECT ${columns}
 			FROM Problems
 			${inner_join}
 			WHERE ${conditions}
 			ORDER BY ${sort}
 			LIMIT (@limit) OFFSET (@offset);
-		`).all({ query: query, limit: LIMIT, offset: OFFSET });
-
-		// URL reconstruction for navigation
-		const BACK = new URL("http://localhost:8000/search");
-		BACK.searchParams.set("q", query); 
-		BACK.searchParams.set("order", (page - 1).toString()); 
-
-		const FORWARD = new URL("http://localhost:8000/search");
-		FORWARD.searchParams.set("q", query); 
-		FORWARD.searchParams.set("order", (page + 1).toString()); 
+		`).all({ 
+			query: query, 
+			limit: LIMIT, 
+			offset: OFFSET 
+		});
 
 		res.render("search", { 
 			activity: activity, 
 			results: results, 
 			userSearch: req.query.q,
-			back: BACK.toString(),
-			forward: FORWARD.toString(),
 		});
 	});
 
