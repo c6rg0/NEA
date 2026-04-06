@@ -2,37 +2,37 @@ import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 
 export function redirectRouter(db: sqlite3.Database){
-	const router = Router();
+	const ROUTER = Router();
 
 	interface redirectTypes{
 		title: string
 		problem_id: number
 	}
 
-	router.search("/", (req: Request, res: Response) => {
-		const id  = req.body as redirectTypes;
-		console.log(id);
+	ROUTER.search("/", (req: Request, res: Response) => {
+		const ID  = req.body as redirectTypes;
+		console.log(ID);
 
-		const userSearch = db.prepare(`
-			SELECT problem_id 
+		const USER_SEARCH = db.prepare(`
+			SELECT problem_ID 
 			FROM Problems WHERE title = ?
-		`).get(id.title) as redirectTypes;
+		`).get(ID.title) as redirectTypes;
 
-		console.log(userSearch);
+		console.log(USER_SEARCH);
 
-		if (userSearch){
-			const url = "/redirect/" + userSearch.problem_id;
-			return res.redirect(303, url);
+		if (USER_SEARCH){
+			const URL = "/redirect/" + USER_SEARCH.problem_id;
+			return res.redirect(303, URL);
 		} else {
-			return res.status(404).send("Couldn't find problem_id using title");
+			return res.status(404).send("Couldn't find problem_ID using title");
 		}
 	});
 
-	router.get("/:id", (req: Request, res: Response) => {
-		const id = req.params.id; 
+	ROUTER.get("/:ID", (req: Request, res: Response) => {
+		const ID = req.params.id; 
 
-		res.render("create_success", {id: id});
+		res.render("create_success", {id: ID});
 	});
 
-	return router;
+	return ROUTER;
 }

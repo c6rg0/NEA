@@ -1,37 +1,37 @@
 import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 
-export function userRouter(db: sqlite3.Database){
-	const router = Router();
+export function USERRouter(db: sqlite3.Database){
+	const ROUTER = Router();
 
-	router.get("/:id", (req: Request, res: Response) => {
-		let user = req.params.id;
+	ROUTER.get("/:id", (req: Request, res: Response) => {
+		const USER = req.params.id;
 		
-		const userSearch = db.prepare(`
-			SELECT username, elo, time_created
-			FROM Users WHERE username = ?
-		`).get(user);
-		console.log(userSearch);
+		const USER_SEARCH = db.prepare(`
+			SELECT USERname, elo, time_created
+			FROM Users WHERE USERname = ?
+		`).get(USER);
+		console.log(USER_SEARCH);
 
-		const attempts = db.prepare(`
+		const ATTEMPTS = db.prepare(`
 			SELECT * FROM Attempts 
 			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
-			WHERE Attempts.username = ? 
+			WHERE Attempts.USERname = ? 
 			ORDER BY Problems.elo DESC
 		`);
 
-		const averageEloAttempted = db.prepare(`
+		const AVERAGE_ELO_ATTEMPTED = db.prepare(`
 			SELECT AVG(Problems.elo) 
 			AS avg_elo
 			FROM Attempts 
 			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
-			WHERE Attempts.username = ? 
-		`).get(user);
+			WHERE Attempts.USERname = ? 
+		`).get(USER);
 
-		const attemptsResult = attempts.all(user);
+		const ATTEMPTS_RESULT = ATTEMPTS.all(USER);
 
-		res.render("user", { results: userSearch, attempts: attemptsResult, average: averageEloAttempted});
+		res.render("user", { results: USER_SEARCH, ATTEMPTS: ATTEMPTS_RESULT, average: AVERAGE_ELO_ATTEMPTED});
 	});
 
-	return router;
+	return ROUTER;
 }

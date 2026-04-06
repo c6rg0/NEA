@@ -2,20 +2,20 @@ import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 
 export function solveRouter(db: sqlite3.Database){
-	const router = Router();
+	const ROUTER = Router();
 
 	interface fetch {
 		id: string;
 	}
 
-	router.get("/:id", async(req: Request, res: Response) => {
-		const id  = req.params.id;
+	ROUTER.get("/:id", async(req: Request, res: Response) => {
+		const ID  = req.params.id;
 
 		try{
 			const info = db.prepare(`
 				SELECT * FROM Problems 
 				WHERE problem_id = ?;
-			`).get(id) as fetch | undefined;
+			`).get(ID) as fetch | undefined;
 
 			const attempts = db.prepare(`
 				SELECT Attempts.*, Users.elo
@@ -26,7 +26,7 @@ export function solveRouter(db: sqlite3.Database){
 				LIMIT 10;
 			`);
 
-			const attemptsResult = attempts.all(id);
+			const attemptsResult = attempts.all(ID);
 
 			res.render("solve", {info: info, attempts: attemptsResult});
 
@@ -36,5 +36,5 @@ export function solveRouter(db: sqlite3.Database){
 		
 	});
 
-	return router;
+	return ROUTER;
 }

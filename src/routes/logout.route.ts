@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express'
 
 export function logoutRouter(){
-	const router = Router();
+	const ROUTER = Router();
 
-	router.get("/", (req: Request, res: Response) => {
+	ROUTER.get("/", (req: Request, res: Response) => {
 		req.session.destroy((err) => {
 			if (err) {
 				console.error("Error destroying session", err);
@@ -19,5 +19,5 @@ export function logoutRouter(){
 		}
 	)});
 
-	return router;
+	return ROUTER;
 }

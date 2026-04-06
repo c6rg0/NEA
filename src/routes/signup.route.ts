@@ -2,52 +2,52 @@ import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 import bcrypt from "bcrypt";
 
-export function signupRouter(db: sqlite3.Database){
-	const router = Router();
+export function signupRouter(DB: sqlite3.Database){
+	const ROUTER = Router();
 
-	router.get("/", (req: Request, res: Response) => {
+	ROUTER.get("/", (req: Request, res: Response) => {
 		res.render("signup");
 	});
 
-	router.post("/", async (req: Request, res: Response) => {
-		const userInput = req.body;
+	ROUTER.post("/", async (req: Request, res: Response) => {
+		const USER_INPUT = req.body;
 
-		if (!userInput || !userInput.username || !userInput.password) {
+		if (!USER_INPUT || !USER_INPUT.username || !USER_INPUT.password) {
 			return res.status(304).send("Required fields are missing.");
 		}
 
-		const existingUser = db.prepare(`
+		const existingUser = DB.prepare(`
 			SELECT username FROM Users 
 			WHERE username = ?
-		`).get(userInput.username);
+		`).get(USER_INPUT.username);
 
 		if (existingUser) {
 			res.status(409).send("Username already exists");
 		} else {
 
-			let passLength: number = userInput.password.length;
+			let PASS_LENGTH: number = USER_INPUT.password.length;
 
-			if ( passLength < 6) {
+			if (PASS_LENGTH < 6) {
 				return res.status(406).send("Password is too short");
 			} else {
 
-				const pass = userInput.password;
+				const PASS = USER_INPUT.password;
 				
-				async function hashPassword(pass: string): Promise<string> {
-					const saltRounds = 10;
-					const hashedPass = await bcrypt.hash(pass, saltRounds);
-					return hashedPass;
+				async function hashPassword(PASS: string): Promise<string> {
+					const SALT_ROUNDS = 10;
+					const HASHED_PASS = await bcrypt.hash(PASS, SALT_ROUNDS);
+					return HASHED_PASS;
 				}
 
-				const hashedPass = await hashPassword(pass);
+				const HASHED_PASS = await hashPassword(PASS);
 
-				const insert = db.prepare(`
+				const INSERT = DB.prepare(`
 					INSERT INTO Users (username, password) 
 					VALUES (@username , @password);
 				`);
 
 				try {
-					insert.run({ username: userInput.username, password: hashedPass });
+					INSERT.run({ username: USER_INPUT.username, password: HASHED_PASS });
 				} catch (err) {
 					console.log(err);
 					return res.status(500).send(err);
@@ -58,5 +58,5 @@ export function signupRouter(db: sqlite3.Database){
 		}
 	});
 
-	return router;
+	return ROUTER;
 }

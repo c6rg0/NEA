@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
 
 export function indexRouter(){
-	const router = Router();
+	const ROUTER = Router();
 
-	router.get("/", (req: Request, res: Response) => {
+	ROUTER.get("/", (req: Request, res: Response) => {
 		if (!req.session.user){
 			res.render("index", { login_status: "Not logged in", login: false} );
 			return;
@@ -15,5 +15,5 @@ export function indexRouter(){
 		}
 	});
 
-	return router;
+	return ROUTER;
 }

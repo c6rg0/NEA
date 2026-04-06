@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 
 export function attemptRouter(db: sqlite3.Database){
-	const router = Router();
+	const ROUTER = Router();
 
 	interface userTypes {
 		username: string,
@@ -39,7 +39,7 @@ export function attemptRouter(db: sqlite3.Database){
 		}
 
 		fetchElo(user: userTypes, attempt: payloadTypes){
-			let fetchUser = db.prepare(`
+			let FETCH_USER = db.prepare(`
 				SELECT elo FROM Users 
 				WHERE username = ?
 			`).get(user) as dbTypes;
@@ -49,7 +49,7 @@ export function attemptRouter(db: sqlite3.Database){
 				WHERE problem_id = ?`
 			).get(attempt.urlId) as dbTypes;
 			
-			this.userElo = fetchUser.elo;
+			this.userElo = FETCH_USER.elo;
 			this.problemElo = fetchProblem.elo;
 		}
 
@@ -80,22 +80,22 @@ export function attemptRouter(db: sqlite3.Database){
 
 	class Attempts{
 		increment(attempt: payloadTypes){
-			const updateAttempts = db.prepare(`
+			const UPDATE_ATTEMPTS = db.prepare(`
 				UPDATE problems 
 				SET times_attempted = times_attempted + 1 
 				WHERE problem_id = (@id);
 			`);
 
-			updateAttempts.run({id: attempt.urlId});
+			UPDATE_ATTEMPTS.run({id: attempt.urlId});
 
 			if (attempt.correct == true) {
-				const updateSolved = db.prepare(`
+				const UPDATE_SOLVED = db.prepare(`
 					UPDATE Problems 
 					SET times_solved = times_solved + 1 
 					WHERE problem_id = (@id);
 				`);
 
-				updateSolved.run({id: attempt.urlId});
+				UPDATE_SOLVED.run({id: attempt.urlId});
 			}
 		}
 
@@ -112,23 +112,23 @@ export function attemptRouter(db: sqlite3.Database){
 			// history on a problem, then calls method to update
 			// elo.
 			
-			const fetchUser = db.prepare(`
+			const FETCH_USER = db.prepare(`
 				SELECT solved FROM Attempts 
 				WHERE username = (@user) AND 
 				problem_id = (@id);
 			`).get({user: this.user, id: this.attempt.urlId}) as dbTypes;
 
-			if (!fetchUser){
+			if (!FETCH_USER){
 				this.attemptInsert(E);
 				this.eloUpdate(E);
 			}
 			
-			if (fetchUser.solved == 0){
+			if (FETCH_USER.solved == 0){
 				this.attemptUpdate(E);
 				this.eloUpdate(E);
 			} 
 			
-			if (fetchUser.solved == 1){ 
+			if (FETCH_USER.solved == 1){ 
 				// If a problem has been solved, then the user shouldn't
 				// gain more elo from it, it would defeat the purpose since
 				// people could farm easy problems.
@@ -141,16 +141,16 @@ export function attemptRouter(db: sqlite3.Database){
 		}
 
 		attemptInsert(E: Elo){
-			const newAttempt  = db.prepare(`
+			const NEW_ATTEMPT = db.prepare(`
 				INSERT INTO Attempts(username, problem_id, solved)
 				VALUES(@username, @problem_id, @solved);
 			`);
 
-			newAttempt.run({username: this.user, problem_id: this.attempt.urlId, solved: E.outcome});
+			NEW_ATTEMPT.run({username: this.user, problem_id: this.attempt.urlId, solved: E.outcome});
 		}
 
 		attemptUpdate(E: Elo){
-			const triesUpdate = db.prepare(`
+			const TRIES_UPDATE = db.prepare(`
 				UPDATE Attempts 
 				SET tries = tries + 1 AND
 				solved = (@solved)
@@ -158,30 +158,30 @@ export function attemptRouter(db: sqlite3.Database){
 				problem_id = (@id);
 			`);
 
-			triesUpdate.run({solved: E.outcome, user: this.user, id: this.attempt.urlId});
+			TRIES_UPDATE.run({solved: E.outcome, user: this.user, id: this.attempt.urlId});
 		}
 
 		eloUpdate(E: Elo){
-			const userEloUpdate = db.prepare(`
+			const USER_ELO_UPDATE = db.prepare(`
 				UPDATE Users 
 				SET elo = (@userElo) 
 				WHERE username = (@user);
 			`);
 			
-			userEloUpdate.run({userElo: E.newUserElo, user: this.user});
+			USER_ELO_UPDATE.run({userElo: E.newUserElo, user: this.user});
 
-			const problemEloUpdate = db.prepare(`
+			const PROBLEM_ELO_UPDATE = db.prepare(`
 				UPDATE Problems 
 				SET elo = (@elo) 
 				WHERE problem_id = (@id);
 			`);
 
-			problemEloUpdate.run({elo: E.newProblemElo, id: this.attempt.urlId});
+			PROBLEM_ELO_UPDATE.run({elo: E.newProblemElo, id: this.attempt.urlId});
 		}
 
 	}
 
-	router.post("/", async (req: Request, res: Response) => {
+	ROUTER.post("/", async (req: Request, res: Response) => {
 		try {
 			let user = req.session.user as userTypes;
 			let attempt: payloadTypes = req.body;
@@ -212,6 +212,6 @@ export function attemptRouter(db: sqlite3.Database){
 		}
 	});
 
-	return router;
+	return ROUTER;
 }
 

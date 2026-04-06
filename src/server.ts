@@ -28,11 +28,11 @@ if (cookiePerm == true) {
 	app.use(sessionMiddleware);
 }
 
-import { dbSetup } from "./db/db";
-dbSetup();
+import { DBSetup } from "./db/db";
+DBSetup();
 
 import sqlite3 from "better-sqlite3";
-const db = sqlite3("./db/db.db", { verbose: console.log });
+const DB = sqlite3("./db/db.db", { verbose: console.log });
 
 import { indexRouter } from "./routes/index.route";
 import { signupRouter} from "./routes/signup.route";
@@ -51,18 +51,18 @@ import { leaderboardRouter } from "./routes/leaderboard.route";
 
 const index = indexRouter();
 const account = accountRouter();
-const attempt = attemptRouter(db);
-const create = createRouter(db);
-const leaderboard = leaderboardRouter(db);
-const login = loginRouter(db);
+const attempt = attemptRouter(DB);
+const create = createRouter(DB);
+const leaderboard = leaderboardRouter(DB);
+const login = loginRouter(DB);
 const logout = logoutRouter();
-const redirect = redirectRouter(db);
-const search = searchRouter(db);
+const redirect = redirectRouter(DB);
+const search = searchRouter(DB);
 // const session = sessionRouter();
-const signup = signupRouter(db);
-const solve = solveRouter(db);
-const solution = solutionRouter(db);
-const user = userRouter(db);
+const signup = signupRouter(DB);
+const solve = solveRouter(DB);
+const solution = solutionRouter(DB);
+const user = userRouter(DB);
 
 app.use("/", index);
 app.use("/signup", signup);

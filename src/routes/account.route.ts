@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express'
 
 export function accountRouter(){
-	const router = Router();
+	const ROUTER = Router();
 
-	router.get("/", (req: Request, res: Response) => {
+	ROUTER.get("/", (req: Request, res: Response) => {
 		if (!req.session.user){
 			res.render("account", { login: false });
 			return;
@@ -11,6 +11,6 @@ export function accountRouter(){
 		res.render("account", { login_status: req.session.user, login: true });
 	});
 
-	return router;
+	return ROUTER;
 }
 

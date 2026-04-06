@@ -2,53 +2,53 @@ import { Request, Response, Router } from 'express'
 import bcrypt from "bcrypt";
 import sqlite3 from "better-sqlite3";
 
-export function loginRouter(db: sqlite3.Database){
+export function loginRouter(DB: sqlite3.Database){
 
-	const router = Router();
+	const ROUTER = Router();
 
 	interface userPassword {
 		password: string;
 	}
 
 	// req is required, despite the lsp stating it's not
-	router.get("/", (req: Request, res: Response) => {
+	ROUTER.get("/", (req: Request, res: Response) => {
 		res.render("login");
 	});
 
-	router.post("/", async (req, res) => {
-		const userInput = req.body;
+	ROUTER.post("/", async (req: Request, res: Response) => {
+		const USER_INPUT = req.body;
 
-		if (!userInput || !userInput.username || !userInput.password) {
+		if (!USER_INPUT || !USER_INPUT.username || !USER_INPUT.password) {
 			return res.status(204).
 			send("Required credentials are missing.");
 		}
 
-		const result = db.prepare(`
+		const RESULT = DB.prepare(`
 			SELECT password FROM Users 
 			WHERE username = ?
-		`).get(userInput.username) as userPassword | undefined;
+		`).get(USER_INPUT.username) as userPassword | undefined;
 		
-		if (!result || !result.password) {
+		if (!RESULT || !RESULT.password) {
 			return res.status(401).
 			send("Invalid username or password");
 		}
 
-		const inputPass: string = userInput.password;
-		const hashedPass: string = result.password; 
+		const INPUT_PASS: string = USER_INPUT.password;
+		const HASHED_PASS: string = RESULT.password; 
 
-		async function verifyPassword(inputPass:
-			string, hashedPass: string): Promise<boolean> {
+		async function verifyPassword(INPUT_PASS:
+			string, HASHED_PASS: string): Promise<boolean> {
 
-			const match: boolean = await bcrypt.
-			compare(inputPass, hashedPass);
+			const MATCH: boolean = await bcrypt.
+			compare(INPUT_PASS, HASHED_PASS);
 
-			return match;
+			return MATCH;
 		}
 
-		const match: boolean = await verifyPassword(inputPass, hashedPass);
+		const MATCH: boolean = await verifyPassword(INPUT_PASS, HASHED_PASS);
 
-		if (match) {
-			req.session.user = userInput.username;
+		if (MATCH) {
+			req.session.user = USER_INPUT.username;
 			res.redirect("/");
 			return;
 
@@ -58,5 +58,5 @@ export function loginRouter(db: sqlite3.Database){
 		}
 	});
 
-	return router;
+	return ROUTER;
 }
