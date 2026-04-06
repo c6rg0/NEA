@@ -15,7 +15,7 @@ export function leaderboardRouter(db: sqlite3.Database){
 
 		const ATTEMPTS_RESULT = ATTEMPTS.all();
 
-		res.render("leaderboard", { ATTEMPTS: ATTEMPTS_RESULT });
+		res.render("leaderboard", { attempts: ATTEMPTS_RESULT });
 
 	});
 

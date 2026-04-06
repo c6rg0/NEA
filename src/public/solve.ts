@@ -20,7 +20,7 @@ async function getSolution(urlId: RegExpExecArray | null) {
 		}
 
 		else {
-			window.location.assign("http://localhost:8000/browse")
+			window.location.assign("http://localhost:8000/search")
 			return;
 		}
 

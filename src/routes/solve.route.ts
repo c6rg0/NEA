@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 
-export function solveRouter(db: sqlite3.Database){
+export function solveRouter(DB: sqlite3.Database){
 	const ROUTER = Router();
 
 	interface fetch {
@@ -12,12 +12,12 @@ export function solveRouter(db: sqlite3.Database){
 		const ID  = req.params.id;
 
 		try{
-			const info = db.prepare(`
+			const info = DB.prepare(`
 				SELECT * FROM Problems 
 				WHERE problem_id = ?;
 			`).get(ID) as fetch | undefined;
 
-			const attempts = db.prepare(`
+			const attempts = DB.prepare(`
 				SELECT Attempts.*, Users.elo
 				FROM Attempts
 				INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id

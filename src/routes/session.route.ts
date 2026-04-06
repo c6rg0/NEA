@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
 
 export function sessionRouter(){
-	const router = Router();
+	const ROUTER = Router();
 
-	router.get("/", (req: Request, res: Response) => {
+	ROUTER.get("/", (req: Request, res: Response) => {
 		if (req.session.user) {
 			res.send("Session data: " + JSON.stringify(req.session.user));
 		} else {
@@ -11,5 +11,5 @@ export function sessionRouter(){
 		}
 	});
 
-	return router;
+	return ROUTER;
 }

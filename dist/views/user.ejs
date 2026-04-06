@@ -19,7 +19,7 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav nav-underline">
 						<li class="nav-item">
-							<a class="nav-link" href="/browse">Browse</a>
+							<a class="nav-link" href="/search">Browse</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="/create">Create</a>
@@ -38,24 +38,30 @@
 		<div id="user_data">
 			<p id="username"><%= results.username %></p>
 			<% var x = new Date(results.time_created * 1000); %>
-			<p id="joined">Joined: <%= x.toDateString() %></p>
-			<p id="elo">Elo: <%= results.elo %></p>
-			<p id="av_elo">Avg difficulty solved: <%= average.avg_elo %></p>
+			<p>Joined: <%= x.toDateString() %>
+      | Elo: <%= results.elo %>
+			| Avg difficulty solved: <%= average.avg_elo %>
+      </p>
 		</div>
 
-		<p>Hardest solved:</p>
+		<p>Hardest problems solved:</p>
 		<div id="hardest_solved">
 			<% attempts.forEach(i=> { %>
 			<p>
+			  <%= i.elo %>*	| 
 				<a href="/solve/<%= i.problem_id %>">
 					<%= i.title %>
 				</a>
-				| <%= i.elo %>*	| 
+        |
 				<% if(i.tries == 1){ %>
 				<%= i.tries %> try
 				<% } else { %>
 				<%= i.tries %> tries
 				<% }; %>
+        |
+        <% var x = new Date(i.time_submitted * 1000); %>
+        <%= x.toDateString() %>
+
 			</p>
 			<% }); %>
 		</div>

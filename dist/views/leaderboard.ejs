@@ -19,7 +19,7 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav nav-underline">
 						<li class="nav-item">
-							<a class="nav-link" href="/browse">Browse</a>
+							<a class="nav-link" href="/search">Browse</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="/create">Create</a>
@@ -39,15 +39,20 @@
 		<div id="leaderboard">
 			<% attempts.forEach(i=> { %>
 			<p>
-				<a href="/solve/<%= i.problem_id %>">
-					<%= i.title %>
-				</a>
 
-				| <%= i.elo %>*	| 
+				<%= i.elo %>*	| By 
 
 				<a href="/user/<%= i.username %>">
 					<%= i.username %>
 				</a>
+        | On 
+				<a href="/solve/<%= i.problem_id %>">
+					<%= i.title %>
+				</a>
+        |
+        <% var x = new Date(i.time_created * 1000); %>
+        <%= x.toDateString() %>
+
 			</p>
 			<% }); %>
 		</div>

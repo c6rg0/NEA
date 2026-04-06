@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import sqlite3 from "better-sqlite3";
 
-export function solutionRouter(db: sqlite3.Database){
+export function solutionRouter(DB: sqlite3.Database){
 	const ROUTER = Router();
 
 	interface types {
@@ -13,7 +13,7 @@ export function solutionRouter(db: sqlite3.Database){
 		const ID  = req.params.id;
 
 		try {
-			const response  = db.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(ID);
+			const response  = DB.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(ID);
 			console.log("answer = " + (response as types).answer);
 
 			return res.json(response);
