@@ -23,6 +23,28 @@ if (ORDER_ASC){
 	ORDER_ASC.href = CURL.toString();
 }
 
+// sortWhitelist = ["elo", "time_created", "tries"]; 
+const ELO_SORT = document.getElementById("elo_sort") as HTMLAnchorElement;
+if (ELO_SORT){
+	const CURL= new URL(window.location.href);
+	CURL.searchParams.set("sort", "elo"); 
+	ELO_SORT.href = CURL.toString();
+}
+
+const TIME_SORT = document.getElementById("time_sort") as HTMLAnchorElement;
+if (TIME_SORT){
+	const CURL= new URL(window.location.href);
+	CURL.searchParams.set("sort", "time_created"); 
+	TIME_SORT.href = CURL.toString();
+}
+
+const TRIES_SORT = document.getElementById("tries_sort") as HTMLAnchorElement;
+if (TRIES_SORT){
+	const CURL= new URL(window.location.href);
+	CURL.searchParams.set("sort", "times_attempted"); 
+	TRIES_SORT.href = CURL.toString();
+}
+
 const PREVIOUS = document.getElementById("previous") as HTMLAnchorElement;
 const NEXT = document.getElementById("next") as HTMLAnchorElement;
 

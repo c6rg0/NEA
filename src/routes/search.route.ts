@@ -41,12 +41,12 @@ export function searchRouter(db: sqlite3.Database){
 			}
 		} 
 
-		const QUERY_SORT = req.query.sort; // Difficulty/Time/Tries/Success-rate(if possible)
+		const QUERY_SORT = req.query.sort; 
 		let sort: string = "time_created";
 		let sortWhitelist: string[];
 
 		if (QUERY_SORT){
-			sortWhitelist = ["elo", "time_created", "tries"]; 
+			sortWhitelist = ["elo", "time_created", "times_attempted"]; 
 			if (sortWhitelist.includes(QUERY_SORT.toString())){
 				sort = QUERY_SORT.toString();
 			} else {
@@ -72,8 +72,7 @@ export function searchRouter(db: sqlite3.Database){
 
 		let query: string = "";
 		let inner_join = "";
-		let columns: string = "problem_id, title, elo, times_attempted";
-		let fts_match = "";
+		let columns: string = "problem_id, title, creator, time_created, elo, times_attempted";
 		let activity: string = "Searching";
 
 		if (UNSANITIZED_QUERY){

@@ -35,6 +35,8 @@
       </div>
     </nav>
 
+    <hr>
+
     <form id="search_form">
       <div class="input-group mb-3">
         <button class="btn btn-light" type="submit" id="button-addon2">Search</button>
@@ -42,10 +44,11 @@
       </div>
     </form>
 
-
     <% if(activity == "after_query"){ %>
     <h3 id="user_search">Results for:  "<%= userSearch %>"</h3>
     <% } else { %>
+
+    <hr>
 
     <form id="filter_form">
       <div class="input-group mb-3">
@@ -57,14 +60,28 @@
 
     <nav>
       <ul class="pagination">
-
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1">Order:</a>
+        </li>
         <li class="page-item"><a id="order_desc" class="page-link">Descending</a></li>
         <li class="page-item"><a id="order_asc" class="page-link">Ascending</a></li>
       </ul>
     </nav>
 
+    <nav>
+      <ul class="pagination">
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1">Sort by:</a>
+        </li>
+        <li class="page-item"><a id="elo_sort" class="page-link">Elo</a></li>
+        <li class="page-item"><a id="time_sort" class="page-link">Time</a></li>
+        <li class="page-item"><a id="tries_sort" class="page-link">Popularity</a></li>
+      </ul>
+    </nav>
+
     <% }; %>
 
+    <hr>
 
     <% if(Object.keys(results).length > 0){ %>
     <% results.forEach(i=> { %>
@@ -72,13 +89,22 @@
       <%= i.title %>
     </a>
     | <%= i.elo %>*
-    | <%= i.times_attempted %> attempts
+    | Created by: 
+    <a href="/user/<%= i.creator %>">
+    <%= i.creator %>
+    </a>
+    <% var time = new Date(i.time_created * 1000); %>
+		|	Time created: <%= time.toDateString() %>
+    | Attemps: <%= i.times_attempted %>
+
     </p>
     <% }); %>
 
     <% } else { %>
     <p>nope, nothing found... </p>
     <% } %>
+
+    <hr>
 
     <nav>
       <ul class="pagination">

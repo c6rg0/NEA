@@ -39,17 +39,6 @@ html, body {
 	color: #cc241d;
 }
 
-#previous {
-	color: #000000;
-	background-color: tranparent;
-	text-decoration: none;
-}
-
-#next {
-	color: #000000;
-	background-color: tranparent;
-	text-decoration: none;
-}
 #order_asc{
 	color: #000000;
 	background-color: tranparent;
@@ -61,6 +50,37 @@ html, body {
 	background-color: tranparent;
 	text-decoration: none;
 }
+
+#elo_sort{
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+#time_sort{
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+#tries_sort{
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+#previous {
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
+#next {
+	color: #000000;
+	background-color: tranparent;
+	text-decoration: none;
+}
+
 a:link {
 	color: #d5c4a1;
 	background-color: tranparent;
