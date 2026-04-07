@@ -37,6 +37,7 @@
 
     <div id="pre_solution">
       <h1 id="title"><%= info.title %></h1>
+      <hr>
 
       <p id="creator" > Created by: 
       <a href="/user/<%= info.creator %>">
@@ -46,22 +47,25 @@
       <% var x = new Date(info.time_created * 1000); %>
       <p>Created: <%= x.toDateString() %>
       | Difficulty rating: <%= info.elo %></p>
-
-      <p id="instruction"> Instruction: <%= info.instruction %></p>
     </div>
+
+    <hr>
 
     <form id="solution_form">
       <div>
         <p>
-        <label for="solution"></label>
+        <label for="solution" id="instruction"> Instruction: <%= info.instruction %></label>
         <input name="solution" id="solution" class="form-control"/>
         </p>
       </div>
 
       <!--<div class="button_container">-->
-      <button type="submit" class="btn btn-light">Lets test that out!</button>
+      <button type="submit" class="btn btn-light">Submit your answer:</button>
       <!--</div>-->
     </form>
+
+    &nbsp;
+    <hr>
 
     <p>Recent attempts:</p>
     <div id="recent_attempts">

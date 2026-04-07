@@ -1,108 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<title>Creating</title>
-		<link rel="shortcut icon" href="#">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-		<link rel="stylesheet" href="/css/style.css">
-	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/">Regex practice site</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav nav-underline">
-						<li class="nav-item">
-							<a class="nav-link" href="/search">Browse</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/create">Create</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/leaderboard">leaderboard</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link "href="/account">Account</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+  <head>
+    <meta charset="UTF-8">
+    <title>Creating</title>
+    <link rel="shortcut icon" href="#">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Regex practice site</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav nav-underline">
+            <li class="nav-item">
+              <a class="nav-link" href="/search">Browse</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/create">Create</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/leaderboard">leaderboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link "href="/account">Account</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
+    <hr>
 
-		<% if (login == true){ %>
-		<p> Creation </p>
+    <% if (login == true){ %>
+    <h2> Creation </h2>
 
-		<a id="cheatsheet" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet">
-			<button class="btn btn-light btn-lg" type="button">Cheatsheet</button>
-		</a>
+    <a id="cheatsheet" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Cheatsheet">
+      <button class="btn btn-light btn-lg" type="button">Cheatsheet</button>
+    </a>
 
+    <hr>
 
-		<form id="problem_form">
-			<div class="mb-3">
-			<p>
-			<label for="title" class="form-label">Problem title:</label>
-			<input name="title" id="title" class="form-control"/>
-			</p>
-			</div>
+    <form id="problem_form">
 
-			<div class="mb-3">
-			<p>
-			<label for="instr" class="form-label">Instruction:</label>
-			<input name="instr" id="instr" class="form-control"/>
-			</p>
-			</div>
+      <div class="mb-3">
+        <p>
+        <label for="title" class="form-label">Problem title:</label>
+        <input name="title" id="title" class="form-control"/>
+        </p>
+      </div>
 
-			<div class="mb-3">
-			<p>
-			<label for="exmpl" class="form-label">Test case:</label>
-			<input name="exmpl" id="exmpl" class="form-control"/>
-			</p>
-			</div>
+      &nbsp;
 
-			<p>Solution:</p>
+      <div class="mb-3">
+        <p>
+        <label for="instr" class="form-label">Instruction:</label>
+        <input name="instr" id="instr" class="form-control"/>
+        </p>
+      </div>
 
-			<div class="mb-3">
-			<p>
-			<label for="answ" class="form-label">NOTE: Do not include delimiters, and use JavaScript regex</label>
-			<input name="answ" id="answ" class="form-control"/>
-			</p>
-			</div>
+      &nbsp;
 
-			<div class="button_container">
-				<button type="submit" class="form-control">submit</button>
-			</div>
+      <div class="mb-3">
+        <p>
+        <label for="exmpl" class="form-label">Test case:</label>
+        <input name="exmpl" id="exmpl" class="form-control"/>
+        </p>
+      </div>
 
-		</form>
+      &nbsp;
 
-		<div id="result"></div>
-		<p id="errP" style="color: red"></p>
+      <div class="mb-3">
+        <p>
+        <label for="answ" class="form-label">Solution:</label>
+        <label for="answ" class="form-label">(NOTE: Use ECMAScript regex and don't include delimiters)</label>
+        <input name="answ" id="answ" class="form-control"/>
+        </p>
+      </div>
 
-		<h2 id="confirm_msg" ></h2>
+      &nbsp;
 
-		<div class="button_container" id="a_button_container" ></div>
-		<div class="button_container" id="b_button_container" ></div>
+      <div class="button_container">
+        <button type="submit" class="form-control">submit</button>
+      </div>
 
-		<% } if (login == false) { %>
-			<p> Please login before creating a regex problem </p>
+    </form>
 
-			<a href="/">
-				<button class="btn btn-light btn-lg" type="button">Home</button>
-			</a>
+    &nbsp;
 
-			<a href="/login">
-				<button class="btn btn-light btn-lg" type="button">Login</button>
-			</a>
-		<% } %>
+    <div id="result"></div>
+    <p id="errP" style="color: red"></p>
 
+    <h2 id="confirm_msg" ></h2>
 
+    <div class="button_container" id="a_button_container" ></div>
+    <div class="button_container" id="b_button_container" ></div>
 
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-		<script src="js/create.js"></script>
-	</body>
+    <% } if (login == false) { %>
+    <h2>Login to create a regex problem</h2>
+    <hr>
+
+    <a href="/">
+      <button class="btn btn-light btn-lg" type="button">Home</button>
+    </a>
+
+    <a href="/login">
+      <button class="btn btn-light btn-lg" type="button">Login</button>
+    </a>
+    <% } %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/create.js"></script>
+  </body>
 </html> 

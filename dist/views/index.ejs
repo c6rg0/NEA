@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Home</title>
-	<meta charset="UTF-8">
-	<meta name = "viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="#">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-	<link rel="stylesheet" href="/css/style.css">
-</head>
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name = "viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="#">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
 
-<body>
-		<h1>Regex practice site</h1>
-		<div class="d-grid gap-2">
-			<a href="/search"><button class="btn btn-light btn-lg" type="button">Browse</button></a>
-			<a href="/create"><button class="btn btn-light btn-lg" type="button">Create</button></a>
-			<a href="/leaderboard"><button class="btn btn-light btn-lg" type="button">Leaderboard</button></a>
+  <body>
+    <h1>Regex practice site</h1>
 
-			<% if(login==false){ %>
-				<a href="/account">
-					<button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
-				</a>
-			<% } %>
+    <hr>
 
-			<% if(login==true){ %>
-				<a href="/account">
-					<button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
-				</a>
-			<% } %>
+    <div class="d-grid gap-2">
+      <a href="/search"><button class="btn btn-light btn-lg" type="button">Browse</button></a>
+      <a href="/create"><button class="btn btn-light btn-lg" type="button">Create</button></a>
+      <a href="/leaderboard"><button class="btn btn-light btn-lg" type="button">Leaderboard</button></a>
 
-		</div>
+      <% if(login==false){ %>
+      <a href="/account">
+        <button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
+      </a>
+      <% } %>
 
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
+      <% if(login==true){ %>
+      <a href="/account">
+        <button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
+      </a>
+      <% } %>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
 </html>

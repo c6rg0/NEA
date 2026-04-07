@@ -35,14 +35,20 @@
 			</div>
 		</nav>
 
+    <hr>
+
 		<div id="user_data">
-			<p id="username"><%= results.username %></p>
+			<h2 id="username"><%= results.username %></h2>
+      <hr>
+
 			<% var x = new Date(results.time_created * 1000); %>
 			<p>Joined: <%= x.toDateString() %>
       | Elo: <%= results.elo %>
 			| Avg difficulty solved: <%= average.avg_elo %>
       </p>
 		</div>
+
+    <hr>
 
 		<p>Hardest problems solved:</p>
 		<div id="hardest_solved">
@@ -60,11 +66,31 @@
 				<% }; %>
         |
         <% var x = new Date(i.time_submitted * 1000); %>
-        <%= x.toDateString() %>
+        Solved: <%= x.toDateString() %>
 
 			</p>
 			<% }); %>
 		</div>
+
+    <hr>
+
+    <% if(Object.keys(problems).length > 0){ %>
+    <p>Created:</p>
+
+    <% problems.forEach(i=> { %>
+    <p><a href="/solve/<%= i.problem_id %>">
+      <%= i.title %>
+    </a>
+    | <%= i.elo %>*
+    <% var time = new Date(i.time_created * 1000); %>
+		|	Time created: <%= time.toDateString() %>
+    | Attemps: <%= i.times_attempted %>
+    </p>
+    <% }); %>
+
+    <% } else { %>
+      <p>User hasn't created anything yet</p>
+    <% } %>
 
 	</body>
 

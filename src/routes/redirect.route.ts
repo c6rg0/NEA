@@ -14,7 +14,7 @@ export function redirectRouter(db: sqlite3.Database){
 		console.log(ID);
 
 		const USER_SEARCH = db.prepare(`
-			SELECT problem_ID 
+			SELECT problem_id 
 			FROM Problems WHERE title = ?
 		`).get(ID.title) as redirectTypes;
 
@@ -24,7 +24,7 @@ export function redirectRouter(db: sqlite3.Database){
 			const URL = "/redirect/" + USER_SEARCH.problem_id;
 			return res.redirect(303, URL);
 		} else {
-			return res.status(404).send("Couldn't find problem_ID using title");
+			return res.status(404).send("Couldn't find problem_id using title");
 		}
 	});
 
