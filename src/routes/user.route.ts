@@ -4,37 +4,120 @@ import sqlite3 from "better-sqlite3";
 export function userRouter(DB: sqlite3.Database){
 	const ROUTER = Router();
 
+	class Get {
+		public TARGET; 
+
+		constructor(ID: string | undefined, USER: string | undefined){
+			if (ID){
+				this.TARGET = ID;
+			} else if (USER){
+				this.TARGET = USER;
+			}
+		}
+
+		userInfo(){
+			return DB.prepare(`
+				SELECT username, elo, time_created
+				FROM Users WHERE username = ?
+			`).get(this.TARGET);
+		}
+
+		attempts(){
+			return DB.prepare(`
+				SELECT * FROM Attempts 
+				INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
+				WHERE Attempts.username = ? 
+				ORDER BY Problems.elo DESC
+			`).all(this.TARGET);
+		}
+
+		averageEloSolved(){
+			return DB.prepare(`
+				SELECT AVG(Problems.elo) 
+				AS avg_elo
+				FROM Attempts 
+				INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
+				WHERE Attempts.username = ? 
+			`).get(this.TARGET);
+		}
+
+		problems(){
+			return DB.prepare(`
+				SELECT * FROM Problems 
+				WHERE creator = ? 
+				ORDER BY time_created DESC
+			`).all(this.TARGET);
+		}
+	}
+
 	ROUTER.get("/:id", (req: Request, res: Response) => {
-		const USER = req.params.id;
-		
-		const USER_SEARCH = DB.prepare(`
-			SELECT username, elo, time_created
-			FROM Users WHERE username = ?
-		`).get(USER);
-		console.log(USER_SEARCH);
+		const ID = req.params.id;
+		const USER = req.session.user;
 
-		const ATTEMPTS = DB.prepare(`
-			SELECT * FROM Attempts 
-			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
-			WHERE Attempts.username = ? 
-			ORDER BY Problems.elo DESC
-		`).all(USER);
+		const G = new Get(ID, USER);
+		const userInfo = G.userInfo();
 
-		const AVERAGE_ELO_ATTEMPTED = DB.prepare(`
-			SELECT AVG(Problems.elo) 
-			AS avg_elo
-			FROM Attempts 
-			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
-			WHERE Attempts.username = ? 
-		`).get(USER);
+		if (G.TARGET && userInfo){
+			const averageEloSolved = G.averageEloSolved();
+			const attempts = G.attempts();
+			const problems = G.problems();
 
-		const USER_PROBLEMS = DB.prepare(`
-			SELECT * FROM Problems 
-			WHERE creator = ? 
-			ORDER BY time_created DESC
-		`).all(USER);
+			if (req.session.user === G.TARGET){
+				return res.render("user", { 
+					results: userInfo, 
+					average: averageEloSolved, 
+					attempts: attempts, 
+					problems: problems,
+					auth: true,
+				});
+			}
 
-		res.render("user", { results: USER_SEARCH, average: AVERAGE_ELO_ATTEMPTED, attempts: ATTEMPTS, problems: USER_PROBLEMS });
+			return res.render("user", { 
+					results: userInfo, 
+					average: averageEloSolved, 
+					attempts: attempts, 
+					problems: problems,
+					auth: false,
+			});
+		}
+
+		return res.render("user", { 
+			results: null, 
+			average: null, 
+			attempts: null, 
+			problems: null,
+			auth: false,
+		});
+	});
+
+	ROUTER.get("/", (req: Request, res: Response) => {
+		const ID = undefined;
+		const USER = req.session.user;
+		const G = new Get(ID, USER);
+
+		const userInfo = G.userInfo();
+
+		if (G.TARGET && userInfo){
+			const averageEloSolved = G.averageEloSolved();
+			const attempts = G.attempts();
+			const problems = G.problems();
+
+			return res.render("user", { 
+				results: userInfo, 
+				average: averageEloSolved, 
+				attempts: attempts, 
+				problems: problems,
+				auth: true,
+			});
+		}
+
+		return res.render("user", { 
+			results: null, 
+			average: null, 
+			attempts: null, 
+			problems: null,
+			auth: false,
+		});
 	});
 
 	return ROUTER;

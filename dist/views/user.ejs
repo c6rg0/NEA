@@ -1,80 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<title><%= results.username %></title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-		<link rel="stylesheet" href="/css/style.css">
-		<link rel="shortcut icon" href="#">
-	</head>
-	<body>
+  <head>
+    <meta charset="UTF-8">
 
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="/">Regex practice site</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav nav-underline">
-						<li class="nav-item">
-							<a class="nav-link" href="/search">Browse</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/create">Create</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/leaderboard">leaderboard</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/account">Account</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+    <% if(results !== null){ %>
+    <title>
+        <%= results.username %>
+    </title>
+      <% } else { %>
+    <title>
+        404
+    </title>
+      <% } %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="#">
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Regex practice site</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav nav-underline">
+            <li class="nav-item">
+              <a class="nav-link" href="/search">Browse</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/create">Create</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/leaderboard">leaderboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/account">Account</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <hr>
 
-		<div id="user_data">
-			<h2 id="username"><%= results.username %></h2>
+    <% if(results !== null){ %>
+
+    <div id="user_data">
+      <h2 id="username"><%= results.username %></h2>
       <hr>
 
-			<% var x = new Date(results.time_created * 1000); %>
-			<p>Joined: <%= x.toDateString() %>
+      <% var x = new Date(results.time_created * 1000); %>
+      <p>Joined: <%= x.toDateString() %>
       | Elo: <%= results.elo %>
-			| Avg difficulty solved: <%= average.avg_elo %>
+      | Avg difficulty solved: <%= average.avg_elo %>
       </p>
-		</div>
+    </div>
 
     <hr>
 
-		<p>Hardest problems solved:</p>
-		<div id="hardest_solved">
-			<% attempts.forEach(i=> { %>
-			<p>
-			  <%= i.elo %>*	| 
-				<a href="/solve/<%= i.problem_id %>">
-					<%= i.title %>
-				</a>
-        |
-				<% if(i.tries == 1){ %>
-				<%= i.tries %> try
-				<% } else { %>
-				<%= i.tries %> tries
-				<% }; %>
-        |
-        <% var x = new Date(i.time_submitted * 1000); %>
-        Solved: <%= x.toDateString() %>
+    <% if(attempts !== null && Object.entries(attempts).length > 0){ %>
 
-			</p>
-			<% }); %>
-		</div>
+    <p>Hardest problems solved:</p>
+    <div id="hardest_solved">
+      <% attempts.forEach(i=> { %>
+      <p>
+      <%= i.elo %>*	| 
+      <a href="/solve/<%= i.problem_id %>">
+        <%= i.title %>
+      </a>
+      |
+      <% if(i.tries === 1){ %>
+      <%= i.tries %> try
+      <% } else { %>
+      <%= i.tries %> tries
+      <% }; %>
+      |
+      <% var x = new Date(i.time_submitted * 1000); %>
+      Solved: <%= x.toDateString() %>
+
+      </p>
+      <% }); %>
+    </div>
+
+    <% } else { %>
+    <p>(User hasn't solved anything)</p>
+    <% } %>
 
     <hr>
 
-    <% if(Object.keys(problems).length > 0){ %>
+    <% if(problems !== null && Object.entries(attempts).length > 0){ %>
     <p>Created:</p>
 
     <% problems.forEach(i=> { %>
@@ -83,15 +100,29 @@
     </a>
     | <%= i.elo %>*
     <% var time = new Date(i.time_created * 1000); %>
-		|	Time created: <%= time.toDateString() %>
+    |	Time created: <%= time.toDateString() %>
     | Attemps: <%= i.times_attempted %>
+
+    <% if (auth === true){ %>
+    |
+    <a href="/delete_problem/<%= i.problem_id %>">
+      DELETE?
+    </a>
+
+    <% } %>
+
     </p>
     <% }); %>
 
     <% } else { %>
-      <p>User hasn't created anything yet</p>
+    <p>(User hasn't created anything yet)</p>
     <% } %>
 
-	</body>
+    <% } else { %>
+      <h2>User doesn't exist</h2>
+
+    <% } %>
+
+  </body>
 
 </html> 
