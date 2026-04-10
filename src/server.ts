@@ -1,22 +1,22 @@
 import express from "express";
-const app = express();
-app.set("view engine", "ejs");
+const APP = express();
+APP.set("view engine", "ejs");
 
 import bodyParser from "body-parser";
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+APP.use(express.json());
+APP.use(bodyParser.urlencoded({extended: true}));
 
 import path from "path";
-app.use(express.static(path.join(__dirname, "public")));
+APP.use(express.static(path.join(__dirname, "public")));
 
 import session from "express-session";
 declare module "express-session" {
 	interface SessionData {
-		user: { username: string};
+		user: string,
 	}
 }
 
-const sessionMiddleware = session({
+const SESSION_MIDDLEWARE = session({
 	// date +%s%N | sha512sum
 	secret: "7f8b901b7b70580f29b1e64296c3ba20e0dc17a29bf50b9eba302e3688cb12b1f666569ae6b412a43d63af9ffa5400833fdac5e1c30abdd8e1a94c06a665dd6b",
 	resave: false,
@@ -25,7 +25,7 @@ const sessionMiddleware = session({
 
 let cookiePerm: boolean = true;
 if (cookiePerm == true) {
-	app.use(sessionMiddleware);
+	APP.use(SESSION_MIDDLEWARE);
 }
 
 import { DBSetup } from "./db/db";
@@ -48,43 +48,46 @@ import { accountRouter } from "./routes/account.route";
 import { logoutRouter } from "./routes/logout.route";
 import { userRouter } from "./routes/user.route";
 import { leaderboardRouter } from "./routes/leaderboard.route";
+import { deleteRouter } from "./routes/delete.route";
 
-const index = indexRouter();
-const account = accountRouter();
-const attempt = attemptRouter(DB);
-const create = createRouter(DB);
-const leaderboard = leaderboardRouter(DB);
-const login = loginRouter(DB);
-const logout = logoutRouter();
-const redirect = redirectRouter(DB);
-const search = searchRouter(DB);
+const INDEX = indexRouter();
+const ACCOUNT = accountRouter();
+const ATTEMPT = attemptRouter(DB);
+const CREATE = createRouter(DB);
+const LEADERBOARD = leaderboardRouter(DB);
+const LOGIN = loginRouter(DB);
+const LOGOUT = logoutRouter();
+const REDIRECT = redirectRouter(DB);
+const SEARCH = searchRouter(DB);
 // const session = sessionRouter();
-const signup = signupRouter(DB);
-const solve = solveRouter(DB);
-const solution = solutionRouter(DB);
-const user = userRouter(DB);
+const SIGNUP = signupRouter(DB);
+const SOLVE = solveRouter(DB);
+const SOLUTION = solutionRouter(DB);
+const USER = userRouter(DB);
+const DELETE = deleteRouter(DB);
 
-app.use("/", index);
-app.use("/signup", signup);
-app.use("/login", login);
-app.use("/create", create);
-app.use("/redirect/", redirect);
-app.use("/search/", search);
-app.use("/solve", solve);
-app.use("/solution", solution);
-// app.use("/session", session);
-app.use("/attempt", attempt);
-app.use("/account", account);
-app.use("/logout", logout);
-app.use("/user", user);
-app.use("/leaderboard", leaderboard);
+APP.use("/", INDEX);
+APP.use("/signup", SIGNUP);
+APP.use("/login", LOGIN);
+APP.use("/create", CREATE);
+APP.use("/redirect/", REDIRECT);
+APP.use("/search/", SEARCH);
+APP.use("/solve", SOLVE);
+APP.use("/solution", SOLUTION);
+// APP.use("/session", SESSION);
+APP.use("/attempt", ATTEMPT);
+APP.use("/account", ACCOUNT);
+APP.use("/logout", LOGOUT);
+APP.use("/user", USER);
+APP.use("/leaderboard", LEADERBOARD);
+APP.use("/delete_problem", DELETE);
 
-const port = 8000;
-const url = "http://localhost:" + port;
-app.listen(port, () => {
+const PORT = 8000;
+const URL = "http://localhost:" + PORT;
+APP.listen(PORT, () => {
 	try {
 		console.log();
-		console.log("Website running on: " + url);
+		console.log("Website running on: " + URL);
 		console.log("Press { ctrl + c } to end the process...");
 		console.log();
 	} catch (err) {
