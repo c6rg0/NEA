@@ -41,7 +41,7 @@
     <hr>
 
 		<div class="d-grid gap-2">
-			<% if(login==false){ %>
+			<% if(login===false){ %>
 				<a href="/signup">
 					<button class="btn btn-light btn-lg" type="button">Signup</button>
 				</a>
@@ -50,7 +50,7 @@
 				</a>
 			<% } %>
 
-			<% if(login==true){ %>
+			<% if(login===true){ %>
 				<a href="/user/<%= login_status %>">
 					<button class="btn btn-light btn-lg" type="button">View profile</button>
 				</a>

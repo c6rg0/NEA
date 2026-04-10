@@ -19,13 +19,13 @@
       <a href="/create"><button class="btn btn-light btn-lg" type="button">Create</button></a>
       <a href="/leaderboard"><button class="btn btn-light btn-lg" type="button">Leaderboard</button></a>
 
-      <% if(login==false){ %>
+      <% if(login===false){ %>
       <a href="/account">
         <button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
       </a>
       <% } %>
 
-      <% if(login==true){ %>
+      <% if(login===true){ %>
       <a href="/account">
         <button class="btn btn-light btn-lg" type="button"><%= login_status %></button>
       </a>
