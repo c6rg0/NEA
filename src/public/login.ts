@@ -37,7 +37,7 @@ loginForm.addEventListener("submit", (event) => {
         const username = (document.getElementById("username") as HTMLInputElement).value;
         const password = (document.getElementById("password") as HTMLInputElement).value;
 
-        if (username.trim() === " || password.trim() === ") {
+        if (username.trim() === "" || password.trim() === "") {
         	return loginLength.innerHTML = 
 			"Please fill in the fields";
         } else {

@@ -88,7 +88,7 @@ export function attemptRouter(db: sqlite3.Database){
 
 			UPDATE_ATTEMPTS.run({id: attempt.urlId});
 
-			if (attempt.correct == true) {
+			if (attempt.correct === true) {
 				const UPDATE_SOLVED = db.prepare(`
 					UPDATE Problems 
 					SET times_solved = times_solved + 1 
@@ -116,19 +116,19 @@ export function attemptRouter(db: sqlite3.Database){
 				SELECT solved FROM Attempts 
 				WHERE username = (@user) AND 
 				problem_id = (@id);
-			`).get({user: this.user, id: this.attempt.urlId}) as dbTypes;
+			`).get({ user: this.user, id: this.attempt.urlId }) as dbTypes;
 
 			if (!FETCH_USER){
 				this.attemptInsert(E);
 				this.eloUpdate(E);
 			}
 			
-			if (FETCH_USER.solved == 0){
+			else if (FETCH_USER.solved === 0){
 				this.attemptUpdate(E);
 				this.eloUpdate(E);
 			} 
 			
-			if (FETCH_USER.solved == 1){ 
+			else if (FETCH_USER.solved === 1){ 
 				// If a problem has been solved, then the user shouldn't
 				// gain more elo from it, it would defeat the purpose since
 				// people could farm easy problems.
@@ -183,7 +183,7 @@ export function attemptRouter(db: sqlite3.Database){
 
 	ROUTER.post("/", async (req: Request, res: Response) => {
 		try {
-			let user = req.session.user as userTypes;
+			let user = req.session.user as unknown as userTypes;
 			let attempt: payloadTypes = req.body;
 
 			let A = new Attempts(user, attempt);
@@ -193,7 +193,7 @@ export function attemptRouter(db: sqlite3.Database){
 				// 1 = user winner, 0 = user loser
 				let outcome: number;
 
-				if (attempt.correct == true){ outcome = 1; }
+				if (attempt.correct === true){ outcome = 1; }
 				else { outcome = 0; }
 
 				const E = new Elo(25, outcome);

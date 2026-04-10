@@ -20,7 +20,7 @@ export function searchRouter(db: sqlite3.Database){
 			const PARSED = Number(QUERY_ELO_LOWER);
 			if (!isNaN(PARSED)){
 				eloLower = PARSED;
-				conditions = "elo > " + eloLower; // + "AND elo < (@upper)";
+				conditions = "elo > " + eloLower;
 			}
 		} if (QUERY_ELO_UPPER){
 			const PARSED = Number(QUERY_ELO_UPPER);
@@ -30,7 +30,7 @@ export function searchRouter(db: sqlite3.Database){
 			}
 		} 
 
-		const QUERY_ORDER = req.query.order; // "DESC"(defualt)/"ASC"
+		const QUERY_ORDER = req.query.order; 
 		let order: string = "DESC";
 		let orderWhitelist: string[];
 
@@ -56,7 +56,6 @@ export function searchRouter(db: sqlite3.Database){
 
 		sort = sort + " " + order;
 
-		// Managing limit & offset relative to page
 		const QUERY_PAGE = req.query.page;
 
 		let page: number = 1;
@@ -71,7 +70,7 @@ export function searchRouter(db: sqlite3.Database){
 		const OFFSET = (page - 1) * LIMIT; 
 
 		let query: string = "";
-		let inner_join = "";
+		let innerJoin = "";
 		let columns: string = "problem_id, title, creator, time_created, elo, times_attempted";
 		let activity: string = "Searching";
 
@@ -81,7 +80,7 @@ export function searchRouter(db: sqlite3.Database){
 			query = query.replace(SYMBOL_STRIP, "").trim().slice(0, 100);
 			query = query + "*";
 
-			inner_join = "INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid";
+			innerJoin = "INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid";
 			columns = "Problems.*";
 			conditions = "Problems_fts MATCH (@query)";
 			sort = "rank";
@@ -93,7 +92,7 @@ export function searchRouter(db: sqlite3.Database){
 		= db.prepare(`
 			SELECT ${columns}
 			FROM Problems
-			${inner_join}
+			${innerJoin}
 			WHERE ${conditions}
 			ORDER BY ${sort}
 			LIMIT (@limit) OFFSET (@offset);

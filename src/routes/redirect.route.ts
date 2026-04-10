@@ -28,10 +28,10 @@ export function redirectRouter(db: sqlite3.Database){
 		}
 	});
 
-	ROUTER.get("/:ID", (req: Request, res: Response) => {
+	ROUTER.get("/:id", (req: Request, res: Response) => {
 		const ID = req.params.id; 
 
-		res.render("create_success", {id: ID});
+		res.render("create_success", { id: ID });
 	});
 
 	return ROUTER;
