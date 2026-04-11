@@ -63,8 +63,12 @@ export function DBSetup(){
 
 			tries INTEGER DEFAULT 1,
 			time_submitted INTEGER DEFAULT (strftime('%s', 'now')),
-			FOREIGN KEY (username) REFERENCES Users(username),
-			FOREIGN KEY (problem_id) REFERENCES Problems(problem_id)
+			FOREIGN KEY (username) 
+				REFERENCES Users(username)
+				ON DELETE CASCADE
+			FOREIGN KEY (problem_id) 
+				REFERENCES Problems(problem_id)
+				ON DELETE CASCADE
 		);
 	`);
 

@@ -55,7 +55,7 @@ you can go to step 2.\
 `$ cd ~/ && git clone https://github.com/c6rg0/NEA.git && cd NEA/`
 
 4. Install the npm packages and dependencies:\
-*NOTE: You're now in the project directory*\
+*NOTE: You're now in the project directory*
 
 5. Compile the source code:\
 *NOTE: Chmod is used to set file permisions (there is a chance this is alread done for you)*
@@ -66,24 +66,11 @@ you can go to step 2.\
 `$ node run website`\
 If you go to `http://localhost:8000` in the browser, you can use and test the website.\
 *NOTE: As far as I'm aware, you can run the website in wsl, and use the browser in windows
-to view the website.*\
+to view the website.*
 
 ## To do list:
-- [x] Redesign the database (until further notice)
-- [x] Make a broswing system
-- [x] Make a problem creation system
-- [x] Make solving problems possible (quiz.ts -> solve.ts)
-- [x] Make an ELO system to determine user skill and problem diff
+- [x] Solve the projects aim
 
-- [X] Add a leaderboard and user system
-- [x] Catch up on the frontend, and improve user interaction (going to new problem after creation etc)
-- [x] AMEND: Use ejs to make users login first before creation
-- [X] AMEND: The data being fetched and displayed for the leaderboard makes no sense. Better: user, elo, date joined
-- [x] AMEND: Display account creation date on user
-- [x] Make a problem searching system
-- [ ] Balance the ELO system (determine by how much loss/win affects ELO)
-- [ ] Populate the database with problems that are seperate from user created content
-- [ ] Finish off the styling
-
+- [ ] Fix problems with my code (consistent style, properly adhering to RESTful, ...)
 - [ ] Documentation
 

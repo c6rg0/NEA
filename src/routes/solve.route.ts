@@ -11,29 +11,40 @@ export function solveRouter(DB: sqlite3.Database){
 	ROUTER.get("/:id", async(req: Request, res: Response) => {
 		const ID  = req.params.id;
 
-		try{
-			const info = DB.prepare(`
-				SELECT * FROM Problems 
-				WHERE problem_id = ?;
-			`).get(ID) as fetch | undefined;
+		const info = DB.prepare(`
+			SELECT * FROM Problems 
+			WHERE problem_id = ?;
+		`).get(ID) as fetch | undefined;
 
-			const attempts = DB.prepare(`
-				SELECT Attempts.*, Users.elo
-				FROM Attempts
-				INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id
-				INNER JOIN Users ON Attempts.username = Users.username
-				WHERE Attempts.problem_id = ? 
-				LIMIT 10;
-			`);
+		const attempts = DB.prepare(`
+			SELECT Attempts.*, Users.elo
+			FROM Attempts
+			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id
+			INNER JOIN Users ON Attempts.username = Users.username
+			WHERE Attempts.problem_id = ? 
+			LIMIT 10;
+		`);
 
-			const attemptsResult = attempts.all(ID);
+		const attemptsResult = attempts.all(ID);
 
-			res.render("solve", {info: info, attempts: attemptsResult});
+		if (info && req.session.user){
+			res.render("solve", {
+				info: info, 
+				attempts: attemptsResult,
+				auth: true,
+			});
 
-		} catch(error){
-			return res.status(500).send(error + ": unkown error");
+		} else if (info) {
+			res.render("solve", {
+				info: info, 
+				attempts: attemptsResult,
+				auth: false,
+			});
 		}
-		
+	});
+
+	ROUTER.get("/", async(req: Request, res: Response) => {
+		res.status(404).send("404: No problem_id supplied");
 	});
 
 	return ROUTER;

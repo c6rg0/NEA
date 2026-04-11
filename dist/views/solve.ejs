@@ -45,8 +45,16 @@
       </a></p>
 
       <% var x = new Date(info.time_created * 1000); %>
-      <p>Created: <%= x.toDateString() %>
-      | Difficulty rating: <%= info.elo %></p>
+      <p>
+      Created: <%= x.toDateString() %>
+      | Difficulty rating: <%= info.elo %>      
+      <% if (auth === true){ %>
+      |
+      <a href="/delete_problem/<%= info.problem_id %>">
+        DELETE?
+      </a>
+      </p>
+      <% } %>
     </div>
 
     <hr>
