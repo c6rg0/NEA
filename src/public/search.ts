@@ -4,9 +4,6 @@ const SEARCH_FORM = document.
 const FILTER_FORM = document.
 	getElementById("filter_form") as HTMLButtonElement;
 
-const PLACEHOLDER_BUTTON = document.
-	getElementById("placeholder_button") as HTMLButtonElement;
-
 // Setting the HREF of the buttons responsible for changing order
 const ORDER_DESC = document.getElementById("order_desc") as HTMLAnchorElement;
 const ORDER_ASC = document.getElementById("order_asc") as HTMLAnchorElement;
@@ -133,14 +130,4 @@ FILTER_FORM.addEventListener("submit", (event) => {
 	if (eloLower || eloUpper){
 		window.location.assign(NEW_URL.toString());
 	}
-});
-
-PLACEHOLDER_BUTTON.addEventListener("submit", (event) => {
-	event.preventDefault(); 
-
-	const NEW_URL = new URL(window.location.href);
-	NEW_URL.searchParams.set("order", "DESC"); 
-	NEW_URL.searchParams.set("sort", "time_created"); 
-	window.location.assign(NEW_URL.toString());
-
-});
+);
