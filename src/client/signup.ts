@@ -1,20 +1,14 @@
 function signupResponse(RESPONSE: Response){
-	console.log(RESPONSE.status);
-
-	if (RESPONSE.status === 204){
-		DISPLAY_EXISTS.innerHTML = "Username or/and password is required!";
-	}
-
-	if (RESPONSE.status === 401){
-		DISPLAY_EXISTS.innerHTML = "Incorrect username or password!";
-	}
-	
-	if (RESPONSE.status === 409){
-		DISPLAY_EXISTS.innerHTML = "Username already exists!";
-	}
-
 	if (RESPONSE.status === 200){
 		return window.location.assign("/login");
+	} else if (RESPONSE.status === 204){
+		DISPLAY_EXISTS.innerHTML = "Username or/and password is required!";
+	} else if (RESPONSE.status === 401){
+		DISPLAY_EXISTS.innerHTML = "Incorrect username or password!";
+	} else if (RESPONSE.status === 409){
+		DISPLAY_EXISTS.innerHTML = "Username already exists!";
+	} else {
+		console.log(RESPONSE.status);
 	}
 }
 
@@ -44,6 +38,7 @@ const DISPLAY_SYMBOLS = document.
 
 SIGNUP_FORM.addEventListener("submit", (event) => {
         event.preventDefault(); 
+
         const INPUT_USERNAME = (document.getElementById("username") as HTMLInputElement).value;
         const INPUT_PASSWORD = (document.getElementById("password") as HTMLInputElement).value;
 

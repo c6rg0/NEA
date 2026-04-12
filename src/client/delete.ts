@@ -4,9 +4,8 @@ async function deleteFetch(){
 	});
 
 	if (RESPONSE.status === 200){
-		window.location.href = "http://localhost:8000/user";
+		return window.location.href = "http://localhost:8000/user";
 	} else {
-		window.location.href = "http://localhost:8000/user";
-		return console.log(RESPONSE.status);
+		console.log(RESPONSE.status);
 	}
 }

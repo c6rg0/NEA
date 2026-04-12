@@ -14,7 +14,7 @@ async function getSolution(problemId: string | null) {
 	if (RESPONSE.status === 200){
 		return await RESPONSE.json() as solutionTypes; 
 	} else {
-		// return window.location.assign("http://localhost:8000/search")
+		return window.location.assign("http://localhost:8000/search")
 	}
 }
 
@@ -45,14 +45,12 @@ class Data {
 	async fetchData(PAGE_URL: string){
 		this.problemId = PAGE_URL.match(/\d+$/)?.[0] ?? null;
 		if (!this.problemId) throw new Error("problemId is empty?");
-		console.log(this.problemId);
 		this.problemData = await getSolution(this.problemId) as solutionTypes;
 	}
 
 	async submitAttempt(PAGE_URL: string, CORRECT: boolean){
 		this.problemId = PAGE_URL.match(/\d+$/)?.[0] ?? null;
 		if (!this.problemId) throw new Error("problemId is empty?");
-		console.log(this.problemId);
 		await submitAttempt(this.problemId, CORRECT);
 	}
 }
@@ -60,7 +58,6 @@ class Data {
 // Allows the code to be executed before the frontend is completely loaded:
 (async () => {
 	const PAGE_URL = window.location.href;
-	console.log(PAGE_URL);
 	const D = new Data();
 	await D.fetchData(PAGE_URL);
 
@@ -76,7 +73,6 @@ async function form(PAGE_URL: string, D: Data){
 
 	SOLUTION_FORM.addEventListener("submit", (event) => {
 		event.preventDefault();
-		console.log("prevented");
 
 		const INPUT_SOLUTION: string = (document.getElementById("solution") as HTMLInputElement).value;
 

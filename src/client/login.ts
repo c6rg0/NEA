@@ -4,8 +4,7 @@ function loginResponse(RESPONSE: Response){
 	} if (RESPONSE.status === 200){
 		return window.location.assign("/");
 	} else {
-		console.log(RESPONSE.status);
-		return LOGIN_ERROR_DISPAY.innerHTML = "501: Unexpected problem.";
+		return LOGIN_ERROR_DISPAY.innerHTML = "Unexpected server problem.";
 	}
 }
 
