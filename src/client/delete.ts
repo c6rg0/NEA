@@ -6,6 +6,7 @@ async function deleteFetch(){
 	if (RESPONSE.status === 200){
 		window.location.href = "http://localhost:8000/user";
 	} else {
-		console.log(RESPONSE.status);
+		window.location.href = "http://localhost:8000/user";
+		return console.log(RESPONSE.status);
 	}
 }

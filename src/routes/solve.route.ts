@@ -6,6 +6,7 @@ export function solveRouter(DB: sqlite3.Database){
 
 	interface fetch {
 		id: string;
+		creator: string,
 	}
 
 	ROUTER.get("/:id", async(req: Request, res: Response) => {
@@ -27,19 +28,20 @@ export function solveRouter(DB: sqlite3.Database){
 
 		const attemptsResult = attempts.all(ID);
 
-		if (info && req.session.user){
-			res.render("solve", {
-				info: info, 
-				attempts: attemptsResult,
-				auth: true,
-			});
-
-		} else if (info) {
-			res.render("solve", {
-				info: info, 
-				attempts: attemptsResult,
-				auth: false,
-			});
+		if (info){
+			if (req.session.user === info.creator){
+				res.render("solve", {
+					info: info, 
+					attempts: attemptsResult,
+					auth: true,
+				});
+			} else {
+				res.render("solve", {
+					info: info, 
+					attempts: attemptsResult,
+					auth: false,
+				});
+			}
 		}
 	});
 

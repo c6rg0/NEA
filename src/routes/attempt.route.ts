@@ -4,13 +4,9 @@ import sqlite3 from "better-sqlite3";
 export function attemptRouter(db: sqlite3.Database){
 	const ROUTER = Router();
 
-	interface userTypes {
-		username: string,
-	}
-
 	interface payloadTypes {
 		correct: boolean,
-		urlId: string,
+		problemId: string,
 	}
 
 	interface dbTypes {
@@ -38,7 +34,7 @@ export function attemptRouter(db: sqlite3.Database){
 		    this.outcome = outcome;
 		}
 
-		fetchElo(user: userTypes, attempt: payloadTypes){
+		fetchElo(user: string | undefined, attempt: payloadTypes){
 			let FETCH_USER = db.prepare(`
 				SELECT elo FROM Users 
 				WHERE username = ?
@@ -47,7 +43,7 @@ export function attemptRouter(db: sqlite3.Database){
 			let fetchProblem = db.prepare(`
 				SELECT elo FROM Problems 
 				WHERE problem_id = ?`
-			).get(attempt.urlId) as dbTypes;
+			).get(attempt.problemId) as dbTypes;
 			
 			this.userElo = FETCH_USER.elo;
 			this.problemElo = fetchProblem.elo;
@@ -86,7 +82,7 @@ export function attemptRouter(db: sqlite3.Database){
 				WHERE problem_id = (@id);
 			`);
 
-			UPDATE_ATTEMPTS.run({id: attempt.urlId});
+			UPDATE_ATTEMPTS.run({id: attempt.problemId});
 
 			if (attempt.correct === true) {
 				const UPDATE_SOLVED = db.prepare(`
@@ -95,14 +91,14 @@ export function attemptRouter(db: sqlite3.Database){
 					WHERE problem_id = (@id);
 				`);
 
-				UPDATE_SOLVED.run({id: attempt.urlId});
+				UPDATE_SOLVED.run({id: attempt.problemId});
 			}
 		}
 
-		private user: userTypes;
+		private user: string | undefined;
 		private attempt: payloadTypes;
 
-		constructor(user: userTypes, attempt: payloadTypes){
+		constructor(user: string | undefined, attempt: payloadTypes){
 			this.user = user;
 			this.attempt = attempt;
 		}
@@ -116,7 +112,7 @@ export function attemptRouter(db: sqlite3.Database){
 				SELECT solved FROM Attempts 
 				WHERE username = (@user) AND 
 				problem_id = (@id);
-			`).get({ user: this.user, id: this.attempt.urlId }) as dbTypes;
+			`).get({ user: this.user, id: this.attempt.problemId }) as dbTypes;
 
 			if (!FETCH_USER){
 				this.attemptInsert(E);
@@ -146,7 +142,7 @@ export function attemptRouter(db: sqlite3.Database){
 				VALUES(@username, @problem_id, @solved);
 			`);
 
-			NEW_ATTEMPT.run({username: this.user, problem_id: this.attempt.urlId, solved: E.outcome});
+			NEW_ATTEMPT.run({username: this.user, problem_id: this.attempt.problemId, solved: E.outcome});
 		}
 
 		attemptUpdate(E: Elo){
@@ -158,7 +154,7 @@ export function attemptRouter(db: sqlite3.Database){
 				problem_id = (@id);
 			`);
 
-			TRIES_UPDATE.run({solved: E.outcome, user: this.user, id: this.attempt.urlId});
+			TRIES_UPDATE.run({solved: E.outcome, user: this.user, id: this.attempt.problemId});
 		}
 
 		eloUpdate(E: Elo){
@@ -176,14 +172,14 @@ export function attemptRouter(db: sqlite3.Database){
 				WHERE problem_id = (@id);
 			`);
 
-			PROBLEM_ELO_UPDATE.run({elo: E.newProblemElo, id: this.attempt.urlId});
+			PROBLEM_ELO_UPDATE.run({elo: E.newProblemElo, id: this.attempt.problemId});
 		}
 
 	}
 
 	ROUTER.post("/", async (req: Request, res: Response) => {
 		try {
-			let user = req.session.user as unknown as userTypes;
+			let user = req.session.user as string | undefined;
 			let attempt: payloadTypes = req.body;
 
 			let A = new Attempts(user, attempt);
@@ -194,7 +190,7 @@ export function attemptRouter(db: sqlite3.Database){
 				let outcome: number;
 
 				if (attempt.correct === true){ outcome = 1; }
-				else { outcome = 0; }
+				else outcome = 0;
 
 				const E = new Elo(25, outcome);
 

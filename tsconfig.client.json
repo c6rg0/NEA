@@ -14,8 +14,8 @@
 
 		"target": "es2020",
 		"outDir": "./dist/public/js/",
-    		"rootDir": "./src/public/"
+    		"rootDir": "./src/client/"
 	},
-  		"include": ["src/public/"]
+  		"include": ["src/client/"]
 }
 

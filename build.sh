@@ -7,5 +7,5 @@ tsc
 tsc -p tsconfig.json
 
 tsc 
-tsc -p tsconfig.public.json
+tsc -p tsconfig.client.json
 

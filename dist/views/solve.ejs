@@ -59,7 +59,7 @@
 
     <hr>
 
-    <form id="solution_form">
+    <form id="solution_form" method="dialog">
       <div>
         <p>
         <label for="solution" id="instruction"> Instruction: <%= info.instruction %></label>
@@ -72,11 +72,10 @@
       <!--</div>-->
     </form>
 
-    &nbsp;
     <hr>
 
-    <p>Recent attempts:</p>
     <div id="recent_attempts">
+      <p>Recent attempts:</p>
       <% attempts.forEach(i=> { %>
       <p><a href="/user/<%= i.username %>">
         <%= i.username %>
@@ -99,7 +98,7 @@
     <div class="button_container" id="h_button_container" ></div>
     <div class="button_container" id="r_button_container" ></div>
 
-    <script src="../js/solve.js"></script>
+    <script src="/js/solve.js"></script>
   </body>
 
 </html> 

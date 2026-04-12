@@ -10,7 +10,7 @@ export function redirectRouter(db: sqlite3.Database){
 	}
 
 	ROUTER.search("/", (req: Request, res: Response) => {
-		const ID  = req.body as redirectTypes;
+		const ID = req.body as redirectTypes;
 		console.log(ID);
 
 		const USER_SEARCH = db.prepare(`

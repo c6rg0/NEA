@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8">
 
-    <% if(results !== null){ %>
+    <% if(results !== null && Object.entries(results).length > 0){ %>
     <title>
         <%= results.username %>
     </title>
@@ -46,7 +46,7 @@
 
     <hr>
 
-    <% if(results !== null){ %>
+    <% if(results !== null && Object.entries(results).length > 0){ %>
 
     <div id="user_data">
       <h2 id="username"><%= results.username %></h2>

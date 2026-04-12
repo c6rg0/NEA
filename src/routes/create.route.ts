@@ -27,13 +27,17 @@ export function createRouter(DB: sqlite3.Database){
 			} else {
 				
 				const PROBLEM_INSERT = DB.prepare(`
-					INSERT INTO Problems (title, creator, instruction, example, answer) 
-					VALUES(@title, @creator, @instruction, @example, @answer);
+					INSERT INTO Problems 
+					(title, creator, instruction, example, answer) 
+					VALUES
+					(@title, @creator, @instruction, @example, @answer);
 				`);
 
 				PROBLEM_INSERT.run({
-					title: USER_INPUT.title, creator: req.session.user, 
-					instruction: USER_INPUT.instruction, example: USER_INPUT.example,
+					title: USER_INPUT.title, 
+					creator: req.session.user, 
+					instruction: USER_INPUT.instruction, 
+					example: USER_INPUT.example,
 					answer: USER_INPUT.answer
 				});
 				
