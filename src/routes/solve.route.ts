@@ -45,8 +45,10 @@ export function solveRouter(DB: sqlite3.Database){
 		}
 	});
 
-	ROUTER.get("/", async(req: Request, res: Response) => {
-		res.status(404).send("404: No problem_id supplied");
+	ROUTER.all("/:id", (req: Request, res: Response) => {
+		res.set("Allow", "GET");
+		res.status(405).json({ error: "HTTP method not allowed" });
+
 	});
 
 	return ROUTER;

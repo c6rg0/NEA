@@ -200,12 +200,17 @@ export function attemptRouter(db: sqlite3.Database){
 				A.record(E);
 			}
 
-			return res.status(200).send("Success.");
+			return res.status(200).send();
 
 		} catch (Error) {
 			console.log(Error);
-			return res.status(500).send("HTTP CODE 500");
+			return res.status(500).json({ error: "HTTP CODE 500" });
 		}
+	});
+
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "POST");
+		res.status(405).json({ error: "HTTP method not alllowed" });
 	});
 
 	return ROUTER;

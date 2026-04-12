@@ -46,12 +46,17 @@ export function deleteRouter(DB: sqlite3.Database){
 					WHERE problem_id = (@id);
 				`).run({ id: ID });
 				
-				return res.status(200).send("Success!");
+				return res.status(200).send();
 
 			} else {
-				return res.status(403).send("Not authorized");
+				return res.status(403).json({ error: "Not authorized for the requested action" });
 			}
 		}
+	});
+
+	ROUTER.all("/id", (req: Request, res: Response) => {
+		res.set("Allow", "GET, DELETE");
+		res.status(405).json({ error: "HTTP method not allowed" });
 	});
 
 	return ROUTER;

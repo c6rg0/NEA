@@ -9,29 +9,36 @@ export function redirectRouter(db: sqlite3.Database){
 		problem_id: number
 	}
 
+	ROUTER.get("/:id", (req: Request, res: Response) => {
+		const ID = req.params.id; 
+		res.render("create_success", { id: ID });
+	});
+
 	ROUTER.search("/", (req: Request, res: Response) => {
 		const ID = req.body as redirectTypes;
-		console.log(ID);
 
 		const USER_SEARCH = db.prepare(`
 			SELECT problem_id 
 			FROM Problems WHERE title = ?
 		`).get(ID.title) as redirectTypes;
 
-		console.log(USER_SEARCH);
-
 		if (USER_SEARCH){
 			const URL = "/redirect/" + USER_SEARCH.problem_id;
 			return res.redirect(303, URL);
 		} else {
-			return res.status(404).send("Couldn't find problem_id using title");
+			return res.status(404).json({ error: "Couldn't find problem_id using title" });
 		}
 	});
 
-	ROUTER.get("/:id", (req: Request, res: Response) => {
-		const ID = req.params.id; 
 
-		res.render("create_success", { id: ID });
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "SEARCH");
+		res.status(405).json({ error: "HTTP method not allowed" });
+	});
+
+	ROUTER.all("/:id", (req: Request, res: Response) => {
+		res.set("Allow", "GET");
+		res.status(501).json({ error: "Using a URL path ID isn't supported" });
 	});
 
 	return ROUTER;

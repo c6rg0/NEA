@@ -120,5 +120,15 @@ export function userRouter(DB: sqlite3.Database){
 		});
 	});
 
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "GET");
+		res.status(405).json({ error: "HTTP method not allowed" });
+	});
+
+	ROUTER.all("/:id", (req: Request, res: Response) => {
+		res.set("Allow", "GET");
+		res.status(405).json({ error: "HTTP method not allowed" });
+	});
+
 	return ROUTER;
 }

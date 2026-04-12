@@ -15,5 +15,10 @@ export function indexRouter(){
 		}
 	});
 
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "GET");
+		res.status(405).json({ error: "HTTP method not allowed" });
+	});
+
 	return ROUTER;
 }

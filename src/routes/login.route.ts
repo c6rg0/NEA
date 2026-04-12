@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import sqlite3 from "better-sqlite3";
 
 export function loginRouter(DB: sqlite3.Database){
-
 	const ROUTER = Router();
 
 	interface userPassword {
@@ -20,7 +19,7 @@ export function loginRouter(DB: sqlite3.Database){
 
 		if (!USER_INPUT || !USER_INPUT.username || !USER_INPUT.password) {
 			return res.status(204).
-			send("Required credentials are missing.");
+			json({ error: "Required credentials are missing" });
 		}
 
 		const RESULT = DB.prepare(`
@@ -30,7 +29,7 @@ export function loginRouter(DB: sqlite3.Database){
 		
 		if (!RESULT || !RESULT.password) {
 			return res.status(401).
-			send("Invalid username or password");
+			json({ error: "Invalid username or password" });
 		}
 
 		const INPUT_PASS: string = USER_INPUT.password;
@@ -53,9 +52,15 @@ export function loginRouter(DB: sqlite3.Database){
 			return;
 
 		} else {
-			res.status(401).send("Incorrect password or username.");
+			res.status(401).json({ error: "Incorrect password or username" });
 			return;
 		}
+	});
+
+
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "GET, POST");
+		res.status(405).json({ error: "HTTP method not allowed" });
 	});
 
 	return ROUTER;

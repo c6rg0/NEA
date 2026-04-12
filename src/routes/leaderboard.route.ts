@@ -5,7 +5,6 @@ export function leaderboardRouter(db: sqlite3.Database){
 	const ROUTER = Router();
 
 	ROUTER.get("/", async (req: Request, res: Response) => {
-
 		const ATTEMPTS = db.prepare(`
 			SELECT * FROM Attempts 
 			INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id
@@ -14,9 +13,12 @@ export function leaderboardRouter(db: sqlite3.Database){
 		`);
 
 		const ATTEMPTS_RESULT = ATTEMPTS.all();
-
 		res.render("leaderboard", { attempts: ATTEMPTS_RESULT });
+	});
 
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "GET");
+		res.status(405).json({ error: "HTTP method not allowed" });
 	});
 
 	return ROUTER;

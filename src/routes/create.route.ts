@@ -23,7 +23,7 @@ export function createRouter(DB: sqlite3.Database){
 		
 		if (req.session.user) {
 			if (!USER_INPUT){
-				return res.status(204).send("Title is required");
+				return res.status(204).json({ error: "Title is required" });
 			} else {
 				
 				const PROBLEM_INSERT = DB.prepare(`
@@ -46,15 +46,19 @@ export function createRouter(DB: sqlite3.Database){
 					FROM Problems 
 					WHERE title = ?
 				`).get(USER_INPUT.title) as problem_types;
-				console.log("problem_id: ", SEARCH_ID.problem_id);
 
 				return res.status(200).send();
 			}
 		} else {
-			res.status(204).send("Please login first");
+			res.status(204).json({ error: "Please login first" });
 			return;
 
 		}
+	});
+
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "GET, POST");
+		res.status(405).json({ error: "HTTP nethod not allowed" });
 	});
 
 	return ROUTER;

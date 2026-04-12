@@ -13,7 +13,7 @@ export function signupRouter(DB: sqlite3.Database){
 		const USER_INPUT = req.body;
 
 		if (!USER_INPUT || !USER_INPUT.username || !USER_INPUT.password) {
-			return res.status(304).send("Required fields are missing.");
+			return res.status(304).json({ error: "Required fields are missing." });
 		}
 
 		const existingUser = DB.prepare(`
@@ -22,13 +22,13 @@ export function signupRouter(DB: sqlite3.Database){
 		`).get(USER_INPUT.username);
 
 		if (existingUser) {
-			res.status(409).send("Username already exists");
+			res.status(409).json({ error: "Username already exists" });
 		} else {
 
 			let PASS_LENGTH: number = USER_INPUT.password.length;
 
 			if (PASS_LENGTH < 6) {
-				return res.status(406).send("Password is too short");
+				return res.status(406).json({ error: "Password is too short" });
 			} else {
 
 				const PASS = USER_INPUT.password;
@@ -50,12 +50,18 @@ export function signupRouter(DB: sqlite3.Database){
 					INSERT.run({ username: USER_INPUT.username, password: HASHED_PASS });
 				} catch (err) {
 					console.log(err);
-					return res.status(500).send(err);
+					return res.status(500).json({ error: err });
 				}
+
 				res.redirect("/login");
 				return;
 			}
 		}
+	});
+
+	ROUTER.all("/", (req: Request, res: Response) => {
+		res.set("Allow", "GET, POST");
+		res.status(405).json({ error: "HTTP method not allowed" });
 	});
 
 	return ROUTER;

@@ -14,15 +14,22 @@ export function solutionRouter(DB: sqlite3.Database){
 
 		try {
 			const response  = DB.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(ID);
+			// Usefull for testing purposes
 			console.log("answer = " + (response as types).answer);
 
 			return res.json(response);
 
 		} catch(error){
-			return res.status(500).send(error + ": unkown error");
+			return res.status(500).json({ error: "Unknown server error" });
 		}
 		
 	});
+
+	ROUTER.all("/:id", (req: Request, res: Response) => {
+		res.set("Allow", "GET");
+		res.status(405).json({ error: "HTTP method not allowed" });
+	});
+
 
 	return ROUTER;
 }
