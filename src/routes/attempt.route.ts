@@ -148,10 +148,10 @@ export function attemptRouter(db: sqlite3.Database){
 		attemptUpdate(E: Elo){
 			const TRIES_UPDATE = db.prepare(`
 				UPDATE Attempts 
-				SET tries = tries + 1 AND
-				solved = (@solved)
+				SET tries = tries + 1,
+					solved = (@solved)
 				WHERE username = (@user) AND 
-				problem_id = (@id);
+					problem_id = (@id);
 			`);
 
 			TRIES_UPDATE.run({solved: E.outcome, user: this.user, id: this.attempt.problemId});

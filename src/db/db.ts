@@ -17,7 +17,7 @@ export function DBSetup(){
 			password TEXT NOT NULL,
 			elo INTEGER DEFAULT 400,
 			time_created INTEGER DEFAULT (strftime('%s', 'now'))
-			-- time is in seconds since the UNIX epoch (1/1/1970)
+			-- time is in milliseconds since the UNIX epoch (1/1/1970); UNIX time
 		);
 
 		CREATE TABLE IF NOT EXISTS Problems(
@@ -41,8 +41,8 @@ export function DBSetup(){
 			content_rowid='problem_id' -- and the primary key of that table.
 		);
 
-		-- Triggers get run if triggered...
-		-- These exist to insert/delete problems to/in the FTS table automatically.
+		-- These triggers insert/delete problems in the FTS table automatically,
+		-- mirroring the Problems table in virtual table format.
 		CREATE TRIGGER IF NOT EXISTS problems_ai AFTER INSERT ON Problems BEGIN
 			INSERT INTO Problems_fts(rowid, title, creator)
 			VALUES (new.problem_id, new.title, new.creator);

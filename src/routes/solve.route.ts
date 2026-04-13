@@ -24,21 +24,19 @@ export function solveRouter(DB: sqlite3.Database){
 			INNER JOIN Users ON Attempts.username = Users.username
 			WHERE Attempts.problem_id = ? 
 			LIMIT 10;
-		`);
-
-		const attemptsResult = attempts.all(ID);
+		`).all(ID);
 
 		if (info){
 			if (req.session.user === info.creator){
 				res.render("solve", {
 					info: info, 
-					attempts: attemptsResult,
+					attempts: attempts,
 					auth: true,
 				});
 			} else {
 				res.render("solve", {
 					info: info, 
-					attempts: attemptsResult,
+					attempts: attempts,
 					auth: false,
 				});
 			}

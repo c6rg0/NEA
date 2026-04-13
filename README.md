@@ -71,6 +71,6 @@ to view the website.*
 ## To do list:
 - [x] Solve the projects aim
 
-- [ ] Fix problems with my code (consistent style, properly adhering to RESTful, ...)
+- [x] Fix problems with my code (consistent style, properly adhering to RESTful, ...)
 - [ ] Documentation
 

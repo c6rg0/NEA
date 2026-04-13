@@ -80,7 +80,17 @@
       <p><a href="/user/<%= i.username %>">
         <%= i.username %>
       </a>
+
       (<%= i.elo %> elo) |
+
+      <%= i.tries %> attempts |
+
+      <% if (i.solved === 1){ %>
+      Already solved |
+      <% } else { %>
+      Unsolved |
+      <% } %>
+
       <% var x = new Date(i.time_submitted * 1000); %>
       <%= x.toDateString() %>
       </p>

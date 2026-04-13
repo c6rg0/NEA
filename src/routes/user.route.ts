@@ -26,9 +26,11 @@ export function userRouter(DB: sqlite3.Database){
 			return DB.prepare(`
 				SELECT * FROM Attempts 
 				INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
-				WHERE Attempts.username = ? 
+				WHERE Attempts.username = (@username)
+				AND Attempts.solved = 1
 				ORDER BY Problems.elo DESC
-			`).all(this.TARGET);
+				LIMIT 5;
+			`).all({ username: this.TARGET });
 		}
 
 		averageEloSolved(){
