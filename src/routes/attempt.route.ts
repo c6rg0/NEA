@@ -19,8 +19,8 @@ export function attemptRouter(db: sqlite3.Database){
 		private kFactor: number;
 		public outcome: number;
 
-		private pa: number = 0;
-		private pb: number = 0;
+		private userProbability: number = 0;
+		private problemProbability: number = 0;
 
 		private userElo: number = 0;
 		private problemElo: number = 0;
@@ -56,11 +56,11 @@ export function attemptRouter(db: sqlite3.Database){
 
 		// setter 
 		update(){
-			this.pa = this.probability(this.problemElo, this.userElo);
-			this.pb = this.probability(this.userElo, this.problemElo);
+			this.userProbability = this.probability(this.problemElo, this.userElo);
+			this.problemProbability = this.probability(this.userElo, this.problemElo);
 
-			this.newUserElo  = this.userElo + this.kFactor * (this.outcome - this.pa);
-			this.newProblemElo = this.problemElo + this.kFactor * ((1 - this.outcome - this.pb));
+			this.newUserElo  = this.userElo + this.kFactor * (this.outcome - this.userProbability);
+			this.newProblemElo = this.problemElo + this.kFactor * ((1 - this.outcome - this.problemProbability));
 
 			// float -> int 
 			this.newUserElo = Math.trunc(this.newUserElo);

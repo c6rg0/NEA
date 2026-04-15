@@ -1,0 +1,163 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="k8VrtsVDgHuUJepLwfkq">
+    <mxGraphModel dx="478" dy="572" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PM-JdtiZYCXSUChTKfex-2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="140" />
+              <mxPoint x="99.66" y="140" />
+            </Array>
+            <mxPoint x="99.66" y="130" as="sourcePoint" />
+            <mxPoint x="99.66" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-25" edge="1" parent="1" source="PM-JdtiZYCXSUChTKfex-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="PM-JdtiZYCXSUChTKfex-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;start&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="95" x="52.5" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-3" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="Input query from request holding elo min-max filters&amp;nbsp;" vertex="1">
+          <mxGeometry height="80" width="170" x="15" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-4" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="264" />
+              <mxPoint x="99.66" y="264" />
+            </Array>
+            <mxPoint x="99.66" y="240" as="sourcePoint" />
+            <mxPoint x="99.66" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-12" edge="1" parent="1" source="PM-JdtiZYCXSUChTKfex-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="PM-JdtiZYCXSUChTKfex-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-5" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="assignFilters with previous inputs" vertex="1">
+          <mxGeometry height="60" width="120" x="40" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-6" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="Input query from request holding the order to display problems&amp;nbsp;" vertex="1">
+          <mxGeometry height="80" width="170" x="15" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-16" edge="1" parent="1" source="PM-JdtiZYCXSUChTKfex-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="PM-JdtiZYCXSUChTKfex-13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-8" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="assignOrder with previous input" vertex="1">
+          <mxGeometry height="60" width="120" x="40" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-11" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="484" />
+              <mxPoint x="99.66" y="484" />
+            </Array>
+            <mxPoint x="99.66" y="460" as="sourcePoint" />
+            <mxPoint x="99.66" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-13" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="Input query from request holding the sort to display problems by" vertex="1">
+          <mxGeometry height="80" width="170" x="15" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-14" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="584" />
+              <mxPoint x="99.66" y="584" />
+            </Array>
+            <mxPoint x="99.66" y="560" as="sourcePoint" />
+            <mxPoint x="99.66" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-15" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="assignSort with previous input" vertex="1">
+          <mxGeometry height="60" width="120" x="40" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-17" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="704" />
+              <mxPoint x="99.66" y="704" />
+            </Array>
+            <mxPoint x="99.66" y="680" as="sourcePoint" />
+            <mxPoint x="99.66" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-18" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="&lt;div&gt;Input query from request holding the users page&amp;nbsp;&lt;/div&gt;&lt;div&gt;number&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="170" x="15" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-19" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="804" />
+              <mxPoint x="99.66" y="804" />
+            </Array>
+            <mxPoint x="99.66" y="780" as="sourcePoint" />
+            <mxPoint x="99.66" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-20" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="assignOffset with previous input" vertex="1">
+          <mxGeometry height="60" width="120" x="40" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-21" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="924" />
+              <mxPoint x="99.66" y="924" />
+            </Array>
+            <mxPoint x="99.66" y="900" as="sourcePoint" />
+            <mxPoint x="99.66" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-22" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="80" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-23" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="99.66" y="1024" />
+              <mxPoint x="99.66" y="1024" />
+            </Array>
+            <mxPoint x="99.66" y="1000" as="sourcePoint" />
+            <mxPoint x="99.66" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-24" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="280" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-27" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="299.65999999999997" y="120" as="sourcePoint" />
+            <mxPoint x="299.65999999999997" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Setting variables that will either: be changed later or stay the same" vertex="1">
+          <mxGeometry height="60" width="120" x="240" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-29" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="Input query from request holding search query&amp;nbsp;" vertex="1">
+          <mxGeometry height="80" width="170" x="215" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-31" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="299.65999999999997" y="210" as="sourcePoint" />
+            <mxPoint x="299.65999999999997" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-32" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="299.66" y="344" />
+              <mxPoint x="299.66" y="344" />
+            </Array>
+            <mxPoint x="299.66" y="320" as="sourcePoint" />
+            <mxPoint x="299.66" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PM-JdtiZYCXSUChTKfex-34" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;if&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;previous input isn&#39;t empty&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="100" x="250" y="360" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

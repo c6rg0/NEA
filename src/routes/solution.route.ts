@@ -13,7 +13,8 @@ export function solutionRouter(DB: sqlite3.Database){
 		const ID  = req.params.id;
 
 		try {
-			const response  = DB.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(ID);
+			const response = DB.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(ID);
+
 			// Usefull for testing purposes
 			console.log("answer = " + (response as types).answer);
 

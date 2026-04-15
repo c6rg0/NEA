@@ -3,8 +3,7 @@ import { Request, Response, Router } from 'express'
 export function logoutRouter(){
 	const ROUTER = Router();
 
-	// Probably should be a DELETE route, but GET is more intuitive 
-	// since you can call with href
+	// This could be a DELETE request 
 	ROUTER.get("/", (req: Request, res: Response) => {
 		req.session.destroy((err) => {
 			if (err) {
