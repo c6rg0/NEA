@@ -13,7 +13,7 @@ export function searchRouter(db: sqlite3.Database){
 		let order = assignOrder(QUERY_ORDER);
 
 		const QUERY_SORT = req.query.sort as string; 
-		let sort = assignSort(QUERY_SORT, res, order);
+		let sort = assignSort(QUERY_SORT, res, order) as string; 
 
 		const QUERY_PAGE = req.query.page as string;
 		const LIMIT = 50;
@@ -23,22 +23,8 @@ export function searchRouter(db: sqlite3.Database){
 		let innerJoin = "";
 		let columns: string = "problem_id, title, creator, time_created, elo, times_attempted";
 		let activity: string = "Searching";
-
 		const UNSANITIZED_QUERY = req.query.q as string;
-
-		if (UNSANITIZED_QUERY){
-			query = UNSANITIZED_QUERY.toString();
-			const SYMBOL_STRIP: RegExp = /[^a-zA-Z0-9 ]/g;
-			query = query.replace(SYMBOL_STRIP, "").trim().slice(0, 100);
-			query = query + "*";
-
-			innerJoin = "INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid";
-			columns = "Problems.*";
-			conditions = "Problems_fts MATCH (@query)";
-			sort = "rank";
-
-			activity = "after_query";
-		} 
+		[query, innerJoin, columns, conditions, sort, activity] = assignSQL(UNSANITIZED_QUERY, query, innerJoin, columns, conditions, sort, activity);
 		
 		let results: sqlite3.RunResult | unknown[] = db.prepare(`
 			SELECT ${columns}
@@ -122,6 +108,26 @@ export function searchRouter(db: sqlite3.Database){
 		}
 
 		return ((page - 1) * LIMIT); 
+	}
+
+	function assignSQL(UNSANITIZED_QUERY: string, query: string, innerJoin: string, 
+			   columns: string, conditions: string, sort: string, activity: string){
+
+		if (UNSANITIZED_QUERY){
+			query = UNSANITIZED_QUERY.toString();
+			const SYMBOL_STRIP: RegExp = /[^a-zA-Z0-9 ]/g;
+			query = query.replace(SYMBOL_STRIP, "").trim().slice(0, 100);
+			query = query + "*";
+
+			innerJoin = "INNER JOIN Problems_fts ON Problems.problem_id = Problems_fts.rowid";
+			columns = "Problems.*";
+			conditions = "Problems_fts MATCH (@query)";
+			sort = "rank";
+
+			activity = "after_query";
+		} 
+
+		return [query, innerJoin, columns, conditions, sort, activity];
 	}
 
 	ROUTER.all("/", (req: Request, res: Response) => {
