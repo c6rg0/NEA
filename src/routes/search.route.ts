@@ -7,24 +7,32 @@ export function searchRouter(db: sqlite3.Database){
 	ROUTER.get("/", async (req: Request, res: Response) => {
 		const QUERY_ELO_UPPER = req.query.fu as string; // "fu": filter upper
 		const QUERY_ELO_LOWER = req.query.fl as string; // ...: ... lower
-		let conditions = assignFilters(QUERY_ELO_UPPER, QUERY_ELO_LOWER);
+		let conditions = assignFilters(QUERY_ELO_UPPER, QUERY_ELO_LOWER, res) as string;
 
 		const QUERY_ORDER = req.query.order as string; 
-		let order = assignOrder(QUERY_ORDER);
+		let order = assignOrder(QUERY_ORDER, res) as string;
 
 		const QUERY_SORT = req.query.sort as string; 
 		let sort = assignSort(QUERY_SORT, res, order) as string; 
 
 		const QUERY_PAGE = req.query.page as string;
 		const LIMIT = 50;
-		const OFFSET = assignOffset(QUERY_PAGE, LIMIT)
+		const OFFSET = assignOffset(QUERY_PAGE, LIMIT, res);
 
 		let query: string = "";
 		let innerJoin = "";
 		let columns: string = "problem_id, title, creator, time_created, elo, times_attempted";
 		let activity: string = "Searching";
 		const UNSANITIZED_QUERY = req.query.q as string;
-		[query, innerJoin, columns, conditions, sort, activity] = assignSQL(UNSANITIZED_QUERY, query, innerJoin, columns, conditions, sort, activity);
+
+		[
+			query, 
+			innerJoin, 
+			columns, 
+			conditions, 
+			sort, 
+			activity
+		] = assignQuery(UNSANITIZED_QUERY, query, innerJoin, columns, conditions, sort, activity);
 		
 		let results: sqlite3.RunResult | unknown[] = db.prepare(`
 			SELECT ${columns}
@@ -46,7 +54,7 @@ export function searchRouter(db: sqlite3.Database){
 		});
 	});
 
-	function assignFilters(QUERY_ELO_UPPER: string, QUERY_ELO_LOWER: string){
+	function assignFilters(QUERY_ELO_UPPER: string, QUERY_ELO_LOWER: string, res: Response){
 		let eloUpper: number; 
 		let eloLower: number = 0;
 
@@ -57,19 +65,25 @@ export function searchRouter(db: sqlite3.Database){
 			if (!isNaN(PARSED)){
 				eloLower = PARSED;
 				conditions = "elo > " + eloLower;
+			} else {
+				return res.status(400).json({ error: "Elo filter query isn't a number?" });
 			}
+
 		} if (QUERY_ELO_UPPER){
 			const PARSED = Number(QUERY_ELO_UPPER);
 			if (!isNaN(PARSED)){
 				eloUpper = PARSED;
 				conditions = "elo > " + eloLower + " AND elo < " + eloUpper;
+			} else {
+				return res.status(400).json({ error: "Elo filter query isn't a number?" });
 			}
+
 		} 
 		
 		return conditions;
 	}
 
-	function assignOrder(QUERY_ORDER: string){
+	function assignOrder(QUERY_ORDER: string, res: Response){
 		let order: string = "DESC";
 		let orderWhitelist: string[];
 
@@ -77,7 +91,10 @@ export function searchRouter(db: sqlite3.Database){
 			orderWhitelist = ["DESC", "ASC"];
 			if (orderWhitelist.includes(QUERY_ORDER.toString())){
 				order = QUERY_ORDER.toString();
+			} else {
+				return res.status(400).json({ error: "Invalid order option {DESC|ASC}" });
 			}
+
 		} 
 
 		return order;
@@ -92,25 +109,27 @@ export function searchRouter(db: sqlite3.Database){
 			if (sortWhitelist.includes(QUERY_SORT.toString())){
 				sort = QUERY_SORT.toString();
 			} else {
-				return res.status(400).json({ error: "Invalid sort option" });
+				return res.status(400).json({ error: "Invalid sort option {elo|time_created|times_attempted}" });
 			}
 		}
 
 		return (sort + " " + order);
 	}
 
-	function assignOffset(QUERY_PAGE: string, LIMIT: number, page = 1){
+	function assignOffset(QUERY_PAGE: string, LIMIT: number, res: Response, page = 1){
 		if (QUERY_PAGE){
 			const PARSED = Number(QUERY_PAGE);
 			if (!isNaN(PARSED)){
 				page = PARSED;
+			} else {
+				return res.status(400).json({ error: "Page query isn't a number?" });
 			}
 		}
 
 		return ((page - 1) * LIMIT); 
 	}
 
-	function assignSQL(UNSANITIZED_QUERY: string, query: string, innerJoin: string, 
+	function assignQuery(UNSANITIZED_QUERY: string, query: string, innerJoin: string, 
 			   columns: string, conditions: string, sort: string, activity: string){
 
 		if (UNSANITIZED_QUERY){

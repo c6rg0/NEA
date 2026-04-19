@@ -50,7 +50,7 @@ export function createRouter(DB: sqlite3.Database){
 				return res.status(200).send();
 			}
 		} else {
-			res.status(204).json({ error: "Please login first" });
+			res.status(401).json({ error: "Please login first" });
 			return;
 
 		}

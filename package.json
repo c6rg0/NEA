@@ -24,18 +24,18 @@
 		"website": "cd dist && node server.js && cd .."
 	},
 	"dependencies": {
-		"@types/bcrypt": "^6.0.0",
-		"@types/express": "^5.0.6",
-		"bcrypt": "^6.0.0",
-		"better-sqlite3": "^12.4.1",
-		"body-parser": "^2.2.0",
-		"ejs": "^3.0.2",
+		"typescript": "^5.9.3",
 		"express": "^5.0.6",
-		"express-session": "^1.18.2",
-		"typescript": "^5.9.3"
+		"body-parser": "^2.2.0",
+		"better-sqlite3": "^12.4.1",
+		"ejs": "^3.0.2",
+		"bcrypt": "^6.0.0",
+		"express-session": "^1.18.2"
 	},
 	"devDependencies": {
+		"@types/express": "^5.0.6",
 		"@types/better-sqlite3": "^7.6.13",
+		"@types/bcrypt": "^6.0.0",
 		"@types/express-session": "^1.18.2"
 	},
 	"engines": {

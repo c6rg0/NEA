@@ -60,15 +60,13 @@ export function attemptRouter(db: sqlite3.Database){
 			this.problemProbability = this.probability(this.userElo, this.problemElo);
 
 			this.newUserElo  = this.userElo + this.kFactor * (this.outcome - this.userProbability);
-			this.newProblemElo = this.problemElo + this.kFactor * ((1 - this.outcome - this.problemProbability));
+			this.newProblemElo = this.problemElo + this.kFactor * (1 - this.outcome - this.problemProbability);
 
 			// float -> int 
 			this.newUserElo = Math.trunc(this.newUserElo);
 			this.newProblemElo = Math.trunc(this.newProblemElo);
 
-			if (!Number.isNaN(this.newUserElo) && !Number.isNaN(this.newProblemElo)){
-				return;
-			} else {
+			if (Number.isNaN(this.newUserElo) || Number.isNaN(this.newProblemElo)){
 				return Error;
 			}
 		}

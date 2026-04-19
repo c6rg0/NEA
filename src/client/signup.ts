@@ -1,8 +1,6 @@
 function signupResponse(RESPONSE: Response){
 	if (RESPONSE.status === 200){
 		return window.location.assign("/login");
-	} else if (RESPONSE.status === 204){
-		DISPLAY_EXISTS.innerHTML = "Username or/and password is required!";
 	} else if (RESPONSE.status === 401){
 		DISPLAY_EXISTS.innerHTML = "Incorrect username or password!";
 	} else if (RESPONSE.status === 409){
