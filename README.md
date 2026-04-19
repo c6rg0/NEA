@@ -1,76 +1,33 @@
-# Leetregex - Website for learning and improving regex skills
+# AQA A-Level CS NEA
 
 ## Technologies used:
-- Languages: `TypeScript` (compiled to `JavaScript`), `Bash` (in the terminal to manage
-  the compilation of the project, as well as to automate the removal of existing compiled 
-  code unrelated to the functionality),
-- Markdown: `EJS (embedded JavaScript` (`CSS` for styling),
-- Package managers: `Nix` (personally), `APT` and `Homebrew` (examples included in the
-  instructions), `npm` (nodejs package manager, in the instructions too),
-- JavaScript runtime: `NodeJS`
-- NPM packages: `express`, `express-session`, `better-sqlite3`, `bcrypt`
+> Languages: `TypeScript` (transpiled to `JavaScript`), `Bash` (for the build/clean scripts),\
+> JavaScript runtime: `NodeJS`,\
+> Package managers: `NPM`,\
+> Framework: `express`\
+> Frontend: `EJS (embedded JavaScript`, `BootstrapJS`, `CSS`,
 
-> Any other things I forgot to mention are stated in package.json.
+- (Anything not included here is in `package.json`)
 
-## Requirements:
-- A `UNIX` (MacOS for example) OS or `Linux` distro - If you're using windows\
-you'll have to install `wsl2`: the Windows Subsystem for Linux so that everything\
-works (explanation below).
-
-- NodeJS and git to be installed on the system (instructions are below).
-
-- Explanation:\
-I use NixOS on my laptop, a distrubution of linux. Linux being inspired by UNIX\
-has forward slashes ( / ), however windows inconveniently uses back slashes ( \ ).\
-File paths won't work and the server will simply crash.
-
-## How to run the project locally:
+# How to run the project locally:
 *NOTE: "$" is used to represent terminal commands, don't include it in the terminal.*
 
-1. Open up the terminal:\
-If you're on linux or macos, and you have the terminal open,
-you can go to step 2.\
-*On windows, we'll set up wsl2 (a command line virtual machine):*
+- Ensure that you're using a unix(-like) OS, like Linux or MacOs.
+- I recommend Windows users to install wsl2 with ubuntu and follow the bellow instructions.
 
-*To do so, open up cmd,*\
-*enter `$ wsl`, let it download and reboot your machine once it's done.*
-
-*Once rebooted, go to cmd again, and enter `$ wsl --install ubuntu`,*\
-*and follow the prompts.* 
-
-*In wsl, type `$ sudo apt update` to upate the packages on the system,*\
-*and then `$ sudo apt upgrade` to upgrade the packages - you now have a*\
-*functional ubuntu linux vm.*
-
-2. Make sure that git and NodeJS are installed:
-- On ubuntu (which is the distro we installed for wsl2):\
-*NOTE: Any other distro works, I'm just using ubuntu for the examples*\
-`$ sudo apt install git nodejs npm node-typescript`
-- On macos (using the homebrew package manager - `https://www.brew.sh`)\
-*NOTE: if you want to use homebrew, you'll have to install it beforehand,*\
+1. Install git, nodejs, npm, typescript using your package manager\
+- On Ubuntu:\
+`$ sudo apt install git nodejs npm node-typescript`\
+- On macos (with homebrew):\
 `$ brew install git node typescript`
 
-3. Clone the project:\
-*NOTE: "~/" is used to represent the home directory, and "cd" to change directory.*\
-`$ cd ~/ && git clone https://github.com/c6rg0/NEA.git && cd NEA/`
+2. Clone the repo:\
+`$ git clone https://github.com/c6rg0/nea && cd nea`
 
-4. Install the npm packages and dependencies:\
-*NOTE: You're now in the project directory*
-
-5. Compile the source code:\
-*NOTE: Chmod is used to set file permisions (there is a chance this is alread done for you)*
+3. Compile:\
 `$ sudo chmod +x build.sh`
-`$ npm run build`
+`$ ./build.sh`
 
-6. Run the website!\
-`$ node run website`\
-If you go to `http://localhost:8000` in the browser, you can use and test the website.\
-*NOTE: As far as I'm aware, you can run the website in wsl, and use the browser in windows
-to view the website.*
-
-## To do list:
-- [x] Solve the projects aim
-
-- [x] Fix problems with my code (consistent style, properly adhering to RESTful, ...)
-- [ ] Documentation
-
+4. Run:\
+`$ npm run website`
+- You can access it [here](http://localhost:8000) now!

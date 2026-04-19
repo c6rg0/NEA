@@ -6,3 +6,6 @@
 *dist/db/*js
 *dist/routes/*.js
 *dist/public/js/*
+
+# Ignore an AQA pdf
+*docs/AQA-7517-NEA-GUIDE.pdf
