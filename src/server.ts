@@ -48,7 +48,7 @@ import { logoutRouter } from "./routes/logout.route";
 import { userRouter } from "./routes/user.route";
 import { leaderboardRouter } from "./routes/leaderboard.route";
 import { deleteRouter } from "./routes/delete.route";
-import { elseRouter } from "./routes/else.route";
+import { elseRouter } from "./routes/exception.route";
 
 const INDEX = indexRouter();
 const ACCOUNT = accountRouter();

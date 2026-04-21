@@ -18,8 +18,7 @@ export function loginRouter(DB: sqlite3.Database){
 		const USER_INPUT = req.body;
 
 		if (!USER_INPUT || !USER_INPUT.username || !USER_INPUT.password) {
-			return res.status(204).
-			json({ error: "Required credentials are missing" });
+			return res.status(412).json({ error: "Required credentials are missing" });
 		}
 
 		const RESULT = DB.prepare(`
@@ -27,9 +26,8 @@ export function loginRouter(DB: sqlite3.Database){
 			WHERE username = ?
 		`).get(USER_INPUT.username) as userPassword | undefined;
 		
-		if (!RESULT || !RESULT.password) {
-			return res.status(401).
-			json({ error: "Invalid username or password" });
+		if (!RESULT) {
+			return res.status(404).json({ error: "User doesn't exist" });
 		}
 
 		const INPUT_PASS: string = USER_INPUT.password;
@@ -48,12 +46,10 @@ export function loginRouter(DB: sqlite3.Database){
 
 		if (MATCH) {
 			req.session.user = USER_INPUT.username;
-			res.redirect("/");
-			return;
+			return res.status(200).send();
 
 		} else {
-			res.status(401).json({ error: "Incorrect password or username" });
-			return;
+			return res.status(401).json({ error: "Incorrect password or username" });
 		}
 	});
 

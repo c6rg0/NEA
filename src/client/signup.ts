@@ -37,6 +37,11 @@ const DISPLAY_SYMBOLS = document.
 SIGNUP_FORM.addEventListener("submit", (event) => {
         event.preventDefault(); 
 
+	DISPLAY_LEGNTH.innerHTML = "";
+	DISPLAY_NUMS.innerHTML = "";
+	DISPLAY_SYMBOLS.innerHTML = "";
+	DISPLAY_EXISTS.innerHTML = "";
+
         const INPUT_USERNAME = (document.getElementById("username") as HTMLInputElement).value;
         const INPUT_PASSWORD = (document.getElementById("password") as HTMLInputElement).value;
 
@@ -51,9 +56,24 @@ SIGNUP_FORM.addEventListener("submit", (event) => {
 
 	if (INPUT_PASSWORD.length < 6) {
 		DISPLAY_LEGNTH.innerHTML = 
-			"Password must be 6 characters or more!";
+			"Password must be 6 characters or more";
 		len = false; 
 	}
+
+	if (INPUT_PASSWORD.length > 24) {
+		DISPLAY_LEGNTH.innerHTML = 
+			"Password must be less than 24 characters";
+		len = false; 
+	}
+
+	if (INPUT_USERNAME.length > 16) {
+		DISPLAY_LEGNTH.innerHTML = 
+			"Username must be less than 16 characters";
+		len = false; 
+	}
+
+	let lower = false;
+	let upper = false; 
 
 	for (let i = 0; i < INPUT_PASSWORD.length; i++){
 		const char: string = INPUT_PASSWORD[i];
@@ -62,10 +82,15 @@ SIGNUP_FORM.addEventListener("submit", (event) => {
 			num = true;
 		} if (!/[a-zA-Z0-9]/.test(char)){
 			symbol = true;
+		} if (/[a-z]/.test(char)){
+			lower = true;
+		} if (/[A-Z]/.test(char)){
+			upper = true;
 		}
+
 	}
 
-	if (len === true && num === true && symbol === true){
+	if (len === true && num === true && symbol === true && lower === true && upper === true){
 		DISPLAY_LEGNTH.innerHTML = "";
 		DISPLAY_NUMS.innerHTML = "";
 		DISPLAY_SYMBOLS.innerHTML = "";
@@ -77,5 +102,7 @@ SIGNUP_FORM.addEventListener("submit", (event) => {
 
 	} if (!symbol){
 		DISPLAY_SYMBOLS.innerHTML = "Please include at least 1 symbol!";
+	} if (!lower || !upper){
+		DISPLAY_EXISTS.innerHTML = "Please use an upper case and lower case letter";
 	}
 });

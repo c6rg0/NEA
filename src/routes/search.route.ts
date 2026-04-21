@@ -7,17 +7,21 @@ export function searchRouter(db: sqlite3.Database){
 	ROUTER.get("/", async (req: Request, res: Response) => {
 		const QUERY_ELO_UPPER = req.query.fu as string; // "fu": filter upper
 		const QUERY_ELO_LOWER = req.query.fl as string; // ...: ... lower
-		let conditions = assignFilters(QUERY_ELO_UPPER, QUERY_ELO_LOWER, res) as string;
+		let conditions = assignFilters(QUERY_ELO_UPPER, QUERY_ELO_LOWER) as string;
 
 		const QUERY_ORDER = req.query.order as string; 
-		let order = assignOrder(QUERY_ORDER, res) as string;
+		let order = assignOrder(QUERY_ORDER) as string;
 
 		const QUERY_SORT = req.query.sort as string; 
-		let sort = assignSort(QUERY_SORT, res, order) as string; 
+		let sort = assignSort(QUERY_SORT, order) as string; 
 
 		const QUERY_PAGE = req.query.page as string;
 		const LIMIT = 50;
-		const OFFSET = assignOffset(QUERY_PAGE, LIMIT, res);
+		const OFFSET = assignOffset(QUERY_PAGE, LIMIT);
+
+		if (conditions === null || order === null || sort === null || OFFSET === null){
+			return res.status(412).json({ error: "Invalid data supplied with a valid query param" });
+		}
 
 		let query: string = "";
 		let innerJoin = "";
@@ -54,11 +58,11 @@ export function searchRouter(db: sqlite3.Database){
 		});
 	});
 
-	function assignFilters(QUERY_ELO_UPPER: string, QUERY_ELO_LOWER: string, res: Response){
+	function assignFilters(QUERY_ELO_UPPER: string, QUERY_ELO_LOWER: string){
 		let eloUpper: number; 
 		let eloLower: number = 0;
 
-		let conditions = "elo > " + eloLower; // + "AND elo < (@upper)";
+		let conditions: string | null = "elo > " + eloLower; // + "AND elo < (@upper)";
 
 		if (QUERY_ELO_LOWER){
 			const PARSED = Number(QUERY_ELO_LOWER);
@@ -66,25 +70,23 @@ export function searchRouter(db: sqlite3.Database){
 				eloLower = PARSED;
 				conditions = "elo > " + eloLower;
 			} else {
-				return res.status(400).json({ error: "Elo filter query isn't a number?" });
+				return conditions = null;
 			}
-
 		} if (QUERY_ELO_UPPER){
 			const PARSED = Number(QUERY_ELO_UPPER);
 			if (!isNaN(PARSED)){
 				eloUpper = PARSED;
 				conditions = "elo > " + eloLower + " AND elo < " + eloUpper;
 			} else {
-				return res.status(400).json({ error: "Elo filter query isn't a number?" });
+				return conditions = null;
 			}
-
 		} 
 		
 		return conditions;
 	}
 
-	function assignOrder(QUERY_ORDER: string, res: Response){
-		let order: string = "DESC";
+	function assignOrder(QUERY_ORDER: string){
+		let order: string | null = "DESC";
 		let orderWhitelist: string[];
 
 		if (QUERY_ORDER){
@@ -92,15 +94,14 @@ export function searchRouter(db: sqlite3.Database){
 			if (orderWhitelist.includes(QUERY_ORDER.toString())){
 				order = QUERY_ORDER.toString();
 			} else {
-				return res.status(400).json({ error: "Invalid order option {DESC|ASC}" });
+				return order = null;
 			}
-
 		} 
 
 		return order;
 	}
 
-	function assignSort(QUERY_SORT: string, res: Response, order: string){
+	function assignSort(QUERY_SORT: string, order: string){
 		let sort: string = "time_created";
 		let sortWhitelist: string[];
 
@@ -109,20 +110,20 @@ export function searchRouter(db: sqlite3.Database){
 			if (sortWhitelist.includes(QUERY_SORT.toString())){
 				sort = QUERY_SORT.toString();
 			} else {
-				return res.status(400).json({ error: "Invalid sort option {elo|time_created|times_attempted}" });
+				return null;
 			}
 		}
 
 		return (sort + " " + order);
 	}
 
-	function assignOffset(QUERY_PAGE: string, LIMIT: number, res: Response, page = 1){
+	function assignOffset(QUERY_PAGE: string, LIMIT: number, page = 1){
 		if (QUERY_PAGE){
 			const PARSED = Number(QUERY_PAGE);
 			if (!isNaN(PARSED)){
 				page = PARSED;
 			} else {
-				return res.status(400).json({ error: "Page query isn't a number?" });
+				return null;
 			}
 		}
 
