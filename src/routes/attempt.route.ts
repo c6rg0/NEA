@@ -15,6 +15,10 @@ export function attemptRouter(db: sqlite3.Database){
 		solved: number,
 	}
 
+	interface checkTypes{
+		count: number,
+	}
+
 	class Elo {
 		private kFactor: number;
 		public outcome: number;
@@ -28,7 +32,6 @@ export function attemptRouter(db: sqlite3.Database){
 		public newUserElo: number = 0;
 		public newProblemElo: number = 0;
 
-		// constructor
 		constructor(kFactor: number, outcome: number) {
 		    this.kFactor = kFactor;
 		    this.outcome = outcome;
@@ -73,14 +76,37 @@ export function attemptRouter(db: sqlite3.Database){
 	}
 
 	class Attempts{
+		private user: string | undefined;
+		private attempt: payloadTypes;
+
+		constructor(user: string | undefined, attempt: payloadTypes){
+			this.user = user;
+			this.attempt = attempt;
+		}
+
+		check(){
+			const CHECK = db.prepare(`
+				SELECT COUNT(1)
+				AS count 
+				FROM Problems 
+				WHERE problem_id = (@id);	   
+			`).get({id: this.attempt.problemId}) as checkTypes;
+
+			console.log(CHECK);
+
+			if (CHECK.count === 1){
+				return false;
+			} else {
+				return true;
+			}
+		}
+
 		increment(attempt: payloadTypes){
-			const UPDATE_ATTEMPTS = db.prepare(`
+			db.prepare(`
 				UPDATE problems 
 				SET times_attempted = times_attempted + 1 
 				WHERE problem_id = (@id);
-			`);
-
-			UPDATE_ATTEMPTS.run({id: attempt.problemId});
+			`).run({id: attempt.problemId});
 
 			if (attempt.correct === true) {
 				const UPDATE_SOLVED = db.prepare(`
@@ -91,14 +117,6 @@ export function attemptRouter(db: sqlite3.Database){
 
 				UPDATE_SOLVED.run({id: attempt.problemId});
 			}
-		}
-
-		private user: string | undefined;
-		private attempt: payloadTypes;
-
-		constructor(user: string | undefined, attempt: payloadTypes){
-			this.user = user;
-			this.attempt = attempt;
 		}
 
 		record(E: Elo){
@@ -174,13 +192,19 @@ export function attemptRouter(db: sqlite3.Database){
 		}
 
 	}
-
+1
 	ROUTER.post("/", async (req: Request, res: Response) => {
 		try {
 			let user = req.session.user as string | undefined;
 			let attempt: payloadTypes = req.body;
 
 			let A = new Attempts(user, attempt);
+
+			const ERROR: boolean = A.check();
+			if (ERROR === true){
+				return res.status(404).json({ error: "Problem doesn't exist?" });
+			}
+
 			A.increment(attempt);
 
 			if (user){
@@ -191,8 +215,6 @@ export function attemptRouter(db: sqlite3.Database){
 				else outcome = 0;
 
 				const E = new Elo(25, outcome);
-
-				E.fetchElo(user, attempt);
 				E.update();
 
 				A.record(E);
@@ -202,7 +224,7 @@ export function attemptRouter(db: sqlite3.Database){
 
 		} catch (Error) {
 			console.log(Error);
-			return res.status(500).json({ error: "HTTP CODE 500" });
+			return res.status(500).json({ error: "Server side error" });
 		}
 	});
 

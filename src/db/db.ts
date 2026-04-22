@@ -25,7 +25,7 @@ export function DBSetup(){
 			title TEXT NOT NULL,
 			creator TEXT NOT NULL,
 			instruction TEXT NOT NULL,
-			example TEXT NOT NULL, -- Test case a users solution is used against
+			test_data TEXT NOT NULL, -- Test case a users solution is used against
 			answer TEXT NOT NULL,
 			elo INTEGER DEFAULT 400, 
 			times_attempted INTEGER DEFAULT 0,
@@ -43,12 +43,12 @@ export function DBSetup(){
 
 		-- These triggers insert/delete problems in the FTS table automatically,
 		-- mirroring the Problems table in virtual table format.
-		CREATE TRIGGER IF NOT EXISTS problems_ai AFTER INSERT ON Problems BEGIN
+		CREATE TRIGGER IF NOT EXISTS fts_insert AFTER INSERT ON Problems BEGIN
 			INSERT INTO Problems_fts(rowid, title, creator)
 			VALUES (new.problem_id, new.title, new.creator);
 		END;
 
-		CREATE TRIGGER IF NOT EXISTS problems_ad AFTER DELETE ON Problems BEGIN
+		CREATE TRIGGER IF NOT EXISTS fts_delete AFTER DELETE ON Problems BEGIN
 			INSERT INTO Problems_fts(Problems_fts, rowid, title, creator)
 			VALUES ('delete', old.problem_id, old.title, old.creator);
 		END;

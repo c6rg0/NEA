@@ -43,7 +43,7 @@ function createConfirm(TITLE: string, INSTRUCTION: string, ANSWER_STRING: string
 	document.getElementById("problem_form")!.remove();
 	document.getElementById("cheatsheet")!.remove();
 
-	let ANSWER_REGEX_RESULT = ANSWER_REGEX.exec(TEST_CASE);
+	const ANSWER_REGEX_RESULT = ANSWER_REGEX.exec(TEST_CASE);
 
 	if (ANSWER_REGEX_RESULT === null){
 		window.location.assign("http://localhost:8000/create");
@@ -94,7 +94,7 @@ async function problemPost(TITLE: string, INSTRUCTION: string, ANSWER_STRING: st
 			title: TITLE, 
 			instruction: INSTRUCTION, 
 			answer: ANSWER_STRING, 
-			example: TEST_CASE
+			test_data: TEST_CASE
 		}),
 	});
 

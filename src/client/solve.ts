@@ -1,5 +1,5 @@
 interface solutionTypes {
-	example: string,
+	test_data: string,
 	answer: string,
 }
 async function getSolution(problemId: string | null) {
@@ -114,16 +114,16 @@ function resultsDisplay(CORRECT: boolean, D: Data, INPUT_SOLUTION: string){
 
 	// Database data 
 	const TEST_CASE_DISPLAY = document.
-		getElementById("example_data");
+		getElementById("test_data_data");
 	const TEST_DISPLAY_CHILD = document.
-		createTextNode("Test case: [" + D.problemData.example + "]");
+		createTextNode("Test case: [" + D.problemData.test_data + "]");
 	TEST_CASE_DISPLAY!.appendChild(TEST_DISPLAY_CHILD);
 
 	const SOLUTION_DISPLAY = document.
 		getElementById("db_solution");
 	const SOLUTION_REGEX = new RegExp(D.problemData.answer);
 	const SOLUTION_RESULT: RegExpExecArray | null = SOLUTION_REGEX.
-		exec(D.problemData.example);
+		exec(D.problemData.test_data);
 	const SOLUTION_DISPLAY_CHILD = document.
 		createTextNode("Intended result: [" + SOLUTION_RESULT + "]");
 	SOLUTION_DISPLAY!.appendChild(SOLUTION_DISPLAY_CHILD);
@@ -133,7 +133,7 @@ function resultsDisplay(CORRECT: boolean, D: Data, INPUT_SOLUTION: string){
 		getElementById("user_attempt");
 	const ATTEMPT_REGEX = new RegExp(INPUT_SOLUTION);
 	const ATTEMPT_RESULT: RegExpExecArray | null = ATTEMPT_REGEX.
-		exec(D.problemData.example);
+		exec(D.problemData.test_data);
 	const ATTEMPT_DISPLAY_CHILD = document.
 		createTextNode("Your result: [" + ATTEMPT_RESULT + "]");
 	ATTEMPT_DISPLAY!.appendChild(ATTEMPT_DISPLAY_CHILD);

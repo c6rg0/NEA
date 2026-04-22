@@ -54,12 +54,15 @@
 				<a href="/user/<%= login_status %>">
 					<button class="btn btn-light btn-lg" type="button">View profile</button>
 				</a>
-				<a href="/logout">
-					<button class="btn btn-light btn-lg" type="button">Log out</button>
-				</a>
+
+        <a>
+        <button onclick="logout()" class="btn btn-light btn-lg" type="button">Log out</button>
+        </a>
 			<% } %>
 
 		</div>
+
+    <script src="js/logout.js"></script>
 
 	</body>
 </html> 

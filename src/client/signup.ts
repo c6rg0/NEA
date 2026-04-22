@@ -26,7 +26,7 @@ const SIGNUP_FORM = document.
 	getElementById("signup_form") as HTMLFormElement;
 
 const DISPLAY_EXISTS = document.
-	getElementById("existsMsg") as HTMLParagraphElement;
+	getElementById("exists") as HTMLParagraphElement;
 const DISPLAY_LEGNTH = document.
 	getElementById("length") as HTMLParagraphElement;
 const DISPLAY_NUMS = document.

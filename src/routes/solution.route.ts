@@ -5,7 +5,7 @@ export function solutionRouter(DB: sqlite3.Database){
 	const ROUTER = Router();
 
 	interface types {
-		example: string,
+		test_data: string,
 		answer: string,
 	}
 
@@ -13,7 +13,7 @@ export function solutionRouter(DB: sqlite3.Database){
 		const ID  = req.params.id;
 
 		try {
-			const response = DB.prepare(`SELECT answer, example FROM Problems WHERE problem_id = ?;`).get(ID);
+			const response = DB.prepare(`SELECT answer, test_data FROM Problems WHERE problem_id = ?;`).get(ID);
 
 			// Usefull for testing purposes
 			console.log("answer = " + (response as types).answer);

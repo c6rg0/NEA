@@ -4,7 +4,7 @@ export function logoutRouter(){
 	const ROUTER = Router();
 
 	// This could be a DELETE request 
-	ROUTER.get("/", (req: Request, res: Response) => {
+	ROUTER.post("/", (req: Request, res: Response) => {
 		req.session.destroy((err) => {
 			if (err) {
 				console.log("Error destroying session", err);
@@ -16,13 +16,12 @@ export function logoutRouter(){
 
 			res.clearCookie("connect.sid");
 			// cookiePerm = false; // leftover from /disable-cookies route
-			res.redirect("/");
-			return;
+			return res.status(200).send();
 		}
 	)});
 
 	ROUTER.all("/", (req: Request, res: Response) => {
-		res.set("Allow", "GET");
+		res.set("Allow", "POST");
 		res.status(405).json({ 
 			error: "HTTP method not allowed" 
 		});

@@ -1,15 +1,17 @@
 function loginResponse(RESPONSE: Response){
 	// Using "===" was causing a problem with if 401, 
 	// probably because of the JSON that comes with it
-	if (RESPONSE.status == 401){
-		return LOGIN_ERROR_DISPAY.innerHTML = "Incorrect username or password!";
+	if (RESPONSE.status === 200){
+		return window.location.assign("/");
+	} if (RESPONSE.status == 401){
+		return LOGIN_ERROR_DISPAY.innerHTML = "Incorrect username or password";
+	} if (RESPONSE.status == 404){
+		return LOGIN_ERROR_DISPAY.innerHTML = "User doesn't exist";
 	} if (RESPONSE.status === 412){ 
 		return LOGIN_ERROR_DISPAY.innerHTML = "Required credentials are missing";
-	} if (RESPONSE.status === 200){
-		return window.location.assign("/");
 	} else {
 		console.log(RESPONSE.status);
-		return LOGIN_ERROR_DISPAY.innerHTML = "Unexpected server problem.";
+		return LOGIN_ERROR_DISPAY.innerHTML = "Unexpected server problem";
 	}
 }
 
