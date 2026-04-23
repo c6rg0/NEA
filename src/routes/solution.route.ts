@@ -15,7 +15,7 @@ export function solutionRouter(DB: sqlite3.Database){
 		try {
 			const response = DB.prepare(`SELECT answer, test_data FROM Problems WHERE problem_id = ?;`).get(ID);
 
-			// Usefull for testing purposes
+			// Useful for testing purposes
 			console.log("answer = " + (response as types).answer);
 
 			return res.json(response);

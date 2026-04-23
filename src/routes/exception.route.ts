@@ -7,8 +7,7 @@ export function elseRouter(){
 	// also works if the user uses a URL path ID in a way that's 
 	// unsupported.
 	ROUTER.use((req: Request, res: Response, next: Function) => {
-		res.status(404).json({ error: 'Not Found' });
-		next();
+		return res.status(404).json({ error: 'Not Found' });
 	});
 	
 	return ROUTER;

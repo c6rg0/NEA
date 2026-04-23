@@ -19,7 +19,7 @@ async function getSolution(problemId: string | null) {
 }
 
 async function submitAttempt(problemId: string | null, CORRECT: boolean) {
-	const FETCH_URL = "http://localhost:8000/attempt";
+	const FETCH_URL = "http://localhost:8000/submit_attempt";
 	const RESPONSE: Response = await fetch(FETCH_URL, {
 		method: "POST",
 		headers: {
@@ -114,7 +114,7 @@ function resultsDisplay(CORRECT: boolean, D: Data, INPUT_SOLUTION: string){
 
 	// Database data 
 	const TEST_CASE_DISPLAY = document.
-		getElementById("test_data_data");
+		getElementById("test_data");
 	const TEST_DISPLAY_CHILD = document.
 		createTextNode("Test case: [" + D.problemData.test_data + "]");
 	TEST_CASE_DISPLAY!.appendChild(TEST_DISPLAY_CHILD);

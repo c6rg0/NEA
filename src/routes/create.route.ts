@@ -4,10 +4,6 @@ import sqlite3 from "better-sqlite3";
 export function createRouter(DB: sqlite3.Database){
 	const ROUTER = Router();
 
-	interface problem_types {
-		problem_id: number
-	}
-
 	ROUTER.get("/", (req: Request, res: Response) => {
 		if (req.session.user){
 			res.render("create", { login: true } );
@@ -51,14 +47,6 @@ export function createRouter(DB: sqlite3.Database){
 				answer: USER_INPUT.answer
 			});
 			
-			/*
-			const SEARCH_ID = DB.prepare(`
-				SELECT problem_id 
-				FROM Problems 
-				WHERE title = ?
-			`).get(USER_INPUT.title) as problem_types;
-			*/
-
 			return res.status(200).send();
 		} 
 

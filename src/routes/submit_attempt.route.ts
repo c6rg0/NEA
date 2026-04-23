@@ -59,15 +59,46 @@ export function attemptRouter(db: sqlite3.Database){
 
 		// setter 
 		update(){
+			console.log("-1" + this.userElo);
+			console.log("-2" + this.problemElo);
+
 			this.userProbability = this.probability(this.problemElo, this.userElo);
 			this.problemProbability = this.probability(this.userElo, this.problemElo);
-
+			console.log("1" + this.userProbability);
+			console.log("2" + this.problemProbability);
+			/* 
+			1 0.5
+			2 0.5
+			*/
+			
 			this.newUserElo  = this.userElo + this.kFactor * (this.outcome - this.userProbability);
 			this.newProblemElo = this.problemElo + this.kFactor * (1 - this.outcome - this.problemProbability);
+			console.log("3" + this.newUserElo);
+			console.log("4" + this.newProblemElo);
+		       /*
+			3 12.5
+			4 -12.5
+			 */
 
 			// float -> int 
 			this.newUserElo = Math.trunc(this.newUserElo);
 			this.newProblemElo = Math.trunc(this.newProblemElo);
+
+			if (this.newUserElo < 100){
+				this.newUserElo = 100;
+			}
+
+			if (this.newProblemElo < 100){
+				this.newProblemElo = 100;
+			}
+
+			console.log("5" + this.newUserElo);
+			console.log("6" + this.newProblemElo);
+		       /*
+			5 100
+			6 100
+			 */
+
 
 			if (Number.isNaN(this.newUserElo) || Number.isNaN(this.newProblemElo)){
 				return Error;
@@ -85,16 +116,14 @@ export function attemptRouter(db: sqlite3.Database){
 		}
 
 		check(){
-			const CHECK = db.prepare(`
+			const EXISTS = db.prepare(`
 				SELECT COUNT(1)
 				AS count 
 				FROM Problems 
 				WHERE problem_id = (@id);	   
 			`).get({id: this.attempt.problemId}) as checkTypes;
 
-			console.log(CHECK);
-
-			if (CHECK.count === 1){
+			if (EXISTS.count === 1){
 				return false;
 			} else {
 				return true;
@@ -215,6 +244,7 @@ export function attemptRouter(db: sqlite3.Database){
 				else outcome = 0;
 
 				const E = new Elo(25, outcome);
+				E.fetchElo(user, attempt);
 				E.update();
 
 				A.record(E);

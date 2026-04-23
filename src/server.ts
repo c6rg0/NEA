@@ -17,8 +17,9 @@ declare module "express-session" {
 }
 
 const SESSION_MIDDLEWARE = session({
-	// date +%s%N | sha512sum
-	secret: "7f8b901b7b70580f29b1e64296c3ba20e0dc17a29bf50b9eba302e3688cb12b1f666569ae6b412a43d63af9ffa5400833fdac5e1c30abdd8e1a94c06a665dd6b",
+	// (with coreutils, in the terminal):
+	// $ date | sha256sum
+	secret: "41db0fe8c13891866f2f92ecda4e587e000391aa8b9de40952808a3e19f796c6",
 	resave: false,
 	saveUninitialized: false,
 });
@@ -42,7 +43,7 @@ import { redirectRouter } from "./routes/redirect.route";
 import { searchRouter } from "./routes/search.route";
 import { solveRouter } from "./routes/solve.route";
 import { solutionRouter } from "./routes/solution.route";
-import { attemptRouter } from "./routes/attempt.route";
+import { attemptRouter } from "./routes/submit_attempt.route";
 import { accountRouter } from "./routes/account.route";
 import { logoutRouter } from "./routes/logout.route";
 import { userRouter } from "./routes/user.route";
@@ -67,30 +68,31 @@ const DELETE = deleteRouter(DB);
 const ELSE = elseRouter();
 
 APP.use("/", INDEX);
-APP.use("/signup", SIGNUP);
-APP.use("/login", LOGIN);
-APP.use("/create", CREATE);
+APP.use("/signup/", SIGNUP);
+APP.use("/login/", LOGIN);
+APP.use("/create/", CREATE);
 APP.use("/redirect/", REDIRECT);
 APP.use("/search/", SEARCH);
-APP.use("/solve", SOLVE);
-APP.use("/solution", SOLUTION);
-APP.use("/attempt", ATTEMPT);
-APP.use("/account", ACCOUNT);
-APP.use("/logout", LOGOUT);
-APP.use("/user", USER);
-APP.use("/leaderboard", LEADERBOARD);
-APP.use("/delete_problem", DELETE);
+APP.use("/solve/", SOLVE);
+APP.use("/solution/", SOLUTION);
+APP.use("/submit_attempt/", ATTEMPT);
+APP.use("/account/", ACCOUNT);
+APP.use("/logout/", LOGOUT);
+APP.use("/user/", USER);
+APP.use("/leaderboard/", LEADERBOARD);
+APP.use("/delete_problem/", DELETE);
 APP.use(ELSE);
 
 const PORT = 8000;
 const URL = "http://localhost:" + PORT;
-APP.listen(PORT, () => {
-	try {
-		console.log();
+try{
+	APP.listen(PORT, () => {
 		console.log("Website running on: " + URL);
-		console.log("Press { ctrl + c } to end the process...");
-		console.log();
-	} catch (err) {
-		console.log(err);
-	}
-});
+		console.log("(Press [Ctrl + c] to end the process) \n");
+	});
+} catch (error){
+	console.log("Critical networking error: \n");
+	console.log(error + "\n");
+	console.log("Exiting process.");
+	process.exit(1); 
+}

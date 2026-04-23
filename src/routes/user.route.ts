@@ -18,8 +18,8 @@ export function userRouter(DB: sqlite3.Database){
 		userInfo(){
 			return DB.prepare(`
 				SELECT username, elo, time_created
-				FROM Users WHERE username = ?
-			`).get(this.TARGET);
+				FROM Users WHERE username = (@username);
+			`).get({ username: this.TARGET });
 		}
 
 		attempts(){
@@ -39,16 +39,16 @@ export function userRouter(DB: sqlite3.Database){
 				AS avg_elo
 				FROM Attempts 
 				INNER JOIN Problems ON Attempts.problem_id = Problems.problem_id 
-				WHERE Attempts.username = ? 
-			`).get(this.TARGET);
+				WHERE Attempts.username = (@username);
+			`).get({ username: this.TARGET });
 		}
 
 		problems(){
 			return DB.prepare(`
 				SELECT * FROM Problems 
-				WHERE creator = ? 
-				ORDER BY time_created DESC
-			`).all(this.TARGET);
+				WHERE creator = (@username)
+				ORDER BY time_created DESC;
+			`).all({ username: this.TARGET });
 		}
 	}
 

@@ -5,8 +5,7 @@ export function accountRouter(){
 
 	ROUTER.get("/", (req: Request, res: Response) => {
 		if (!req.session.user){
-			res.render("account", { login: false });
-			return;
+			return res.render("account", { login: false });
 		}
 		res.render("account", { login_status: req.session.user, login: true });
 	});
