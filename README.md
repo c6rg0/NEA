@@ -1,4 +1,5 @@
 # AQA A-Level CS NEA
+# Regex practice site
 
 ## Technologies used:
 > Languages: `TypeScript` (transpiled to `JavaScript`), `Bash` (for the build/clean scripts),\
@@ -12,8 +13,8 @@
 # How to run the project locally:
 *NOTE: "$" is used to represent terminal commands, don't include it in the terminal.*
 
-- Ensure that you're using a unix(-like) OS, like Linux or MacOs.
-- I recommend Windows users to install wsl2 with ubuntu and follow the bellow instructions.
+- Ensure that you're using a unix(-like) OS, like Linux or macos.
+- On windows, I recommend installing wsl2 with ubuntu and following the bellow instructions.
 
 1. Install git, nodejs, npm, typescript using your package manager\
 - On Ubuntu:\
@@ -30,4 +31,4 @@
 
 4. Run:\
 `$ npm run website`
-- You can access it [here](http://localhost:8000) now!
+- You can access it [here](http://localhost:8000).
