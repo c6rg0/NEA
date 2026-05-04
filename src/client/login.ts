@@ -44,7 +44,7 @@ LOGIN_FORM.addEventListener("submit", (event) => {
         	LOGIN_ERROR_DISPAY.innerHTML = 
 			"Please fill in the fields";
         } else {
-		LOGIN_ERROR_DISPAY.innerHTML = "";
-		return loginPost(INPUT_USERNAME, INPUT_PASSWORD);
-	}
+			LOGIN_ERROR_DISPAY.innerHTML = "";
+			return loginPost(INPUT_USERNAME, INPUT_PASSWORD);
+		}
 });

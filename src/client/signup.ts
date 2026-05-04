@@ -87,7 +87,6 @@ SIGNUP_FORM.addEventListener("submit", (event) => {
 		} if (/[A-Z]/.test(char)){
 			upper = true;
 		}
-
 	}
 
 	if (len === true && num === true && symbol === true && lower === true && upper === true){
@@ -99,7 +98,6 @@ SIGNUP_FORM.addEventListener("submit", (event) => {
 
 	} if (!num){
 		DISPLAY_NUMS.innerHTML = "Please include at least 1 number!";
-
 	} if (!symbol){
 		DISPLAY_SYMBOLS.innerHTML = "Please include at least 1 symbol!";
 	} if (!lower || !upper){
